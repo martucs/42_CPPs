@@ -6,10 +6,9 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:52:13 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/12 15:05:50 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:05:02 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <cstdio>
 #include "Zombie.hpp"
 
 Zombie	*zombieHorde(int N, std::string name)
