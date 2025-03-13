@@ -1,0 +1,64 @@
+
+- la funcion operator=(blablabla) que declaramos de manera publica en una clase sirve para que cada evz que igualamos 2 objetos de esa clase, se igualen las variables/elementos que contiene esa clase.
+Por ejemplo si en la clase estudiante hay un int _edad y otro int _curso, la funcion operator= se veria asi-> operator=(clase estudiante_orginal, clase estudiante_a_copiar) 
+{
+	 estudiante_a_copiar._edad = estudiante_orginal._edad;
+	 estudiante_a_copiar._curso = estudiante_orginal._curso;
+};
+en realidad no se exactamente como se envian los argumentos, pero la cosa es que cada vez que estemos dentro de un objeto estudiante y utilicemos el signo '=', vamos a llamar a nuestra funcion, no será un signo normal. El caracter que determina que se llame a esta funcion es el que ponemos justo despues de la paabra 'operator'. Osea, que si sin querer escribimos el signo '+' en la definicion de la funcion y luego hacemos 
+	estudiante_a_copiar + estudiante_orginal,
+aqui se hara una copia porque lo que hay dentro de la funcion siguen siendo igualaciones de las variables internas de cada objeto de la clase.
+
+- en general, cualquier cosa que tenemos como atributo/variables dentro de una clase se tiene que declarar como privado y crear funciones publicas getters y setters para poder acceder y modificar esas variables. Aun no acabo de entender por que.
+
+- hay que llamar a constuctor y destructor siempre, porque si creamos un objeto de una clase sin destructor de manera local (sin new) puede que haya cosas que no queden bien liberadas, puede que hayan LEAKS. Imagino que no lo vemos al hacer new porque hacemos frees manualmente.
+
+- cuidado con los headers que pongo en los archivos .hpp, porque si pongo innecesarios me va a dar errores de compilación! Puede que vea funciones con el mismo nombre y declaradas en 2 sitios y no sepa cual coger
+
+- cuando accedemos a alguna funcion o variable con '.' es que accedemos a ella a través de un objeto. Si uso std::cin.getline(), la funcion 'getline' es una funcion que esta dentro del objeto cin (de tipo istream), que a la vez tambien está dentro de std  -> std::istream::getline
+
+si uso std::getline(), la funcion 'getline' es una funcion dentro solo de std -> std::getline (string)
+
+Al combinar llamar a std::cin.getline() para escribir el comando + luego llamar a std::getline() para escribir la informacion de cada contacto, la primera getline() detectaba el "ADD\n", eliminaba la string "ADD" y dejaba el "\n". Por eso luego la segunda getline()automaticamente leia lo que habia en cin, veia el "\n" y ya no me dejaba escribir nada más.
+ 
+- al imprimir en pantalla con std::cout << str, si esa str no tiene salto de linea y no hay nada más en el programa que envie un \n a cout, no vamos a ver esa string en pantalla hasta que se acabe el programa. 
+ 
+ Osea que escribe en pantalla linea por linea, como get_next_line. Por ejemplo, si ponemos despues de esa liniea de imprimir la string(sin \n), un sleep de 10 segundos, hace el sleep de 10 segundos y luego vemos la string en pantalla. 
+Sin embargo, si hacemos lo mismo pero con una string con \n, lo primero que vemos es la impresion de esa string y luego el sleep.
+
+- REFERENCIAS
+Una referencia es otra manera de acceder a la misma informacion, que está en una misma direccion de memoria. Por ejemplo: int x = 1 (0x00ab), int &ref = x, ref será = 1. Si cambiamos el valor de cualquiera de las dos variables, el cambio se verá reflejado en la otra también, dado que muestran la misma dirección de memoria.
+
+Esto es muy útil cuando nos pasamos argumentos en funciones, porque normalmente si pasamos un int a una funcion, se hace una copia de ese int en el stack. Si pasamos una referencia, no se hace una copia, sino que simplemente usamos esa variable que nos pasan y accedemos a esa variable con su direccion de memoria y por tanto, la podemos modificar y ver esos cambios fuera de esa función. 
+Ejemplo:
+
+	std::string str = "hola";
+	std::string &ref = str;
+
+	changeStr(ref);
+
+----------------------------
+void	changeStr(std::string &string)
+{
+	string = "adios";
+}
+
+En este ejemplo, str será "hola" antes de pasar por la funcion y será "adios" despues.
+Si hubiera definido changeStr asi:
+void	changeStr(std::string string), str siempre seria "hola", NO cambiaría.
+
+Lo que aún no acabo de entender es el hecho de que también nos deja enviarle la propia 'str', que no ha sido creada como referencia, como argumento a la funcion changeStr(la que recibe &string). Y la string también se cambia.
+Creo que lo unico que hace el &string es indicarnos que no va a ser una copia de la variable, ni un puntero que nos permita acceder a su direccion de memoria, sino que vamos a tener otro nombre/alias para acceder a la propia variable que nos han enviado a la funcion.
+
+Reference qualifiers in C++ allow you to specify whether a member function can be called on lvalue references (non-const references) or rvalue references (temporary objects). This feature enables you to create member functions that have different behavior depending on whether they are called on lvalues or rvalues. 
+Lvalue references deben ser las referencias y rvalue references deben ser las copias que se hacen en el stack de la funcion.
+
+Pointers support pointer arithmetic operations (e.g., incrementing, decrementing), while references do not.
+
+- Al declarar un constructor que recibe argumentos, si uno de esos argumentos es una referencia, tenemos que declararla immediatamente. Como la primera vez que se usa esa variable es al recibirla en la declaracion de la funcion, no podemos hacer lo que hariamos normalmente:
+	int x = 1;
+	int &ref_x = x;
+Tenemos que hacer esto:
+	HumanA::HumanA(std::string name, Weapon &weapon):_weapon(weapon) 
+Lo que hay detras de los ':' nos indica que la variable 'weapon' va a ser una referencia de la variable '_weapon' dentro del objeto HumanA.
+
