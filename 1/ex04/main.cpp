@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:21:05 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/14 19:41:44 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:59:04 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,54 @@
 #include <iostream>
 #include <fstream>
 
-int	filenameCheck(char	*filename)
+int	copyAndModFile(std::string filename, std::string s1, std::string s2)
 {
 	std::fstream	inFile;
+	std::ofstream	newFile;
+	std::string		line;
+	int				res;
+	std::string		replace;
+	std::string		new_filename;
 
-	inFile.open(filename, std::fstream::in);
+	replace = ".replace";
+	if (s1.empty())
+	{
+		std::cout << "Error: first string is empty" << std::endl;
+		return (0);
+	}
+	inFile.open(filename.c_str(), std::fstream::in);
 	if (inFile.fail())
 	{
 		std::cout << "error opening file" << std::endl;
-		return (1);
+		return (0);
 	}
-	else
-		std::cout << "file opened succesfully" << std::endl;
-//	std::cout << (char) inFile.get();
-//	std::cout << inFile.rdbuf();
-	
-	const char	*new_filename;
-//	const char	*s_replace;
-	
-//	s_replace = ".replace";
-
-//	new_filename = filename + s_replace;
-
-	new_filename = "hola.txt";
-	std::ofstream	new_file(new_filename);
-
-	new_file << inFile.rdbuf();
-
+	new_filename = filename + replace;
+	newFile.open(new_filename.c_str());
+	std::getline(inFile, line);
+	if (inFile.eof())
+	{
+		inFile.close();
+		newFile.close();
+		return (0);
+	}
+	while (true)
+	{
+		res = -s2.length();
+		line.insert(line.length(), "\n");
+		while ((res = line.find(s1.c_str(), res + s2.length())) != (int)std::string::npos)
+		{
+			line.erase(res, s1.length());
+			line.insert(res, s2);
+		}
+		newFile << line;
+		std::getline(inFile, line);
+		if (inFile.eof())
+			break ;
+	}
 	inFile.close();
-	return (0);
+	newFile.close();
+	return (1);
 }
-// creamos un stream que va a ser como un fd de lectura, que se mueve cada vez que hacemos un read
-
-
 
 int	main(int argc, char **argv)
 {
@@ -55,12 +70,7 @@ int	main(int argc, char **argv)
 		std::cout << "Usage:\n./executable filename string1 string2" << std::endl;
 		return (1);
 	}
-	// 1. check if filename is valid
-	filenameCheck(argv[1]);
-	// 2. create new file
-//	createFile(argv[1]);
-	// 3. copy content of filename in the new file
-	// 4. replace every occurrence of s1 with s2 in the new file
-
+	if (!copyAndModFile(argv[1], argv[2], argv[3]))
+		return (1);
 	return (0);
 }

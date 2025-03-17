@@ -4,9 +4,7 @@ CC = c++
 
 CFLAGS = -std=c++98 -Wall -Werror -Wextra -fsanitize=address
 
-SRC = main2.cpp
-
-#HEADER = 
+SRC = main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
