@@ -14,12 +14,6 @@
 #include <iostream>
 #include <fstream>
 
-// STEP BY STEP
-	// 1. check if filename is valid
-	// 2. create new file
-	// 3. copy content of filename in the new file
-	// 4. replace every occurrence of s1 with s2 in the new file
-	
 int	copyAndModFile(std::string filename, std::string s1, std::string s2)
 {
 	(void)s2;
@@ -34,20 +28,38 @@ int	copyAndModFile(std::string filename, std::string s1, std::string s2)
 	std::string		new_filename;
 
 	replace = ".replace";
+	
 	inFile.open(filename.c_str(), std::fstream::in);
 	if (inFile.fail())
 	{
 		std::cout << "error opening file" << std::endl;
 		return (0);
 	}
+	
 	new_filename = filename + replace;
 	newFile_w.open(new_filename.c_str());
-	newFile_w << inFile.rdbuf();
+
+	std::getline(inFile, line);
+	while (true)
+	{
+		res = -1;
+		while ((res = line.find(s1.c_str(), res + 1)) != (int)std::string::npos)
+		{
+			line.erase(res, s1.length());
+			line.insert(res, s2);
+		}
+		newFile_w << line << std::endl;
+		std::getline(inFile, line);
+		if (inFile.eof())
+			break ;
+	}
 	inFile.close();
 	newFile_w.close();
 
-	newFile_r.open(new_filename.c_str());
-	std::getline(newFile_r, line);
+//	newFile_w << inFile.rdbuf();
+//	new_filename = filename + replace;
+//	newFile_r.open(new_filename.c_str());
+/*	std::getline(newFile_r, line);
 	while (true)
 	{
 		res = -1;
@@ -68,7 +80,7 @@ int	copyAndModFile(std::string filename, std::string s1, std::string s2)
 			std::cout << "EOF" << std::endl;
 			break ;
 		}
-	}
+	}*/
 	return (1);
 }
 
