@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 23:06:51 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/17 23:17:32 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:48:33 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ class Harl
 	public:
 		Harl();
 		~Harl();
-		void	complain( std::string level );
+		std::string	levels[4];
+		
+		void(Harl::*levelFunctions[4])(void);
+	
+
+		void		setLevels( void);
+		void		complain( std::string level );
 };
 
 #endif
