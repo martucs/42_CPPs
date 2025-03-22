@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:09:34 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/11 18:09:54 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:10:07 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	randomChump(std::string name)
 {
-	Zombie	new_zombie;
+	Zombie	newZombie;
 
-	new_zombie.setName(name);
-	new_zombie.announce();
+	newZombie.setName(name);
+	newZombie.announce();
 }

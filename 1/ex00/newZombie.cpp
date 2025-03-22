@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:08:36 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/11 18:33:25 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:10:56 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 Zombie	*newZombie(std::string name)
 {
-	Zombie	*new_zombie;
+	Zombie	*newZombie;
 
-	new_zombie = new Zombie;
-	new_zombie->setName(name);
-	return (new_zombie);
+	newZombie = new Zombie;
+	newZombie->setName(name);
+	return (newZombie);
 }
