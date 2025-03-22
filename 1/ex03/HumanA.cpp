@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 20:47:10 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/13 21:56:24 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 22:06:02 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 HumanA::HumanA(std::string name, Weapon &weapon):_weapon(weapon)
 {
 	_name = name;
-//	std::cout << "creating HumanA: " << name << std::endl;
 }
 
 HumanA::~HumanA()
 {
-//	std::cout << "destroying HumanA" << std::endl;
 }
 
 void	HumanA::attack(void)

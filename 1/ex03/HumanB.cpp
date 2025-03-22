@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 21:59:10 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/13 22:32:29 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 23:40:23 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	HumanB::setWeapon(Weapon &weapon)
 {
 	_weapon = &weapon;
 }
+// si no recibieramos weapon con referencia, perderiamos la verdadera direccion de memoria
+// de weapon, me da un 'heap use after free' al intentar imprimirla desde humanB.attack()
+// imagino porque el objeto weapon ya habrá sido destruido por el destructor en cuanto
+// sale de setWeapon() e intentamos acceder a esa misma direccion de memoria
+
 
 void    HumanB::attack(void)                                                              
 {

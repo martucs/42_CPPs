@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 20:44:12 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/13 22:30:43 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 23:40:28 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 class HumanB
 {
 	private:
-		std::string		_name;
 		class Weapon	*_weapon;
+			std::string		_name;
 
-	public:
-		HumanB( std::string );
-		~HumanB();
+		public:
+			HumanB( std::string );
+			~HumanB();
 
 		void	attack( void );
-		void	setWeapon( Weapon &);
+		void	setWeapon( Weapon& );
 };
 
 #endif
