@@ -2,7 +2,7 @@ NAME = Harl
 
 CC = c++
 
-CFLAGS = -std=c++98 #-Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -std=c++98 -Wall -Werror -Wextra -fsanitize=address
 
 SRC = main.cpp Harl.cpp
 

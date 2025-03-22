@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 23:10:03 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/21 14:48:49 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:36:44 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,10 @@ void	Harl::complain(std::string level)
 	int	i;
 
 	i = 0;
-	std::cout << "level of complaining = " << level << std::endl;	
 	while (i < 4)
 	{
-		if (levels[i].find(level) != std::string::npos)
-		{				
+		if (level == levels[i])
 			(this->*levelFunctions[i])();
-		}
 		i++;
 	}
 }
@@ -70,7 +67,3 @@ void	Harl::setLevels(void)
 	levels[2] = "WARNING";
 	levels[3] = "ERROR";
 }
-
-
-
-
