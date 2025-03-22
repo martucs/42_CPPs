@@ -2,7 +2,7 @@ NAME = hi_this_is_brain
 
 CC = c++
 
-CFLAGS =  -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -std=c++98 -Wall -Werror -Wextra -fsanitize=address
 
 SRC = main.cpp
 

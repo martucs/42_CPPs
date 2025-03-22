@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:11:27 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/12 20:30:18 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:56:59 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,7 @@ int	main(void)
 	
 	changeString( stringRef );
 	std::cout << "string: " << string << std::endl;
+	std::cout << "stringPtr dereferenced: " << *stringPtr << std::endl;
 	std::cout << "stringRef: " << stringRef << std::endl;
 	return (0);
 }
-
-/*void	cosaQueVi( std::string const &&str )
-{
-	(void)str;
-	std::cout << "funcion llamada" << std::endl;
-	std::cout << "str: " << str << std::endl;
-}*/
-
-//	cosaQueVi(&string[0]);
