@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:57:49 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/12 15:01:18 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:43:37 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 Zombie::Zombie()
 {
-	std::cout << "constructor says hi" << std::endl;
 }
 
 Zombie::~Zombie()
 {
-	std::cout << "destroying:	" << getName() << std::endl;
 }
 
 std::string	Zombie::getName(void)

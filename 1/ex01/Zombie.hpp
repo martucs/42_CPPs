@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 13:39:14 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/11 18:28:01 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:20:24 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,5 @@ class Zombie
 		void		setName( std::string name);
 		void		announce( void );
 };
-
-Zombie	*newZombie(std::string name);
-void	randomChump(std::string name);
 
 #endif

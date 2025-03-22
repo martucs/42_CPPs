@@ -4,7 +4,7 @@ CC = c++
 
 CFLAGS = -std=c++98 -Wall -Werror -Wextra -fsanitize=address
 
-SRC = main.cpp Zombie.cpp
+SRC = main.cpp Zombie.cpp zombieHorde.cpp
 
 HEADER = Zombie.hpp
 
