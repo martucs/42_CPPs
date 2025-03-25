@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:21:05 by martalop          #+#    #+#             */
-/*   Updated: 2025/03/17 22:59:04 by martalop         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:29:58 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ int	copyAndModFile(std::string filename, std::string s1, std::string s2)
 	std::ofstream	newFile;
 	std::string		line;
 	int				res;
-	std::string		replace;
 	std::string		new_filename;
 
-	replace = ".replace";
 	if (s1.empty())
 	{
 		std::cout << "Error: first string is empty" << std::endl;
@@ -32,11 +30,12 @@ int	copyAndModFile(std::string filename, std::string s1, std::string s2)
 	inFile.open(filename.c_str(), std::fstream::in);
 	if (inFile.fail())
 	{
-		std::cout << "error opening file" << std::endl;
+		std::cout << "Error: failed to open file" << std::endl;
 		return (0);
 	}
-	new_filename = filename + replace;
+	new_filename = filename + ".replace";
 	newFile.open(new_filename.c_str());
+	
 	std::getline(inFile, line);
 	if (inFile.eof())
 	{
