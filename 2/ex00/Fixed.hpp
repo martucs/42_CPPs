@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:48:38 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/03 20:31:01 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:35:39 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Fixed
 		void operator=(const Fixed&);
 		~Fixed();
 
-		int	getRawBits( void ); //const
+		int	getRawBits( void ) const;
 		void	setRawBits( int const );
 	
 	private:
