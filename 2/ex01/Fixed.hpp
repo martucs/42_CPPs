@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:48:38 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/07 19:17:24 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:33:38 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Fixed
 		Fixed( const Fixed& );
 		~Fixed();
 		
-		void	operator=(const Fixed&);
+		Fixed&	operator=(const Fixed&);
 		
 		int		toInt( void ) const;
 		float	toFloat ( void ) const;

@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:53:11 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/07 19:32:01 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:50:51 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ Fixed::Fixed(const int value )
 
 Fixed::Fixed( const float value )
 {
-//	float	tmp;
-
 	std::cout << "float constructor says hi" << std::endl;
-	printf("\nfloat value = %f\n", value);
-	_value = value * (1 << 8);
-	printf("\nint value = %d\n", _value);
+	_value = roundf(value * (1 << _fractionalNum));
 }
+// 'roundf' redondea el ultimo decimal a la alta
+// es necesario porque si no lo ponemos, al igualar _value(int) a un resultado decimal, redondea el numero a la baja
+// por tanto, perdemos parte de la info del decimal
 
 Fixed::Fixed(const Fixed &original)
 {
 	std::cout << "copy constructor called" << std::endl;
-	_value = original._value;
+	*this = original;
 }
 
 Fixed::~Fixed()
@@ -50,8 +49,9 @@ Fixed::~Fixed()
 // MEMBER FUNCTIONS 
 float	Fixed::toFloat(void) const
 {
-	return (_value / (1 << _fractionalNum));
+	return ((float)_value / ((float)(1 << _fractionalNum)));
 }
+// aqui tambien es necesario castear a float porque si no, perdemos los decimales
 
 int	Fixed::toInt(void) const
 {
@@ -66,13 +66,20 @@ int	Fixed::getRawBits(void) const
 
 void	Fixed::setRawBits(int const raw)
 {
-	(void)raw;
 	_value = raw;
 }
 
 // OPERATORS 
-void	Fixed::operator=(const Fixed &var)
+Fixed&	Fixed::operator=(const Fixed &var)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
-	this->setRawBits(var._value);
+	if (this != &var)
+		this->setRawBits(var._value);
+	return (*this);
+}
+
+std::ostream&	operator<<(std::ostream &os, const Fixed &var)
+{
+	os << var.toFloat();
+	return (os);
 }
