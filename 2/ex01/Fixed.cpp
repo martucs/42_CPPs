@@ -6,40 +6,40 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:53:11 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/06 22:32:31 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:32:01 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
-
+#include <cstdio>
 
 // CONSTRUCTORS & DESTRUCTOR
 Fixed::Fixed()
 {
 	std::cout << "default constructor says hi" << std::endl;
 	_value = 0;
-	_fractionalNum = 8;
 }
 
 Fixed::Fixed(const int value )
 {
 	std::cout << "int constructor says hi" << std::endl;
-	_value = value;
-	_fractionalNum = 8;
+	_value = value << _fractionalNum;
 }
 
 Fixed::Fixed( const float value )
 {
+//	float	tmp;
+
 	std::cout << "float constructor says hi" << std::endl;
-	_value = (int)value;
-	_fractionalNum = 8;
+	printf("\nfloat value = %f\n", value);
+	_value = value * (1 << 8);
+	printf("\nint value = %d\n", _value);
 }
 
 Fixed::Fixed(const Fixed &original)
 {
 	std::cout << "copy constructor called" << std::endl;
 	_value = original._value;
-	_fractionalNum = 8;
 }
 
 Fixed::~Fixed()
@@ -50,12 +50,12 @@ Fixed::~Fixed()
 // MEMBER FUNCTIONS 
 float	Fixed::toFloat(void) const
 {
-	return (_value);
+	return (_value / (1 << _fractionalNum));
 }
 
 int	Fixed::toInt(void) const
 {
-	return (_value);
+	return (_value >> _fractionalNum);
 }
 
 // GETTER & SETTER
@@ -71,7 +71,6 @@ void	Fixed::setRawBits(int const raw)
 }
 
 // OPERATORS 
-
 void	Fixed::operator=(const Fixed &var)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
