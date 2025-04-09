@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:48:38 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/08 20:35:57 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:54:35 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,31 @@ class Fixed
 		//assignment
 		Fixed&	operator=(const Fixed&);
 		//comparison
-		bool	operator>(const Fixed&);
-		bool	operator<(const Fixed&);
-		bool	operator>=(const Fixed&);
-		bool	operator<=(const Fixed&);
-		bool	operator==(const Fixed&);
-		bool	operator!=(const Fixed&);
+		bool	operator>(const Fixed&) const;
+		bool	operator<(const Fixed&) const;
+		bool	operator>=(const Fixed&) const;
+		bool	operator<=(const Fixed&) const;
+		bool	operator==(const Fixed&) const;
+		bool	operator!=(const Fixed&) const;
 		//arithmetic
-/*		Fixed&	operator+(const Fixed&);
-		Fixed&	operator-(const Fixed&);
-		Fixed&	operator*(const Fixed&);
-		Fixed&	operator/(const Fixed&);
+		Fixed	operator+(const Fixed&) const; 
+		Fixed	operator-(const Fixed&) const;
+		Fixed	operator*(const Fixed&) const;
+		Fixed	operator/(const Fixed&) const;
 		//increment/decrement
-		Fixed&	operator++(const Fixed&);
-		Fixed&	operator--(const Fixed&);
-		Fixed&	operator++(const Fixed&);
-		Fixed&	operator--(const Fixed&);*/
+		Fixed	operator++(void);
+		Fixed	operator--(void);
+		Fixed	operator++(int);
+		Fixed	operator--(int);
 		
-		int		toInt( void ) const;
-		float	toFloat ( void ) const;
-		int		getRawBits( void ) const;
-		void	setRawBits( int const );
-		Fixed&	min( Fixed&, Fixed& );
-	//	Fixed&	min( const Fixed&, const Fixed& );
-		Fixed&	max( Fixed&, Fixed& );
-	//	Fixed&	max( const Fixed&, const Fixed& );
+		int					toInt( void ) const;
+		float				toFloat ( void ) const;
+		int					getRawBits( void ) const;
+		void				setRawBits( int const );
+		static Fixed&		min( Fixed&, Fixed& );
+		static Fixed&		max( Fixed&, Fixed& );
+		static const Fixed&	min( const Fixed&, const Fixed& );
+		static const Fixed&	max( const Fixed&, const Fixed& );
 	
 	private:
 		int					_value;

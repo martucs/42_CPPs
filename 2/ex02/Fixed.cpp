@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:53:11 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/08 20:36:14 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:55:06 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ Fixed&	Fixed::min(Fixed &one, Fixed &two)
 	return (two);
 }
 
-/*Fixed&	Fixed::min(const Fixed &one, const Fixed &two)
+const Fixed&	Fixed::min(const Fixed &one, const Fixed &two)
 {
 	if (one < two)
 		return (one);
 	return (two);
-}*/
+}
 
 Fixed&	Fixed::max(Fixed &one, Fixed &two)
 {
@@ -70,12 +70,12 @@ Fixed&	Fixed::max(Fixed &one, Fixed &two)
 	return (two);
 }
 
-/*Fixed&	Fixed::max(const Fixed &one, const Fixed &two)
+const Fixed&	Fixed::max(const Fixed &one, const Fixed &two)
 {
-	if (one < two)
+	if (one > two)
 		return (one);
 	return (two);
-}*/
+}
 
 // GETTER & SETTER
 int	Fixed::getRawBits(void) const
@@ -96,46 +96,108 @@ Fixed&	Fixed::operator=(const Fixed &var)
 	return (*this);
 }
 
-bool	Fixed::operator>(const Fixed &var)
+bool	Fixed::operator>(const Fixed &var) const
 {
 	if (_value > var.getRawBits())
 		return (true);
 	return (false);
 }
 
-bool	Fixed::operator<(const Fixed &var)
+bool	Fixed::operator<(const Fixed &var) const
 {
 	if (_value < var.getRawBits())
 		return (true);
 	return (false);
 }
 
-bool	Fixed::operator>=(const Fixed &var)
+bool	Fixed::operator>=(const Fixed &var) const
 {
 	if (_value > var.getRawBits() || _value == var.getRawBits())
 		return (true);
 	return (false);
 }
 
-bool	Fixed::operator<=(const Fixed &var)
+bool	Fixed::operator<=(const Fixed &var) const
 {
 	if (_value < var.getRawBits() || _value == var.getRawBits())
 		return (true);
 	return (false);
 }
 
-bool	Fixed::operator==(const Fixed &var)
+bool	Fixed::operator==(const Fixed &var) const
 {
 	if (_value == var.getRawBits())
 		return (true);
 	return (false);
 }
 
-bool	Fixed::operator!=(const Fixed &var)
+bool	Fixed::operator!=(const Fixed &var) const
 {
 	if (_value != var.getRawBits())
 		return (true);
 	return (false);
+}
+
+Fixed	Fixed::operator+(const Fixed &var) const
+{
+	Fixed	tmp;
+	tmp._value = _value + var._value;
+	return (tmp);
+}
+
+Fixed	Fixed::operator-(const Fixed &var) const
+{
+	Fixed	tmp;
+	tmp._value = _value - var._value;
+	return (tmp);
+}
+
+Fixed	Fixed::operator*(const Fixed &var) const
+{
+	Fixed	tmp;
+	float	tmpfloat;
+	tmpfloat = this->toFloat() * var.toFloat();
+	tmp._value = roundf(tmpfloat * (1 << _fractionalNum));
+	return (tmp);
+}
+
+Fixed	Fixed::operator/(const Fixed &var) const
+{
+	Fixed	tmp;
+	tmp._value = _value / var._value;
+	return (tmp);
+}
+
+Fixed	Fixed::operator++(void)
+{
+	Fixed	tmp;
+
+	tmp._value = ++_value;
+	return (tmp);
+}
+
+Fixed	Fixed::operator--(void)
+{
+	Fixed	tmp;
+
+	tmp._value = --_value;
+	return (tmp);
+}
+
+Fixed	Fixed::operator++(int)
+{
+	Fixed	tmp;
+
+	tmp._value = _value++;
+	return (tmp);
+}
+
+Fixed	Fixed::operator--(int)
+{
+	Fixed	tmp;
+
+	tmp._value = _value--;
+	return (tmp);
 }
 
 std::ostream&	operator<<(std::ostream &os, const Fixed &var)
