@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:48:38 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/09 14:05:09 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:45:26 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ class Fixed
 	public:
 		Fixed();
 		Fixed(const Fixed&);
+		~Fixed();
 		
 		Fixed&	operator=(const Fixed&);
-		~Fixed();
 
-		int	getRawBits( void ) const;
+		int		getRawBits( void ) const;
 		void	setRawBits( int const );
 	
 	private:

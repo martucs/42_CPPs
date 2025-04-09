@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:53:11 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/09 14:06:36 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:45:00 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	Fixed::getRawBits(void) const
 
 void	Fixed::setRawBits(int const raw)
 {
-	(void)raw;
 	_value = raw;
 }
 
