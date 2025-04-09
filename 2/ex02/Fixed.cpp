@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:53:11 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/09 15:55:06 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:08:33 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,9 @@ Fixed	Fixed::operator*(const Fixed &var) const
 Fixed	Fixed::operator/(const Fixed &var) const
 {
 	Fixed	tmp;
-	tmp._value = _value / var._value;
+	float	tmpfloat;
+	tmpfloat = this->toFloat() / var.toFloat();
+	tmp._value = roundf(tmpfloat * (1 << _fractionalNum));
 	return (tmp);
 }
 
