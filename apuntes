@@ -13,7 +13,7 @@ aqui se hara una copia porque lo que hay dentro de la funcion siguen siendo igua
 
 - hay que llamar a constuctor y destructor siempre, porque si creamos un objeto de una clase sin destructor de manera local (sin new) puede que haya cosas que no queden bien liberadas, puede que hayan LEAKS. Imagino que no lo vemos al hacer new porque hacemos frees manualmente.
 
-- cuidado con los headers que pongo en los archivos .hpp, porque si pongo innecesarios me va a dar errores de compilación! Puede que vea funciones con el mismo nombre y declaradas en 2 sitios y no sepa cual coger
+- ! cuidado con los headers que pongo en los archivos .hpp, porque si pongo innecesarios me va a dar errores de compilación! Puede que vea funciones con el mismo nombre y declaradas en 2 sitios y no sepa cual coger
 
 - cuando accedemos a alguna funcion o variable con '.' es que accedemos a ella a través de un objeto. Si uso std::cin.getline(), la funcion 'getline' es una funcion que esta dentro del objeto cin (de tipo istream), que a la vez tambien está dentro de std  -> std::istream::getline
 
@@ -62,3 +62,11 @@ Tenemos que hacer esto:
 	HumanA::HumanA(std::string name, Weapon &weapon):_weapon(weapon) 
 Lo que hay detras de los ':' nos indica que la variable 'weapon' va a ser una referencia de la variable '_weapon' dentro del objeto HumanA.
 
+INHERITANCE:
+
+- si variables de la clase BASE estan declaradas como:
+	* public: todos objetos de esa clase + derivadas + otras pueden acceder
+	* protected: los objetos de esa clase + clases derivadas pueden acceder
+	* private: solo los objetos de esa clase pueden acceder
+
+- al decidir entre poner 'private' o 'protected' en la clase base, hay que pensar en el uso que van a tener las variables. Si las van a necesitar o querer modificar sus clases derivadas, mejor establecerlas directamente como protected, para no tener que hacer getters y setters.
