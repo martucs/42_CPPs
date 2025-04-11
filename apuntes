@@ -70,3 +70,24 @@ INHERITANCE:
 	* private: solo los objetos de esa clase pueden acceder
 
 - al decidir entre poner 'private' o 'protected' en la clase base, hay que pensar en el uso que van a tener las variables. Si las van a necesitar o querer modificar sus clases derivadas, mejor establecerlas directamente como protected, para no tener que hacer getters y setters.
+
+CONST:
+
+Es necesario poner const en muchas funciones en las que obviamente no se modifica el contenido del objeto que llama a esa funcion porque si el objeto que llama a esa funcion ha sido creado como const e intenta entrar en una funcion que no es const, no nos va a dejar compilar. 
+Ej : 		
+tengo la clase ClapTrap
+{
+	public:
+		int			getHitPoints( void );
+}
+Si hago:
+	ClapTrap const Marta();
+y luego:
+	Marta.getHitPoints();
+NO voy a poder compilar porque el objeto Marta es const, pero la funcion NO es const. Hay que declararla así:
+		int			getHitPoints( void ) const;
+
+Tambien puede pasar con el constructor de copia por ejemplo, que recibe una referencia const de el objeto que va a copiar.(	ClapTrap( const ClapTrap& )). 
+El mensaje de error que me daba el compilador con este tipo de problemas era este:
+" error: passing ‘const ScavTrap’ as ‘this’ argument discards qualifiers [-fpermissive]
+   67 |                 std::cout << var.getName();"
