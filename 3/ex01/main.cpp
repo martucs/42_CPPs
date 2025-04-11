@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:57:57 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/10 17:56:01 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:32:53 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,16 @@
 
 int	main()
 {
-	ClapTrap	Marta("Marta");
+	ScavTrap	Lara("Lara");
 
+	Lara.printStatus();
+
+	Lara.attack("someone");
+	Lara.takeDamage(10);
+	Lara.beRepaired(2);	
+
+	Lara.guardGate();
+	
+	Lara.printStatus();
 	return (0);
 }

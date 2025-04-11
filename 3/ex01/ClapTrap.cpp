@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:58:31 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/10 17:55:07 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:19:06 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,41 @@ ClapTrap::~ClapTrap()
 void	ClapTrap::setName(std::string name)
 {
 	_name = name;
+}
+
+void	ClapTrap::setHitPoints(unsigned int amount)
+{
+	_hitPoints = amount;
+}
+
+void	ClapTrap::setEnergyPoints(unsigned int amount)
+{
+	_energyPoints = amount;
+}
+
+void	ClapTrap::setAttackDamage(unsigned int amount)
+{
+	_attackDamage = amount;
+}
+
+std::string	ClapTrap::getName(void) const
+{
+	return (_name);
+}
+
+int	ClapTrap::getHitPoints(void) const
+{
+	return (_hitPoints);
+}
+
+int	ClapTrap::getEnergyPoints(void) const
+{
+	return (_energyPoints);
+}
+
+int	ClapTrap::getAttackDamage(void) const
+{
+	return (_attackDamage);
 }
 
 void	ClapTrap::printStatus(void)

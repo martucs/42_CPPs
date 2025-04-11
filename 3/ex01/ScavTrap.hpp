@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:41:42 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/10 20:53:34 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/11 20:31:59 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class ScavTrap : public ClapTrap
 		~ScavTrap();
 		
 		ScavTrap&	operator=( const ScavTrap& );
-		
+
 		void	attack( const std::string& target );
 		void	guardGate( void );
 
