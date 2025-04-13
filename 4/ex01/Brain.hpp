@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:50:36 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/13 14:55:41 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:21:48 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ class	Brain
 		
 		Brain&	operator=( const Brain& );
 
-		std::string	ideas[100];
+		std::string	getIdea(int	index) const;
+		void		setIdea(std::string str, int index);
+
+	protected:
+		std::string	_ideas[100];
 
 };
 

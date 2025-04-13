@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:57:04 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/13 20:08:16 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:24:42 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 // COPY OPERATOR TEST
 /*int main()
 {
-	Cat* cat1 = new Cat();
-	Cat* cat2 = new Cat();
-	
+	Cat*	cat1 = new Cat();
+	Cat*	cat2 = new Cat();
+
 	std::cout << std::endl;
-	cat1->getBrain()->ideas[0] = "my idea is Brand-new!";
-	std::cout << "cat1 idea[0] = " << cat1->getBrain()->ideas[0] << std::endl;
+	cat1->getBrain()->setIdea("this idea is brand-new!", 0);
+	std::cout << "cat1 idea[0] = " << cat1->getBrain()->getIdea(0) << std::endl;
 	std::cout << std::endl;
 
 	*cat2 = *cat1;
@@ -31,7 +31,7 @@
 	delete cat1;
 	
 	std::cout << std::endl;
-	std::cout << "cat2 idea[0] = " << cat2->getBrain()->ideas[0] << std::endl;
+	std::cout << "cat2 idea[0] = " << cat2->getBrain()->getIdea(0) << std::endl;
 	std::cout << std::endl;
 	
 	delete cat2;
