@@ -2,7 +2,7 @@ NAME = brain
 
 CC = c++
 
-CFLAGS = -std=c++98 -g -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -std=c++98 -g -Wall -Werror -Wextra #-fsanitize=address
 
 SRC = main.cpp Animal.cpp WrongAnimal.cpp Cat.cpp WrongCat.cpp Dog.cpp Brain.cpp
 

@@ -2,7 +2,7 @@ NAME = Serena
 
 CC = c++
 
-CFLAGS = -std=c++98 -g -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -std=c++98 -g -Wall -Werror -Wextra #-fsanitize=address
 
 SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
 
