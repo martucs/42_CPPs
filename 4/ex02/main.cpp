@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:57:04 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/14 15:20:17 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:43:14 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	main()
 	kitcat.makeSound();
 	dogg.makeSound();
 	cat2->makeSound();
+	std::cout << "Cat -> brain, idea[0] = " << kitcat.getBrain()->getIdea(0) << std::endl;
+//	std::cout << "Animal Cat ptr -> brain, idea[0] = " << cat2->getBrain()->getIdea(0) << std::endl;
 	std::cout << std::endl;
 	
 	delete cat2;	
