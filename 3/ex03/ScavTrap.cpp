@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:41:00 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/11 20:31:00 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:58:09 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ ScavTrap::~ScavTrap()
 
 void	ScavTrap::attack(const std::string &target)
 {
+	std::cout << "Scavthis-> attackDamage = " << &this->_attackDamage << std::endl;
 	if (_energyPoints != 0 && _hitPoints > 0)
 	{
 		std::cout << "ScavTrap " << _name << " attacks " << target
-		   	<< ", causing " << _attackDamage << " points of damage!" << std::endl;
-		_energyPoints -= 1;
+		   	<< ", causing " << getAttackDamage() << " points of damage!" << std::endl;
+		this->_energyPoints -= 1;
 	}
-	else if (_hitPoints <= 0)
+	else if (this->_hitPoints <= 0)
 		std::cout << "ScavTrap " << _name << " cannot attack, it ran out of hit points!" << std::endl;
 	else
 		std::cout << "ScavTrap " << _name << " cannot attack, it ran out of energy!" << std::endl;

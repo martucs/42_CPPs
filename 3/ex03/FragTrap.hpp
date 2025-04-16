@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:48 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/14 22:31:34 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:28:48 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ class FragTrap : virtual public ClapTrap
 
 		void	attack( const std::string& target );
 		void	highFivesGuys(void);
+	protected:
+		int	_hitPoints;
+		int	_attackDamage;
 };
 
 #endif

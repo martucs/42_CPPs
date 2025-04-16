@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:58:31 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/11 19:19:06 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:38:26 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int	ClapTrap::getAttackDamage(void) const
 
 void	ClapTrap::printStatus(void)
 {
-	std::cout << std::endl << "Claptrap " << _name << " STATUS:" << std::endl;
-	std::cout << "Hit points = " << _hitPoints << std::endl;
-	std::cout << "Energy points = " << _energyPoints << std::endl;
-	std::cout << "Attack damage = " << _attackDamage << std::endl << std::endl;
+	std::cout << std::endl << "Claptrap " << this->_name << " STATUS:" << std::endl;
+	std::cout << "Hit points = " << this->_hitPoints << std::endl;
+	std::cout << "Energy points = " << this->_energyPoints << std::endl;
+	std::cout << "Attack damage = " << this->_attackDamage << std::endl << std::endl;
 }
 
 void	ClapTrap::attack(const std::string &target)

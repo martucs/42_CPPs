@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:27:13 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/14 22:19:05 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:58:27 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ class DiamondTrap: public FragTrap, public ScavTrap
 
 		void	whoAmI(void);
 		void	attack(const std::string& target);
+	//	int		getAttackDamage(void);
 
 	private:
 		std::string	_name;
-
 };
 
 #endif

@@ -2,7 +2,7 @@ NAME = repetitive
 
 CC = c++
 
-CFLAGS = -std=c++98 -g -Wall -Werror -Wextra -Wshadow -Wno-shadow #-fsanitize=address
+CFLAGS = -std=c++98 -g -Wall -Werror -Wextra -Wshadow  #-fsanitize=address
 
 SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 

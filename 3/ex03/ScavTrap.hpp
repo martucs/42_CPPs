@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:41:42 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/14 22:32:30 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:11:29 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <iostream>
 # include <string>
 
-class ScavTrap : virtual public ClapTrap 
+class ScavTrap: virtual public ClapTrap 
 {
 	public:
 		ScavTrap( );

@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:42:45 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/12 19:17:29 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:14:42 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ FragTrap::FragTrap(): ClapTrap()
 {
 	std::cout << "FRAG constructor says hi!" << std::endl;
 	_name = "Fragname";
-	_hitPoints = 100;
-	_energyPoints = 100;
-	_attackDamage = 30;
+	this->_hitPoints = 100;
+	this->_energyPoints = 100;
+	this->_attackDamage = 30;
 }
 
 FragTrap::FragTrap( const FragTrap &var): ClapTrap(var)
