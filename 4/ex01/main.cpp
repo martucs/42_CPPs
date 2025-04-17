@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:57:04 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/13 20:24:42 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:19:21 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "Dog.hpp"
 #include "WrongCat.hpp"
 
-// COPY OPERATOR TEST
+// DEEP COPY TEST
 /*int main()
 {
 	Cat*	cat1 = new Cat();

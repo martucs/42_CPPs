@@ -6,14 +6,14 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:03:00 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/13 20:06:45 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:07:28 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Dog.hpp"
 #include "Brain.hpp"
 
-Dog::Dog(): Animal()
+Dog::Dog()
 {
 	std::cout << "Dog constructor called" << std::endl;
 	_type = "Dog";

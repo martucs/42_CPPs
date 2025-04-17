@@ -6,14 +6,14 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:03:00 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/13 20:06:36 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:09:13 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 #include "Brain.hpp"
 
-Cat::Cat(): Animal()
+Cat::Cat()
 {
 	std::cout << "Cat constructor called" << std::endl;
 	_type = "Cat";
