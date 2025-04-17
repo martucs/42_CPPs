@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:53:10 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/13 20:21:40 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:36:20 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,18 @@ Brain::~Brain()
 
 void	Brain::setIdea(std::string str, int index)
 {
-	_ideas[index] = str;
+	if (index >= 0 && index <= 99)
+		_ideas[index] = str;
+	else
+		std::cerr << "oops! non valid idea number sent to: setIdea()" << std::endl;
 }
 
 std::string	Brain::getIdea(int index) const
 {
-	return (_ideas[index]);
+	if (index >= 0 && index <= 99)
+		return (_ideas[index]);
+	else
+		return ("oops! non valid idea number");
 }
 
 Brain&	Brain::operator=(const Brain& var)
