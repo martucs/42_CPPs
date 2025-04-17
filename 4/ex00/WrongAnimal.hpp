@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 21:33:59 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/12 22:37:25 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:35:21 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class	WrongAnimal
 		
 		WrongAnimal&	operator=( const WrongAnimal& );
 
-		void	makeSound(void) const;
+		void			makeSound(void) const;
 		std::string		getType(void) const;
 
 	protected:
