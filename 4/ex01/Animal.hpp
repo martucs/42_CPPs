@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:50:36 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/13 18:05:23 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:41:42 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class	Animal
 		Animal();
 		Animal( std::string );
 		Animal( const Animal& );
-		virtual ~Animal(); // es necesario hacerla virtual prq makesound() tmb lo es y por otras razones
+		virtual ~Animal(); 
 		
 		Animal&	operator=( const Animal& );
 
