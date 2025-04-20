@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:50:36 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/17 17:31:54 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:51:13 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,16 @@ class	Animal
 		std::string	_type;
 };
 // hacer makeSound() virtual nos obliga a ponerlo
-// en el destructor también
+// en el destructor también (por -Werror)
+// es como medida de seguridad porque cuando tengamos memoria
+// dinamica en una clase derivada de Animal,
+// queremos que llame tambien al destructor de
+// esa clase derivada y luego al nuestro,
+// no solo al destructor de Animal
+//
+// lo testeamos con Okto quitando las flags
+// y solo se llamaba al destructor de Animal
+// cuando destruiamos un objeto Cat
 
 #endif
 
