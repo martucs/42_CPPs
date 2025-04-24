@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:06:33 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 14:59:06 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:40:30 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,14 @@ class	AForm
 		int				getExecGrade(void) const;
 		void			setSignStatus(bool);
 
-		virtual void			beSigned(Bureaucrat) = 0;
+		virtual void	beSigned(Bureaucrat&) = 0;
+		virtual void	execute(Bureaucrat const& executor) const = 0;
 		
+		class FormNotSignedException : public std::exception
+		{
+			public:
+			virtual const char* what() const throw();
+		};		
 		class GradeTooLowException : public std::exception
 		{
 			public:

@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:39:41 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 15:14:25 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:44:01 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ class	RobotomyRequestForm: public AForm
 		
 		RobotomyRequestForm&	operator=( const RobotomyRequestForm& );
 		
-		virtual void	beSigned(Bureaucrat);
+		virtual void	beSigned(Bureaucrat&);
+		std::string		getTarget(void);
+
+	private:
+		std::string	_target;
 };
 
 #endif

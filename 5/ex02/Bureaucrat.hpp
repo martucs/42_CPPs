@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:50:36 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 14:27:52 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:20:37 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ class	Bureaucrat
 		
 		Bureaucrat&	operator=( const Bureaucrat& );
 
-		std::string		getName(void) const;
-		int				getGrade(void) const;
-		void			incrementGrade(void);
-		void			decrementGrade(void);
-		void			signForm(AForm&);
+		std::string	getName(void) const;
+		int			getGrade(void) const;
+		void		incrementGrade(void);
+		void		decrementGrade(void);
+		void		signForm(AForm&);
+		void		executeForm(AForm const& form) const;
 
 		class GradeTooLowException : public std::exception
 		{

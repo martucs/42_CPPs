@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:51:47 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 14:28:15 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:31:41 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ void	Bureaucrat::decrementGrade(void)
 		throw GradeTooLowException();
 	_grade += 1;
 	std::cout << "*No issues decrementing grade*" << std::endl;
+}
+
+void	Bureaucrat::executeForm(AForm const& form) const
+{
+	try 
+	{
+		form.execute(*this);
+		std::cout << std::endl << "\e[1m" << _name 
+				<< " executed \"" << form.getName() << "\" AForm \e[0m" << std::endl;
+	}
+	catch ( std::exception &e)
+	{
+		std::cout << std::endl << "\e[1m" << _name 
+			<< " couldn’t execute \"" << form.getName() 
+			<< "\" AForm because -> " << e.what() << "\e[0m" << std::endl;
+	}
 }
 
 void	Bureaucrat::signForm(AForm &form)

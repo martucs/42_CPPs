@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:18:51 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 15:22:37 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:40:48 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	AForm::setSignStatus(bool status)
 	_signStatus = status;
 }
 
-void	AForm::beSigned(Bureaucrat var)
+void	AForm::beSigned(Bureaucrat &var)
 {
 	if (var.getGrade() > _requiredSignGrade)
 		throw GradeTooLowException();
@@ -89,6 +89,11 @@ std::ostream&	operator<<(std::ostream& os, const AForm& var)
 	os << "- Requiered signature grade: " << var.getSignGrade() << std::endl;
 	os << "- Requiered execution grade: " << var.getExecGrade() << std::endl;
 	return (os);
+}
+
+const char	*AForm::FormNotSignedException::what(void) const throw()
+{
+	return ("Custom FORM exception: Attempt to execute when form hasn't been signed!");
 }
 
 const char	*AForm::GradeTooHighException::what(void) const throw()

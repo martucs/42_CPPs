@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:41:20 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 15:14:35 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:45:15 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ class	ShrubberyCreationForm: public AForm
 		
 		ShrubberyCreationForm&	operator=( const ShrubberyCreationForm& );
 		
-		virtual void	beSigned(Bureaucrat);
+		virtual void	beSigned(Bureaucrat&);
+		std::string		getTarget(void);
+
+	private:
+		std::string	_target;
 };
 
 #endif

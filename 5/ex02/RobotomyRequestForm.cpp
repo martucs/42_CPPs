@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:47:17 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 16:14:44 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:44:27 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ RobotomyRequestForm::~RobotomyRequestForm()
 	std::cout << "Robotomy Request Form destructor called" << std::endl;
 }
 
-void	RobotomyRequestForm::beSigned(Bureaucrat var)
+std::string	RobotomyRequestForm::getTarget(void)
+{
+	return (_target);
+}
+
+void	RobotomyRequestForm::beSigned(Bureaucrat &var)
 {
 	if (var.getGrade() > getSignGrade())
 		throw GradeTooLowException();
