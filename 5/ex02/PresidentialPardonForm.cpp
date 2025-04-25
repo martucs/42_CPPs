@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:44:44 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 23:00:15 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:27:21 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ PresidentialPardonForm::PresidentialPardonForm(): AForm("Presidential Pardon", 2
 PresidentialPardonForm::PresidentialPardonForm(std::string target): AForm("Presidential Pardon", 25, 5)
 {
 	std::cout << "Presidential Pardon Form constructor called" << std::endl;
-	setSignStatus(false);
 	_target = target;
 }
 
@@ -50,11 +49,11 @@ void	PresidentialPardonForm::beSigned(Bureaucrat& var)
 
 void	PresidentialPardonForm::execute(Bureaucrat const& executor) const
 {
-	(void)executor;
 	if (!getSignStatus())
 		throw FormNotSignedException(); 
 	if (executor.getGrade() > this->getExecGrade()) 
 		throw GradeTooLowException();
+	std::cout << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 	std::cout << "\e[1m" << getName() << " form was successfully executed by " << executor.getName() << "\e[0m" << std::endl;
 }	
 

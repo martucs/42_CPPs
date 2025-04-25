@@ -6,11 +6,12 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:49:09 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 21:45:26 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:09:40 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
+#include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery AForm", 145, 137)
 {
@@ -21,7 +22,6 @@ ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery AForm", 145, 13
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target): AForm("Shrubbery AForm", 145, 137)
 {
 	std::cout << "Shrubbery Creation Form constructor called" << std::endl;
-	setSignStatus(false);
 	_target = target;
 }
 
@@ -45,7 +45,61 @@ void	ShrubberyCreationForm::beSigned(Bureaucrat &var)
 	if (var.getGrade() > getSignGrade())
 		throw GradeTooLowException();
 	this->setSignStatus(true);
+	std::cout << "\e[1m" << getName() << " form was successfully signed by " << var.getName() << "\e[0m" << std::endl;
 }
+
+void	drawTrees(std::ofstream &file)
+{
+	file << std::endl;
+	file << "                  %%%,%%%%%%%          \n"
+		<< "                   ,'%% \\-*%%%%%%%    \n"
+		<< "             ;%%%%%*%   _%%%%\"        \n"
+	   	<< "              ,%%%       \(_.*%%%%.    \n"
+	   	<< "              % *%%, ,%%%%*\(    '     \n"
+	   	<< "            %^     ,*%%% )|,%%*%,_     \n"
+	   	<< "                 *%    \\ / #).-\"*%%* \n"
+	   	<< "                     _.) ,/ *%,        \n"
+	   	<< "             _________/)#(_____________\n";
+	file << std::endl << std::endl;
+	file << "               '.,\n" 
+		<< "                 'b      *\n" 
+		<< "                  '$    #.\n" 
+		<< "                   $:   #:\n" 
+		<< "                   *#  @):\n" 
+		<< "                   :@,@):   ,.**:'\n" 
+		<< "         ,         :@@*: ..**'\n" 
+		<< "           '#o.    .:(@'.@*\"'\n" 
+		<< "              'bq,..:,@@*'   ,*\n" 
+		<< "              ,p$q8,:@)'  .p*'\n" 
+		<< "             '    '@@Pp@@*'\n" 
+		<< "                   Y7'.'\n" 
+		<< "                  :@):.\n" 
+		<< "                 .:@:'.\n" 
+		<< "               .::(@:.\n";
+	file << std::endl;
+
+}
+
+void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const
+{
+	std::ofstream	file;
+	std::string		fileName;
+
+	if (!getSignStatus())
+		throw FormNotSignedException(); 
+	if (executor.getGrade() > this->getExecGrade()) 
+		throw GradeTooLowException();
+	fileName = _target + "_shrubbery";
+	file.open(fileName.c_str());
+	if (!file.is_open())
+	{
+		std::cerr << "Error: could not open file -> " << fileName << std::endl;
+		return ;
+	}
+	drawTrees(file);
+	file.close();
+	std::cout << "\e[1m" << getName() << " form was successfully executed by " << executor.getName() << "\e[0m" << std::endl;
+}	
 
 ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationForm& var)
 {

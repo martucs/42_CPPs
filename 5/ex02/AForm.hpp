@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:06:33 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 21:40:30 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:50:33 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class	AForm
 		AForm();
 		AForm( const std::string, int signGrade, int execGrade);
 		AForm( const AForm& );
-		~AForm();
+		virtual ~AForm();
 		
 		AForm&	operator=( const AForm& );
 

@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 20:50:20 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 23:02:11 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:47:16 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	main()
 	try
 	{
 		Bureaucrat	C("C", 5);
-		PresidentialPardonForm	h("Mta");
-		//RobotomyRequestForm	h("Marta");
-		//ShrubberyCreationForm	h("mem");
+		//PresidentialPardonForm	h("Marta");
+		RobotomyRequestForm	h("Marta");
+		//ShrubberyCreationForm	h("Marta");
 
 		std::cout << std::endl;
 		std::cout << C;
@@ -32,6 +32,9 @@ int	main()
 		h.beSigned(C);
 		try
 		{
+			h.execute(C);
+			h.execute(C);
+			h.execute(C);
 			h.execute(C);
 		}
 		catch (std::exception &e) 

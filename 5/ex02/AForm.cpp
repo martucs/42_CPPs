@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:18:51 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 21:40:48 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:34:00 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ AForm::AForm(): _name("Random AForm"), _requiredSignGrade(150), _requiredExecGra
 	_signStatus = false;
 }
 
-AForm::AForm(const std::string name, int signGrade, int execGrade ): _name(name), _requiredSignGrade(signGrade), _requiredExecGrade(execGrade)
+AForm::AForm(const std::string name, int signGrade, int execGrade ): _name(name),
+																	_requiredSignGrade(signGrade), 
+																	_requiredExecGrade(execGrade)
 {
 	std::cout << "AForm complete constructor called" << std::endl;
 	if (signGrade <= 0 || execGrade <= 0)
@@ -29,7 +31,9 @@ AForm::AForm(const std::string name, int signGrade, int execGrade ): _name(name)
 	std::cout << "*No issues creating AForm " << _name << "*" << std::endl;
 }
 
-AForm::AForm(const AForm& var): _name(var._name), _requiredSignGrade(var._requiredSignGrade), _requiredExecGrade(var._requiredExecGrade)
+AForm::AForm(const AForm& var): _name(var._name),
+								_requiredSignGrade(var._requiredSignGrade), 
+								_requiredExecGrade(var._requiredExecGrade)
 {
 	std::cout << "AForm constructor called" << std::endl;
 	*this = var;
@@ -40,6 +44,7 @@ AForm::~AForm()
 	std::cout << "AForm destructor called" << std::endl;
 }
 
+// GETTERS & SETTERS
 int	AForm::getSignGrade(void) const
 {
 	return (_requiredSignGrade);
@@ -65,13 +70,7 @@ void	AForm::setSignStatus(bool status)
 	_signStatus = status;
 }
 
-void	AForm::beSigned(Bureaucrat &var)
-{
-	if (var.getGrade() > _requiredSignGrade)
-		throw GradeTooLowException();
-	_signStatus = true;
-}
-
+// OPERATORS
 AForm&	AForm::operator=(const AForm& var)
 {
 	if (this != &var)
@@ -81,7 +80,7 @@ AForm&	AForm::operator=(const AForm& var)
 
 std::ostream&	operator<<(std::ostream& os, const AForm& var)
 {
-	os << var.getName() << " AForm:" << std::endl;
+	os << var.getName() << " Form:" << std::endl;
 	if (var.getSignStatus())
 		os << "- Status: signed" << std::endl;
 	else
@@ -91,6 +90,7 @@ std::ostream&	operator<<(std::ostream& os, const AForm& var)
 	return (os);
 }
 
+// EXCEPTIONS
 const char	*AForm::FormNotSignedException::what(void) const throw()
 {
 	return ("Custom FORM exception: Attempt to execute when form hasn't been signed!");
