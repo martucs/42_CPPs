@@ -6,20 +6,20 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:49:09 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/25 15:09:40 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:58:34 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
 #include <fstream>
 
-ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery AForm", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery Creation", 145, 137)
 {
 	std::cout << "Shrubbery Creation Form constructor called" << std::endl;
 	setSignStatus(false);
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target): AForm("Shrubbery AForm", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(std::string target): AForm("Shrubbery Creation", 145, 137)
 {
 	std::cout << "Shrubbery Creation Form constructor called" << std::endl;
 	_target = target;
@@ -38,14 +38,6 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 std::string	ShrubberyCreationForm::getTarget(void)
 {
 	return (_target);
-}
-
-void	ShrubberyCreationForm::beSigned(Bureaucrat &var)
-{
-	if (var.getGrade() > getSignGrade())
-		throw GradeTooLowException();
-	this->setSignStatus(true);
-	std::cout << "\e[1m" << getName() << " form was successfully signed by " << var.getName() << "\e[0m" << std::endl;
 }
 
 void	drawTrees(std::ofstream &file)
@@ -98,7 +90,6 @@ void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const
 	}
 	drawTrees(file);
 	file.close();
-	std::cout << "\e[1m" << getName() << " form was successfully executed by " << executor.getName() << "\e[0m" << std::endl;
 }	
 
 ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationForm& var)

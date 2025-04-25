@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:47:17 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/25 16:03:48 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:57:33 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,18 @@ std::string	RobotomyRequestForm::getTarget(void)
 	return (_target);
 }
 
-void	RobotomyRequestForm::beSigned(Bureaucrat &var)
-{
-	if (var.getGrade() > getSignGrade())
-		throw GradeTooLowException();
-	this->setSignStatus(true);
-	std::cout << "\e[1m" << getName() << " form was successfully signed by " << var.getName() << "\e[0m" << std::endl;
-}
-
 void	RobotomyRequestForm::execute(Bureaucrat const& executor) const
 {
 	if (!getSignStatus())
 		throw FormNotSignedException(); 
 	if (executor.getGrade() > this->getExecGrade()) 
 		throw GradeTooLowException();
-	std::cout << " *** unbearable drilling noises *** " << std::endl;
+	std::cout << std::endl << " *** unbearable drilling noises *** " << std::endl;
 	//srand((unsigned int)time(NULL));
 	if ((rand() / (float)RAND_MAX) < 0.5)
 		std::cout << _target << " has been robotomized successfully " << std::endl;
 	else
 		std::cout << _target << " could not be robotomized :(" << std::endl;
-	std::cout << "\e[1m" << getName() << " form was successfully executed by " << executor.getName() << "\e[0m" << std::endl;
 }	
 
 RobotomyRequestForm&	RobotomyRequestForm::operator=(const RobotomyRequestForm& var)

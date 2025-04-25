@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:37:47 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 21:39:19 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:49:14 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ class	PresidentialPardonForm: public AForm
 		
 		PresidentialPardonForm&	operator=( const PresidentialPardonForm& );
 		
-		virtual void	beSigned(Bureaucrat&);
 		virtual void	execute(Bureaucrat const& executor) const;
 		std::string		getTarget(void);
 

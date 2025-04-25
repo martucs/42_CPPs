@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:44:44 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/25 12:27:21 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:49:28 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,13 @@ std::string	PresidentialPardonForm::getTarget(void)
 	return (_target);
 }
 
-void	PresidentialPardonForm::beSigned(Bureaucrat& var)
-{
-	if (var.getGrade() > getSignGrade())
-		throw GradeTooLowException();
-	this->setSignStatus(true);
-	std::cout << "\e[1m" << getName() << " form was successfully signed by " << var.getName() << "\e[0m" << std::endl;
-}
-
 void	PresidentialPardonForm::execute(Bureaucrat const& executor) const
 {
-	if (!getSignStatus())
+	if (!this->getSignStatus())
 		throw FormNotSignedException(); 
 	if (executor.getGrade() > this->getExecGrade()) 
 		throw GradeTooLowException();
-	std::cout << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
-	std::cout << "\e[1m" << getName() << " form was successfully executed by " << executor.getName() << "\e[0m" << std::endl;
+	std::cout << std::endl <<  _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }	
 
 PresidentialPardonForm&	PresidentialPardonForm::operator=(const PresidentialPardonForm& var)

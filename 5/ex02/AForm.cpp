@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:18:51 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/25 12:34:00 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:58:59 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ AForm::AForm(const AForm& var): _name(var._name),
 AForm::~AForm()
 {
 	std::cout << "AForm destructor called" << std::endl;
+}
+
+// MEMBER FUNCTIONS
+void	AForm::beSigned(Bureaucrat &var)
+{
+	if (var.getGrade() > _requiredSignGrade)
+		throw GradeTooLowException();
+	_signStatus = true;
 }
 
 // GETTERS & SETTERS
@@ -93,16 +101,16 @@ std::ostream&	operator<<(std::ostream& os, const AForm& var)
 // EXCEPTIONS
 const char	*AForm::FormNotSignedException::what(void) const throw()
 {
-	return ("Custom FORM exception: Attempt to execute when form hasn't been signed!");
+	return ("Exception: Attempt to execute when form hasn't been signed!");
 }
 
 const char	*AForm::GradeTooHighException::what(void) const throw()
 {
-	return ("Custom FORM exception: Grade is too high!");
+	return ("Exception: Grade is too high!");
 }
 
 const char	*AForm::GradeTooLowException::what(void) const throw()
 {
-	return ("Custom FORM exception: Grade is too low!");
+	return ("Exception: Grade is too low!");
 }
 

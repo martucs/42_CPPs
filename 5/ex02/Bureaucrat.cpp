@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 19:51:47 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/24 20:31:41 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:59:58 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	Bureaucrat::executeForm(AForm const& form) const
 	{
 		form.execute(*this);
 		std::cout << std::endl << "\e[1m" << _name 
-				<< " executed \"" << form.getName() << "\" AForm \e[0m" << std::endl;
+				<< " executed \"" << form.getName() << "\" form \e[0m" << std::endl;
 	}
 	catch ( std::exception &e)
 	{
 		std::cout << std::endl << "\e[1m" << _name 
 			<< " couldn’t execute \"" << form.getName() 
-			<< "\" AForm because -> " << e.what() << "\e[0m" << std::endl;
+			<< "\" form because -> " << "\e[0m" << e.what() << std::endl;
 	}
 }
 
@@ -80,13 +80,13 @@ void	Bureaucrat::signForm(AForm &form)
 	{
 		form.beSigned(*this);
 		std::cout << std::endl << "\e[1m" << _name 
-				<< " signed \"" << form.getName() << "\" AForm \e[0m" << std::endl;
+				<< " signed \"" << form.getName() << "\" form \e[0m" << std::endl;
 	}
 	catch ( AForm::GradeTooLowException &e)
 	{
 		std::cout << std::endl << "\e[1m" << _name 
 			<< " couldn’t sign \"" << form.getName() 
-			<< "\" AForm because -> " << e.what() << "\e[0m" << std::endl;
+			<< "\" form because -> " << "\e[0m" << e.what() << std::endl;
 	}
 }
 
