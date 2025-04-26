@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:49:09 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/25 19:58:34 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/26 20:50:48 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const
 	fileName = _target + "_shrubbery";
 	file.open(fileName.c_str());
 	if (!file.is_open())
-	{
-		std::cerr << "Error: could not open file -> " << fileName << std::endl;
-		return ;
-	}
+        throw(std::runtime_error(std::string("Failed to open file: ") + _target + "_shrubbery"));
 	drawTrees(file);
 	file.close();
 }	
