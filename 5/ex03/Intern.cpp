@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:05:15 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/26 20:18:12 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/26 20:34:59 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ AForm	*Intern::makeForm(const std::string name, const std::string target)
 	while (i < 3)
 	{
 		if (name == formNames[i])
+		{
+			std::cout << "\e[1mIntern creates " << name << "\e[0m" << std::endl;
 			form = (this->*allFormsPtr[i])(target);
+		}
 		i++;
 	}
 	if (!form)

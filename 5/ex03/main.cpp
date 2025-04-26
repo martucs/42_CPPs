@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 20:50:20 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/26 20:17:08 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/26 20:38:16 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	main()
 {
 	try
 	{
-		Bureaucrat	E("E", 2);
+		Bureaucrat	E("E", 14);
 		Intern		randomdude;
 		AForm		*form;
 		
 		std::cout << std::endl;
-		form = randomdude.makeForm("Presidential Pardon", "Marta");
+		form = randomdude.makeForm("Shrubbery Creation", "Marta");
 		std::cout << std::endl;
 		
 		std::cout << E << std::endl;
