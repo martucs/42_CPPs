@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:05:15 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/26 20:34:59 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/27 20:19:41 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ AForm	*Intern::makeForm(const std::string name, const std::string target)
 
 Intern&	Intern::operator=(const Intern& var)
 {
-	(void)var;
+	if (this != &var)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			this->formNames[i] = var.formNames[i];
+			this->allFormsPtr[i] = var.allFormsPtr[i];
+		}
+	}
 	return (*this);
 }
 
