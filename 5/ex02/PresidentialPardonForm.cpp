@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:44:44 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/25 19:49:28 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:53:38 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ PresidentialPardonForm::PresidentialPardonForm(): AForm("Presidential Pardon", 2
 {
 	std::cout << "Presidential Pardon Form constructor called" << std::endl;
 	setSignStatus(false);
+	_target = "Random target";
 }
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target): AForm("Presidential Pardon", 25, 5)
@@ -27,11 +28,17 @@ PresidentialPardonForm::PresidentialPardonForm(std::string target): AForm("Presi
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& var): AForm(var)
 {
 	std::cout << "Presidential Pardon copy constructor called" << std::endl;
+	*this = var;
 }
 
 PresidentialPardonForm::~PresidentialPardonForm()
 {
 	std::cout << "Presidential Pardon destructor called" << std::endl;
+}
+
+void	PresidentialPardonForm::setTarget(const std::string target)
+{
+	_target = target;
 }
 
 std::string	PresidentialPardonForm::getTarget(void)
@@ -54,6 +61,7 @@ PresidentialPardonForm&	PresidentialPardonForm::operator=(const PresidentialPard
 	if (this != &var)
 	{
 		setSignStatus(var.getSignStatus());
+		_target = var._target;
 	}
 	return (*this);
 }

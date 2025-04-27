@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:49:09 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/26 20:51:41 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/27 20:01:10 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery Creation", 145,
 {
 	std::cout << "Shrubbery Creation Form constructor called" << std::endl;
 	setSignStatus(false);
+	_target = "Random target";
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target): AForm("Shrubbery Creation", 145, 137)
@@ -28,11 +29,17 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target): AForm("Shrubbe
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& var): AForm(var)
 {
 	std::cout << "Shrubbery Creation Form copy constructor called" << std::endl;
+	*this = var;
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
 	std::cout << "Shrubbery Creation Form destructor called" << std::endl;
+}
+
+void	ShrubberyCreationForm::setTarget(const std::string target)
+{
+	_target = target;
 }
 
 std::string	ShrubberyCreationForm::getTarget(void)
@@ -95,6 +102,7 @@ ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationF
 	if (this != &var)
 	{
 		setSignStatus(var.getSignStatus());
+		_target = var._target;
 	}
 	return (*this);
 }

@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:41:20 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/25 19:58:18 by martalop         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:59:26 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class	ShrubberyCreationForm: public AForm
 		
 		virtual void	execute(Bureaucrat const& executor) const;
 		std::string		getTarget(void);
+		void			setTarget(const std::string);
 
 	private:
 		std::string	_target;
