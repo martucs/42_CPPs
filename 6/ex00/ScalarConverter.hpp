@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:38:19 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/27 20:39:50 by martalop         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:22:21 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 
 typedef enum e_inputType
 {
-	CHAR,	// 0
-	INT,	// 1
-	FLOAT,	// 2
-	DOUBLE,	// 3
-	NDEF,	// 4
+	NDEF,	// 0
+	CHAR,	// 1
+	INT,	// 2
+	FLOAT,	// 3
+	DOUBLE,	// 4
+	LITERAL,// 5
 } t_inputType;
 
 class	ScalarConverter

@@ -1,4 +1,4 @@
-NAME = casting
+NAME = convert
 
 CC = c++
 

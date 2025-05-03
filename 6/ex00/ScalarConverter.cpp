@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include <cstdlib>
 
 ScalarConverter::ScalarConverter()
 {
@@ -29,16 +30,157 @@ ScalarConverter::~ScalarConverter()
 	std::cout << "ScalarConverter destructor called" << std::endl;
 }
 
-void	convertToChar(std::string input)
+void	convertToChar(std::string input, t_inputType type)
+{
+	double	res = 0;
+	
+	if (type == CHAR)
+		std::cout << "Char: \'" << input[0] << "\'";
+	if (type == INT || type == FLOAT || type == DOUBLE)
+	{
+		if (type == INT)
+			res = std::atoi(input.c_str());
+		else
+			res = std::atof(input.c_str());
+		if (res >= 0 && res <= 255 && std::isprint(res))
+			std::cout << "Char: \'" << static_cast<unsigned char>(res) << "\'";
+		else
+			std::cout << "Char: non displayable";
+	}
+	if (type == LITERAL)
+		std::cout << "Char: impossible";
+	std::cout << std::endl;
+}
+
+void	convertToInt(std::string input, t_inputType type)
 {
 	(void)input;
-	std::cout << "converting input to char..." << std::endl;
+	(void) type;
+ 	std::cout << "converting input to int..." << std::endl;
+}
+
+void	convertToFloat(std::string input, t_inputType type)
+{
+	(void)input;
+	(void) type;
+ 	std::cout << "converting input to float..." << std::endl;
+}
+
+void	convertToDouble(std::string input, t_inputType type)
+{
+	(void)input;
+	(void) type;
+ 	std::cout << "converting input to double..." << std::endl;
+}
+
+
+bool	isInt(const std::string input)
+{
+	long unsigned int	i;
+
+	i = 0;
+	while (i < input.length())
+	{
+		if ((i == 0 && (input.at(0) != '+' &&  input.at(0) != '-'))
+			&& !std::isdigit(input[0]))
+		{
+			std::cout << "I entered break 1" << std::endl;
+			break;
+		}
+		if (i != 0 && !std::isdigit(input[i]))
+		{
+			std::cout << "I entered break 2" << std::endl;
+			break;
+		}
+		i++;
+	}
+	if (i == input.length())
+		return (true);
+	return (false);
+}
+
+bool	isFloat(const std::string input)
+{
+	int			point;
+	long unsigned int	i;
+	int			flag;
+
+	flag = 0;
+	point = 0;
+	for (i = 0; i < input.length(); i++)
+	{
+		if ((i == 0 && (input.at(0) != '+' &&  input.at(0) != '-'))
+			&& !std::isdigit(input[0]))
+			flag = 1;
+		if (i != input.length() - 1 && i != 0 && !std::isdigit(input[i]) && input[i] != '.')
+			flag = 1;
+		if (input[i] == '.' && ( point || (input[i +1] && input[i +1] == 'f') 
+					|| (input[i - 1] && !std::isdigit(input[i - 1]))))
+			flag = 1;
+		if (input[i] == '.' && !point)
+			point = 1;
+	}
+	if (!flag)
+	{
+		if (input[input.length() - 1] == 'f')
+			return (true);
+	}
+	return (false);
+}
+
+bool	isChar(const std::string input)
+{
+	if (input.length() == 1 && std::isprint(input[0]) && !std::isdigit(input[0]))
+		return (true);
+	return (false);
+}
+
+bool	isLiteral(const std::string input)
+{
+	if (input == "-inf" || input == "+inf" || input == "nan")
+		return (true);
+	return (false);
+}
+
+bool	isDouble(const std::string input)
+{
+	int			point;
+	long unsigned int	i;
+	int			flag;
+
+	flag = 0;
+	point = 0;
+	for (i = 0; i < input.length(); i++)
+	{
+		if ((i == 0 && (input.at(0) != '+' &&  input.at(0) != '-'))
+			&& !std::isdigit(input[0]))
+			flag = 1;
+		if (i != 0 && !std::isdigit(input[i]) && input[i] != '.')
+			flag = 1;
+		if (input[i] == '.' && point ) 
+			flag = 1;
+		if (input[i] == '.' && !point && i != input.length() - 1)
+			point = 1;
+	}
+	if (!flag && point)
+		return (true);
+	return (false);
 }
 
 t_inputType	getType(const std::string input)
 {
-	if (std::isalpha(input[0]))
+	if (input.empty())
+		return (NDEF);
+	if (isChar(input))
 		return (CHAR);
+	if (isLiteral(input))
+		return (LITERAL);
+	if (isInt(input))
+		return (INT);
+	if (isFloat(input))
+		return (FLOAT);
+	if (input.find('f') == std::string::npos && isDouble(input))
+		return (DOUBLE);
 	return (NDEF);
 }
 
@@ -49,21 +191,18 @@ void	ScalarConverter::convert(const std::string input)
 	std::cout << "I want to convert: " << input << std::endl;
 	type = getType(input); 
 	std::cout << "Type = " << type << std::endl;
-	
-	// si es char
-	/*if (type == CHAR)
-	{
-	}*/
-	// si es int
-	// si es float
-	// si es double
 
-	// PRINT
-	// - char
-		//convertToChar(input);
-	// - int
-	// - float
-	// - double
+	if (type == NDEF)
+	{
+		std::cout << "Error: Undefined type when expecting int/float/double" << std::endl;
+		return ;
+	}
+	std::cout << std::endl;
+
+	convertToChar(input, type);
+	convertToInt(input, type);
+	convertToFloat(input, type);
+	convertToDouble(input, type);
 }
 
 ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& var)
