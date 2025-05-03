@@ -12,6 +12,7 @@
 
 #include "ScalarConverter.hpp"
 #include <cstdlib>
+#include <climits>
 
 ScalarConverter::ScalarConverter()
 {
@@ -54,9 +55,25 @@ void	convertToChar(std::string input, t_inputType type)
 
 void	convertToInt(std::string input, t_inputType type)
 {
-	(void)input;
-	(void) type;
- 	std::cout << "converting input to int..." << std::endl;
+	long int	res;
+	int	flag;
+	
+	flag = 0;
+	if (input.length() > 10)
+		flag = 1;
+	res = std::atol(input.c_str());
+	std::cout << "Int MIN =  " << INT_MIN << std::endl;
+	std::cout << "Int MAX =  " << INT_MAX << std::endl;
+	std::cout << std::endl;
+	std::cout << "res = " << res << std::endl;
+	if (res > INT_MAX || res < INT_MIN)
+		flag = 1;
+	if (type == INT && !flag)
+		std::cout << "Int: " << static_cast<int>(res);
+	else
+		std::cout << "Int: impossible";
+	std::cout << std::endl;
+
 }
 
 void	convertToFloat(std::string input, t_inputType type)
@@ -137,7 +154,8 @@ bool	isChar(const std::string input)
 
 bool	isLiteral(const std::string input)
 {
-	if (input == "-inf" || input == "+inf" || input == "nan")
+	if (input == "-inf" || input == "+inf" || input == "-inff"
+			|| input == "+inff" || input == "nan")
 		return (true);
 	return (false);
 }

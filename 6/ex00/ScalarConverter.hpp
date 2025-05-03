@@ -23,7 +23,7 @@ typedef enum e_inputType
 	INT,	// 2
 	FLOAT,	// 3
 	DOUBLE,	// 4
-	LITERAL,// 5
+	LITERAL // 5
 } t_inputType;
 
 class	ScalarConverter

@@ -1,8 +1,8 @@
 NAME = convert
 
-CC = c++
+CC = g++
 
-CFLAGS = -std=c++98 -g -Wall -Werror -Wextra #-fsanitize=address
+CFLAGS =  -std=c++98 -pedantic -g -Wall -Werror -Wextra 
 
 SRC = main.cpp ScalarConverter.cpp 
 
