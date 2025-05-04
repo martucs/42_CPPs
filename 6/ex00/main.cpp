@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:37:05 by martalop          #+#    #+#             */
-/*   Updated: 2025/05/03 21:47:00 by martalop         ###   ########.fr       */
+/*   Updated: 2025/05/04 23:02:46 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 		ScalarConverter::convert(argv[1]);
 	else
-		std::cout << "error: program must receive 1 argument" << std::endl;
+		std::cout << "Error: program must receive 1 argument" << std::endl;
 	return (0);
 }

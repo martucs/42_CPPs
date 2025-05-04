@@ -34,8 +34,12 @@ class	ScalarConverter
 		
 		ScalarConverter&	operator=( const ScalarConverter& );
 		
-		static void	convert(const std::string input);
-		//t_inputType	getType(const std::string input);
+		static void		convert(const std::string &input);
+		static t_inputType	getType(const std::string &input);
+		static void		convertToChar(const std::string &input, t_inputType &type);
+		static void		convertToInt(const std::string &input, t_inputType &type);
+		static void		convertToFloat(const std::string &input, t_inputType &type);
+		static void		convertToDouble(const std::string &input, t_inputType &type);
 	private:
 		ScalarConverter();
 		
