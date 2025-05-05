@@ -35,9 +35,13 @@ ScalarConverter::~ScalarConverter()
 void	ScalarConverter::convertToChar(const std::string &input, t_inputType &type)
 {
 	double	res = 0;
+	char	char_res;
 	
 	if (type == CHAR)
-		std::cout << "Char: \'" << input[0] << "\'";
+	{
+		char_res = static_cast<char>(input[0]);
+		std::cout << "Char: \'" << char_res << "\'";
+	}
 	if (type == INT || type == FLOAT || type == DOUBLE)
 	{
 		if (type == INT)
@@ -69,7 +73,10 @@ bool	isSafeInt(const std::string &input)
 void	ScalarConverter::convertToInt(const std::string &input, t_inputType &type)
 {
 	if (type == CHAR)
-		std::cout << "Int: " << static_cast<int>(input[0]);
+	{
+		char	char_res = static_cast<char>(input[0]);
+		std::cout << "Int: " << static_cast<int>(char_res);
+	}
 	else if (type != LITERAL && isSafeInt(input))
 		std::cout << "Int: " << std::atoi(input.c_str());
 	else
@@ -92,8 +99,11 @@ void	ScalarConverter::convertToFloat(const std::string &input, t_inputType &type
 	std::cout.precision(1);
 	std::cout.setf(std::ios::fixed); // fixed hace que siempre muestre el mismo valor que haya establecido de precision
 	if (type == CHAR)
-		std::cout << "Float: " << static_cast<float>(input[0]) << "f";
-	else if ((type != LITERAL && isSafeFloat(input)) || type == LITERAL)
+	{
+		char	char_res = static_cast<char>(input[0]);
+		std::cout << "Float: " << static_cast<float>(char_res) << "f";
+	}
+	else if (type == LITERAL || isSafeFloat(input))
 		std::cout << "Float: " << std::atof(input.c_str()) << "f";
 	else
 		std::cout << "Float: impossible";
@@ -113,14 +123,16 @@ bool	isSafeDouble(const std::string &input)
 void	ScalarConverter::convertToDouble(const std::string &input, t_inputType &type)
 {
 	if (type == CHAR)
-		std::cout << "Double: " << static_cast<float>(input[0]);
-	else if ((type != LITERAL && isSafeDouble(input)) || type == LITERAL)
+	{
+		char	char_res = static_cast<char>(input[0]);
+		std::cout << "Double: " << static_cast<float>(char_res);
+	}
+	else if (type == LITERAL || isSafeDouble(input))
 		std::cout << "Double: " << std::atof(input.c_str());
 	else
 		std::cout << "Double: impossible";
 	std::cout << std::endl;
 }
-
 
 bool	isInt(const std::string &input)
 {
@@ -200,7 +212,7 @@ bool	isDouble(const std::string &input)
 			flag = 1;
 		if (i != 0 && !std::isdigit(input[i]) && input[i] != '.')
 			flag = 1;
-		if (input[i] == '.' && point ) 
+		if (input[i] == '.' && (point || (input[i -1] && (input[i -1] == '-' || input[i -1] == '+')))) 
 			flag = 1;
 		if (input[i] == '.' && !point && i != input.length() - 1)
 			point = 1;
