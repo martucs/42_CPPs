@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:05:14 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/30 15:34:29 by martalop         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:14:45 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ScalarConverter::convertToFloat(const std::string &input, t_inputType &type
 		std::cout << "Float: " << static_cast<float>(char_res) << "f";
 	}
 	else if (type == LITERAL || isSafeFloat(input))
-		std::cout << "Float: " << std::atof(input.c_str()) << "f";
+		std::cout << "Float: " << static_cast<float>(std::atof(input.c_str())) << "f";
 	else
 		std::cout << "Float: impossible";
 	std::cout << std::endl;
@@ -112,7 +112,7 @@ void	ScalarConverter::convertToFloat(const std::string &input, t_inputType &type
 
 bool	isSafeDouble(const std::string &input)
 {
-	double	res;
+	long double	res;
 	
 	res = std::atof(input.c_str());
 	if (res > DBL_MAX || res < -DBL_MAX)
@@ -125,7 +125,7 @@ void	ScalarConverter::convertToDouble(const std::string &input, t_inputType &typ
 	if (type == CHAR)
 	{
 		char	char_res = static_cast<char>(input[0]);
-		std::cout << "Double: " << static_cast<float>(char_res);
+		std::cout << "Double: " << static_cast<double>(char_res);
 	}
 	else if (type == LITERAL || isSafeDouble(input))
 		std::cout << "Double: " << std::atof(input.c_str());
