@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:13:11 by martalop          #+#    #+#             */
-/*   Updated: 2025/05/05 20:51:51 by martalop         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:48:26 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int	main()
 	//deserialized_person->age = 10;
 	printData(*deserialized_person);
 	printData(*person);
+	delete person;
 	return (0);
 }
