@@ -19,7 +19,7 @@ typedef unsigned long uintptr_t;
 typedef struct Data_s
 {
 	std::string	name;
-	int			age;
+	int		age;
 } Data;
 
 class	Serializer
@@ -36,7 +36,5 @@ class	Serializer
 	private:
 		Serializer();
 };
-
-std::ostream&	operator<<(std::ostream&, const Serializer&);
 
 #endif

@@ -30,20 +30,18 @@ Serializer::~Serializer()
 
 uintptr_t	Serializer::serialize(Data *ptr)
 {
-	uintptr_t	bla;
-	(void)ptr;
+	uintptr_t	compressed;
 
-	bla = static_cast<uintptr_t>(ptr->age);
-	return (bla);
+	compressed = reinterpret_cast<uintptr_t>(ptr);
+	return (compressed);
 }
 
 Data	*Serializer::deserialize(uintptr_t raw)
 {
-	Data	*bla;
-	(void)raw;
+	Data	*info;
 	
-	bla = new Data;
-	return (bla);
+	info = reinterpret_cast<Data *>(raw);
+	return (info);
 }
 
 Serializer&	Serializer::operator=(const Serializer& var)

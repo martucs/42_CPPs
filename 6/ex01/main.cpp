@@ -12,27 +12,39 @@
 
 #include "Serializer.hpp"
 
-// initData()
+void	initData(Data &var, const std::string name, int age)
+{
+	var.name = name;
+	var.age = age;
+}
 
 void	printData(Data &var)
 {
-	std::cout << "DATA struct:" << std::endl;
+	std::cout << "Person Data " << &var << ":" << std::endl;
 	std::cout << "- Name: " << var.name << std::endl;
 	std::cout << "- Age: " << var.age << std::endl;
 }
 
 int	main()
 {
-	Data	*random;
-	uintptr_t	res;
+	Data		*person;
+	Data		*deserialized_person;
+	uintptr_t	serialized_person;
 
-	random = new Data;
-	random->name = "Marta";
-	random->age = 25;
+	person = new Data;
+	
+	initData(*person, "Marta", 20098);
+	printData(*person);
 
-	printData(*random);
+	serialized_person = Serializer::serialize(person);
 
-	res = Serializer::serialize(random);
-	std::cout << res << std::endl;
+	std::cout << std::endl;
+	std::cout << "serialized_person = " << serialized_person << std::endl;
+	std::cout << std::endl;
+	
+	deserialized_person = Serializer::deserialize(serialized_person);
+	//deserialized_person->age = 10;
+	printData(*deserialized_person);
+	printData(*person);
 	return (0);
 }
