@@ -91,3 +91,9 @@ Tambien puede pasar con el constructor de copia por ejemplo, que recibe una refe
 El mensaje de error que me daba el compilador con este tipo de problemas era este:
 " error: passing ‘const ScavTrap’ as ‘this’ argument discards qualifiers [-fpermissive]
    67 |                 std::cout << var.getName();"
+
+- Cuando usamos ::nombreDeFuncion(), el poner "::" hace que el compilador busque dentro de nuestras definiciones de funciones y se salte buscar si hay alguna definida con ese nombre dentro de la libreria standard por ejemplo.
+Ej:	max(int a, int b);
+> si la uso tal cual, llama a std::max()
+> si la uso con :: y he creado yo una funcion con ese nombre, se va directamente a mi funcion
+> si la uso tal cual y tengo yo una con el mismo nombre, puede dar compilation error: ambiguity
