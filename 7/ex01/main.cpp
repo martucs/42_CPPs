@@ -29,9 +29,9 @@ int main( void )
 	str_arr[2] = "name";	
 	str_arr[3] = "is";	
 
-	::iter(num_arr, 4, ::print);
+	::iter(num_arr, 4, ::print<int>);
 	std::cout << std::endl;
-	::iter(str_arr, 4, ::print);
+	::iter(str_arr, 4, ::print<std::string>);
 
 	return (0);
 }
