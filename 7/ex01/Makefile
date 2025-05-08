@@ -1,4 +1,4 @@
-NAME = func_templates
+NAME = iter
 
 CC = c++
 
