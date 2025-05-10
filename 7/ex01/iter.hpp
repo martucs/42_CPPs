@@ -16,7 +16,7 @@
 #include <iostream>
 
 template <typename T>
-void	print(T var)
+void	print(T const &var)
 {
 	std::cout << var << std::endl;
 }
