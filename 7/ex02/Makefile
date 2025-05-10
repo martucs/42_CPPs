@@ -2,11 +2,11 @@ NAME = array
 
 CC = c++
 
-CFLAGS = -std=c++98 -pedantic -g -Wall -Werror -Wextra 
+CFLAGS = -std=c++98 -pedantic -g -Wall -Werror -Wextra -fsanitize=address
 
 SRC = main.cpp
 
-HEADERS = Array.hpp Array.tpp 
+HEADERS = Array.hpp 
 
 OBJ = $(SRC:.cpp=.o)
 
