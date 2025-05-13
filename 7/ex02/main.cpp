@@ -38,12 +38,14 @@ int	main()
 		str_arr[2] = "tal";
 		std::cout << "str[2] = " << str_arr[2] << std::endl;
 		std::cout << std::endl;
-		
+	
 		Array	<std::string>	str_arr_copied(str_arr);
 		
+		std::cout << "str_arr_copied size = " << str_arr_copied.size() << std::endl;
 		std::cout << "str_arr_copied[2] = " << str_arr_copied[2] << std::endl;
 		std::cout << std::endl;
 		
+
 		dbl_cmplx_arr[0] = 42;
 		std::cout << "complex[0] real = " << dbl_cmplx_arr[0].real() << std::endl;
 		std::cout << "complex[0] imaginary = " << dbl_cmplx_arr[0].imag() << std::endl;

@@ -60,16 +60,10 @@ template <typename T>
 Array<T>::Array(const Array &var)
 {
 	std::cout << "Array copy constructor called" << std::endl;
-	if (var.size() >= 0)
-	{
-		this->_array = new T[var.size()];
-		*this = var;
-	}
-	else
-	{
-		_array = NULL;
-		_size = 0;
-	}
+	_array = NULL;
+	_size = 0;
+	*this = var;
+
 }
 
 template <typename T>
@@ -92,13 +86,11 @@ Array<T>&	Array<T>::operator=(const Array<T>& var)
 {
 	if (this != &var)
 	{
-		unsigned int i = 0;
-
-		while (i < var.size() && _array != NULL)
-		{
+		if (_array)
+			delete[] _array;
+		_array = new T[var.size()];
+		for (unsigned int i = 0; i < var.size(); i++)
 			_array[i] = var._array[i];
-			i++;
-		}
 		_size = var._size;
 	}
 	return (*this);
