@@ -39,9 +39,9 @@ int	main()
 	easyfind(numbers, 1);
 	std::cout << std::endl;	
 	
-	std::vector<char>	vec;
-	vec.assign(5, 'a');
-	std::vector<char>::iterator i;
+	std::vector<int>	vec;
+	vec.assign(5, 100);
+	std::vector<int>::iterator i;
 
 	i = vec.begin();
 	while (i != vec.end())
@@ -50,5 +50,6 @@ int	main()
 		i++;
 	}
 	easyfind(vec, 97);
+	easyfind(vec, 100);
 	return (0);
 }

@@ -22,10 +22,13 @@ int	easyfind(T& container, int intVar)
 	typename T::iterator	it = std::find(container.begin(), container.end(), intVar);
 	
 	if (it != container.end())
+	{
 		std::cout << "- Number " << intVar << " found! -" << std::endl;
-	else
-		std::cout << "- Number " << intVar << " NOT found! -" << std::endl;
-	return (1);
+		return (std::distance(container.begin(), it));
+		
+	}
+	std::cout << "- Number " << intVar << " NOT found! -" << std::endl;
+	return (-1);
 }
 
 #endif
