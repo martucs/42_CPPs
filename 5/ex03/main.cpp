@@ -6,7 +6,7 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 20:50:20 by martalop          #+#    #+#             */
-/*   Updated: 2025/04/26 20:38:16 by martalop         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:17:15 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main()
 		std::cout << "\e[1m" << form->getName() << " form was successfully signed by " << E.getName() << "\e[0m" << std::endl;
 		form->execute(E);
 		std::cout << std::endl << "\e[1m" << form->getName() << " form was successfully executed by " << E.getName() << "\e[0m" << std::endl << std::endl;
+		delete form;
 	}
 	catch (Intern::NonExistentFormException &e)
 	{
