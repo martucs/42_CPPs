@@ -15,6 +15,7 @@
 
 # include <iostream>
 # include <exception>
+#include <vector>
 
 class	Span
 {
@@ -24,14 +25,15 @@ class	Span
 		~Span();
 
 		void		addNumber(int);
-		void		addMultNumbers();
 		int		shortestSpan();
 		int		longestSpan();
-
 		unsigned int	getSize() const;
 		int		getElement(unsigned int pos) const;
 		Span		&operator=(const Span&);
 		
+		template <typename Iterator>
+		void		addRange(Iterator beg_it, Iterator end_it);
+
 		class FullSpan : public std::exception
 		{
 			public:
@@ -52,5 +54,15 @@ class	Span
 
 };
 std::ostream&	operator<<(std::ostream&, const Span&);
+
+template <typename Iterator>
+void	Span::addRange(Iterator beg_it, Iterator end_it)
+{
+	while (beg_it != end_it)
+	{
+		addNumber(*beg_it);
+		beg_it++;
+	}
+}
 
 #endif

@@ -12,6 +12,29 @@
 
 #include "Span.hpp"
 
+#include <list>
+
+// addRange() TEST
+int	main()
+{
+	Span	secondSpan(10);
+	std::vector<int>	vector1;
+	
+	vector1.assign(5, 100);
+
+	secondSpan.addRange(vector1.begin(), vector1.end());
+	std::cout << secondSpan << std::endl;
+
+	std::list<int>	numbers;
+	
+	numbers.assign(4, 42);
+
+	secondSpan.addRange(numbers.begin(), numbers.end());
+	std::cout << secondSpan << std::endl;
+	return (0);
+}
+
+// Exceptions TEST
 /*int	main()
 {
 	Span sp = Span(5);
@@ -40,7 +63,8 @@
 	return (0);
 }*/
 
-int	main()
+// main TEST
+/*int	main()
 {
 	Span sp = Span(5);
 
@@ -63,5 +87,4 @@ int	main()
 	std::cout << "shortest span = " << sp.shortestSpan() << std::endl;
 	std::cout << "longest span = " << sp.longestSpan() << std::endl;
 	std::cout << std::endl;
-	return (0);
-}
+}*/

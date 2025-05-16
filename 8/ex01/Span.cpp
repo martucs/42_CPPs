@@ -14,6 +14,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <climits>
+#include <vector>
 
 Span::Span()
 {
