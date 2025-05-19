@@ -15,7 +15,6 @@
 
 # include <iostream>
 # include <exception>
-#include <vector>
 
 class	Span
 {
@@ -29,6 +28,7 @@ class	Span
 		int		longestSpan();
 		unsigned int	getSize() const;
 		int		getElement(unsigned int pos) const;
+		unsigned int	getFilledNum() const;
 		Span		&operator=(const Span&);
 		
 		template <typename Iterator>
@@ -49,7 +49,7 @@ class	Span
 	private:
 		Span();
 		unsigned int	_size;
-		int		_it;
+		unsigned int	_filled;
 		int		*_elements;
 
 };
@@ -58,6 +58,8 @@ std::ostream&	operator<<(std::ostream&, const Span&);
 template <typename Iterator>
 void	Span::addRange(Iterator beg_it, Iterator end_it)
 {
+	if (std::distance(beg_it, end_it) + this->_filled > this->_size)
+		throw std::overflow_error("Range doesn't fit in Span!");
 	while (beg_it != end_it)
 	{
 		addNumber(*beg_it);

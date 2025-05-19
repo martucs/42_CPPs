@@ -15,17 +15,18 @@
 #include <cstdlib>
 #include <climits>
 #include <vector>
+#include <algorithm>
 
 Span::Span()
 {
-	std::cout << "Span constructor called" << std::endl;
+	//std::cout << "Span constructor called" << std::endl;
 }
 
 Span::Span(unsigned int N)
 {
-	std::cout << "Span complete constructor called" << std::endl;
-	_it = 0;
+	//std::cout << "Span complete constructor called" << std::endl;
 	_size = N;
+	_filled = 0;
 	_elements = new int [N];
 	for (unsigned int i = 0; i < _size; i++)
 		_elements[i] = 0;
@@ -33,20 +34,24 @@ Span::Span(unsigned int N)
 
 Span::Span(const Span& var)
 {
-	std::cout << "Span copy constructor called" << std::endl;
+	//std::cout << "Span copy constructor called" << std::endl;
+	_elements = NULL;
 	*this = var;
 }
 
 Span::~Span()
 {
-	std::cout << "Span destructor called" << std::endl;
+	//std::cout << "Span destructor called" << std::endl;
 	delete[] _elements;
 }
-
 
 unsigned int	Span::getSize(void) const
 {
 	return (_size);
+}
+unsigned int	Span::getFilledNum(void) const
+{
+	return (_filled);
 }
 
 int	Span::getElement(unsigned int pos) const
@@ -60,14 +65,16 @@ int	Span::shortestSpan(void)
 {
 	int	shortestSpan = INT_MAX;
 	int	span = 0;
-	unsigned int i= 0;
 	
-	if (_it <= 1)
+	if (_filled <= 1)
 		throw NotEnoughSpanInfo();
-	while ( i < _size)
+	unsigned int	i = 0;
+	Span		copy = *this;
+
+	std::sort(copy._elements, copy._elements + copy._filled);
+	while ( i < copy._filled - 1)
 	{
-		if (i != _size - 1)
-			span = abs(_elements[i] - _elements[i + 1]);
+		span = std::abs(copy._elements[i] - copy._elements[i + 1]);
 		if (span < shortestSpan)
 			shortestSpan = span; 
 		i++;
@@ -77,29 +84,21 @@ int	Span::shortestSpan(void)
 
 int	Span::longestSpan(void)
 {
-	int	longestSpan = INT_MIN;
-	int	span = 0;
-	unsigned int i= 0;
-	
-	if (_it <= 1)
+	if (_filled <= 1)
 		throw NotEnoughSpanInfo();
-	while ( i < _size)
-	{
-		if (i != _size - 1)
-			span = abs(_elements[i] - _elements[i + 1]);
-		if (span > longestSpan)
-			longestSpan = span; 
-		i++;
-	}
-	return (longestSpan);
+
+	int	*max = std::max_element(this->_elements, this->_elements + this->_filled);
+	int	*min = std::min_element(this->_elements, this->_elements + this->_filled);
+
+	return (std::abs(*max - *min));
 }
 
 void	Span::addNumber(int num)
 {
-	if (static_cast<unsigned int>(_it) < _size)
+	if (_filled < _size)
 	{
-		_elements[_it] = num;
-		_it++;
+		_elements[_filled] = num;
+		_filled++;
 	}
 	else
 		throw FullSpan();
@@ -107,13 +106,16 @@ void	Span::addNumber(int num)
 
 Span&	Span::operator=(const Span& var)
 {
-	std::cout << "copy operator called" << std::endl;
+	//std::cout << "copy operator called" << std::endl;
 	if (this != &var)
 	{
-		for (unsigned int i = 0; i < var._size; i++)
+		if (_elements)
+			delete[] _elements;
+		_elements = new int [var._size];
+		for (unsigned int i = 0; i < var._filled && i < var._size; i++)
 			_elements[i] = var._elements[i];
 		_size = var._size;
-		_it = var._it;
+		_filled = var._filled;
 	}
 	return (*this);
 }
@@ -122,8 +124,10 @@ std::ostream&	operator<<(std::ostream& os, const Span& var)
 {
 	os << "- Span size = " << var.getSize() << std::endl;
 	os << "- Elements: " << std::endl;
-	for (unsigned int i = 0; i < var.getSize(); i++)
+	for (unsigned int i = 0; i < var.getFilledNum(); i++)
+	{
 		os << "[" << i << "] = " << var.getElement(i) << std::endl;
+	}
 	return (os);
 }
 

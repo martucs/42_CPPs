@@ -6,33 +6,43 @@
 /*   By: martalop <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:01:20 by martalop          #+#    #+#             */
-/*   Updated: 2025/05/14 16:01:44 by martalop         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:33:00 by martalop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
-
 #include <list>
+#include <vector>
+#include <climits>
+#include <cstdlib>
 
 // addRange() TEST
-int	main()
+/*int	main()
 {
-	Span	secondSpan(10);
+	Span	secondSpan(10000);
 	std::vector<int>	vector1;
 	
-	vector1.assign(5, 100);
+	vector1.assign(5000, 100);
 
 	secondSpan.addRange(vector1.begin(), vector1.end());
 	std::cout << secondSpan << std::endl;
 
 	std::list<int>	numbers;
 	
-	numbers.assign(4, 42);
+	numbers.assign(5000, 42);
 
 	secondSpan.addRange(numbers.begin(), numbers.end());
 	std::cout << secondSpan << std::endl;
+//	try 
+//	{
+//		secondSpan.addRange(numbers.begin(), numbers.end());
+//	}
+//	catch (std::exception &e)
+//	{
+//		std::cout << "Exception: " <<  e.what() << std::endl;
+//	}
 	return (0);
-}
+}*/
 
 // Exceptions TEST
 /*int	main()
@@ -52,8 +62,8 @@ int	main()
 	std::cout << sp << std::endl;
 	try
 	{
-		std::cout << "shortest span = " << sp.shortestSpan() << std::endl;
 		std::cout << "longest span = " << sp.longestSpan() << std::endl;
+		std::cout << "shortest span = " << sp.shortestSpan() << std::endl;
 	}
 	catch (Span::NotEnoughSpanInfo &e)
 	{
@@ -64,7 +74,7 @@ int	main()
 }*/
 
 // main TEST
-/*int	main()
+int	main()
 {
 	Span sp = Span(5);
 
@@ -76,7 +86,7 @@ int	main()
 	sp.addNumber(11);
 	try
 	{
-		sp.addNumber(1);
+		//sp.addNumber(1);
 	}
 	catch (Span::FullSpan &e)
 	{
@@ -87,4 +97,4 @@ int	main()
 	std::cout << "shortest span = " << sp.shortestSpan() << std::endl;
 	std::cout << "longest span = " << sp.longestSpan() << std::endl;
 	std::cout << std::endl;
-}*/
+}
