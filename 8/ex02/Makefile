@@ -4,7 +4,7 @@ CC = c++
 
 CFLAGS = -std=c++98 -pedantic -g -Wall -Werror -Wextra -fsanitize=address
 
-SRC = main.cpp MutantStack.cpp 
+SRC = main.cpp 
 
 HEADERS = MutantStack.hpp 
 
