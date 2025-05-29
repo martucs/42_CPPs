@@ -53,6 +53,7 @@
 	try
 	{
 		sp.addNumber(1);
+		//sp.addNumber(1);
 	}
 	catch (Span::FullSpan &e)
 	{
@@ -86,7 +87,8 @@ int	main()
 	sp.addNumber(11);
 	try
 	{
-		//sp.addNumber(1);
+	//	sp.addNumber(1);
+		std::cout << "No issues adding numbers to span" << std::endl;
 	}
 	catch (Span::FullSpan &e)
 	{
