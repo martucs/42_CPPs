@@ -14,7 +14,7 @@
 #include <iostream>
 #include <list>
 
-int main()
+/*int main()
 {
 	MutantStack<int> mstack;
 	mstack.push(5);
@@ -63,9 +63,9 @@ int main()
 //	std::stack<int> ss(listt);
 	std::cout  << std::endl;
 	return 0;
-}
+}*/
 
-/*int	main()
+int	main()
 {
 	std::stack<int>	realStack;
 	
@@ -83,19 +83,24 @@ int main()
 	std::cout << realStack.top() << std::endl;
 	std::cout << std::endl;
 
-	MutantStack<int> mstack;
+	MutantStack<int>	mstack;
 	
 	mstack.push(10);
 	mstack.push(20);
 	mstack.push(30);
 	std::cout << "Mutant stack:" << std::endl;
-	std::stack<int>::container_type::iterator myStackItB = mstack.begin();
-	std::stack<int>::container_type::iterator myStackItE = mstack.end();
+	MutantStack<int>::iterator	myStackItB = mstack.begin();
+	MutantStack<int>::iterator	myStackItE = mstack.end();
+//	MutantStack<int>::const_iterator		constIterator = mstack.begin();
 
 	while (myStackItB != myStackItE)
 	{
 		std::cout << *myStackItB << std::endl;
 		myStackItB++;
 	}
+	myStackItB -= 1;
+	*myStackItB += 1;
+	std::cout << "changed last num to: " << *myStackItB << std::endl;
+//	*constIterator += 1; //trying to change first num to '11', will not compile
 	return (0);
-}*/
+}
