@@ -2,7 +2,7 @@ NAME = btc
 
 CC = c++
 
-CFLAGS = -std=c++98 -pedantic -g -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -std=c++98 -pedantic -Wall -Werror -Wextra #-fsanitize=address
 
 SRC = main.cpp BitcoinExchange.cpp 
 
