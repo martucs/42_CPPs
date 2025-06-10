@@ -15,6 +15,7 @@
 #include <fstream>
 #include <map>
 #include <cstdlib>
+#include <climits>
 
 bool	readFile(char *	filename, std::fstream& inFile)
 {
@@ -72,6 +73,103 @@ std::map<std::string, float>*	storeDataBase(void)
 	return (dataMap);
 }
 
+bool	isPositiveInt(const std::string &input)
+{
+	long unsigned int	i;
+	int			point;
+	long int	int_res;
+	double		float_res;
+	
+	int_res = std::atol(input.c_str());
+	float_res = std::atof(input.c_str());
+	if (input.length() > 11 || int_res > 1000 || float_res > 1000)
+		return (false);
+	i = 0;
+	point = 0;
+	while (i < input.length())
+	{
+		if (input[i] == '.')
+			point = 1;
+		if (!std::isdigit(input[i]) && input[i] != '.')
+			break;
+		i++;
+	}
+	if (i != input.length())
+		return (false);
+	return (true);
+}
+
+bool	isPositiveDouble(const std::string &input)
+{
+	int			point;
+	long unsigned int	i;
+	int			flag;
+
+	flag = 0;
+	point = 0;
+	for (i = 0; i < input.length(); i++)
+	{
+		if (i == 0 && !std::isdigit(input[0]))
+			flag = 1;
+		if (i != 0 && !std::isdigit(input[i]) && input[i] != '.')
+			flag = 1;
+		if (input[i] == '.' && (point || (input[i -1] && input[i -1] == '+'))) 
+			flag = 1;
+		if (input[i] == '.' && !point && i != input.length() - 1)
+			point = 1;
+	}
+	if (!flag && point)
+		return (true);
+	return (false);
+}
+bool	checkValueFormat(std::string value, std::map<std::string, float> dataBase)
+{
+	(void)dataBase;
+	
+	if (!isPositiveInt(value))
+		return (false);
+	return (true);
+}
+
+void	calculatePrice(std::string inFileName, std::map<std::string, float>& dataBase)
+{
+	(void)dataBase;
+	std::fstream	inFile;
+	std::string	buffer;
+	std::string	date;
+	std::string	value;
+
+	inFile.open(inFileName.c_str(), std::ios_base::in);
+	std::getline(inFile, buffer);
+	buffer.clear();
+	while (true)
+	{
+		std::getline(inFile, buffer);
+		if (inFile.eof())
+			break;
+		std::string::size_type	pos;
+		
+		pos = buffer.find(" | ", 0);
+		if (pos != buffer.npos)
+		{
+			date = buffer.substr(0, pos);
+			value = buffer.substr(pos + 3, buffer.npos);
+			std::cout << "date = \'" << date << "\', value = \'" << value << "\'" << std::endl;
+		}
+		else
+		{
+			std::cout << "invalid format" << std::endl;
+			continue;
+		}
+		// checkDateFormat(date, dataBase)
+		if (!checkValueFormat(value, dataBase))
+			std::cout << "invalid value format" << std::endl;
+		
+		// std::cout << multiplyvalue(date, value, dataBase) << std::endl;
+		buffer.clear();
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	std::fstream			inFile;
@@ -88,7 +186,7 @@ int	main(int argc, char **argv)
 		std::cout << "Error: failed to open file" << std::endl;
 		return (1);
 	}
-//	checkFormat(inFile);
+	calculatePrice(argv[1], *dataBase);
 	delete dataBase;
 	return (0);
 }
