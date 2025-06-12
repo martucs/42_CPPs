@@ -69,66 +69,90 @@ std::map<std::string, float>*	storeDataBase(void)
 		buffer.clear();
 	}
 //	printDataMap(*dataMap);
-	std::cout << "finished reading file" << std::endl;
 	return (dataMap);
 }
 
-bool	isPositiveInt(const std::string &input)
+bool	isValidNum(const std::string &value)
 {
-	long unsigned int	i;
-	int			point;
+	int		point;
 	long int	int_res;
 	double		float_res;
 	
-	int_res = std::atol(input.c_str());
-	float_res = std::atof(input.c_str());
-	if (input.length() > 11 || int_res > 1000 || float_res > 1000)
+	int_res = std::atol(value.c_str());
+	float_res = std::atof(value.c_str());
+	if (value.length() > 11 || int_res > 1000 || float_res > 1000)
 		return (false);
-	i = 0;
 	point = 0;
-	while (i < input.length())
+	for (size_t i = 0; i < value.length(); i++)
 	{
-		if (input[i] == '.')
+		if (value[i] == '.' && !point && i != value.length() - 1)
 			point = 1;
-		if (!std::isdigit(input[i]) && input[i] != '.')
-			break;
-		i++;
+		if ((!std::isdigit(value[i]) && !point) || 
+			(!std::isdigit(value[i]) && value[i] != '.'))
+			return (false);
 	}
-	if (i != input.length())
+	return (true);
+}
+
+bool	isValidDate(const std::string &date)
+{
+	(void)date;
+	int	year;
+	int	month;
+	int	day;
+
+	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
+		return (false);
+	year = std::atoi(date.substr(0, 4).c_str());
+//	std::cout << "year = " << year <<std::endl;
+	if (year > 2025)
+		return (false);
+	month = std::atoi(date.substr(5, 2).c_str());
+//	std::cout << "month = " << month <<std::endl;
+	if (month > 12 || month < 01)
+		return (false);
+	day = std::atoi(date.substr(8, 2).c_str());
+//	std::cout << "day = " << day <<std::endl;
+	if (day > 31 || day < 1)
 		return (false);
 	return (true);
 }
 
-bool	isPositiveDouble(const std::string &input)
-{
-	int			point;
-	long unsigned int	i;
-	int			flag;
-
-	flag = 0;
-	point = 0;
-	for (i = 0; i < input.length(); i++)
-	{
-		if (i == 0 && !std::isdigit(input[0]))
-			flag = 1;
-		if (i != 0 && !std::isdigit(input[i]) && input[i] != '.')
-			flag = 1;
-		if (input[i] == '.' && (point || (input[i -1] && input[i -1] == '+'))) 
-			flag = 1;
-		if (input[i] == '.' && !point && i != input.length() - 1)
-			point = 1;
-	}
-	if (!flag && point)
-		return (true);
-	return (false);
-}
-bool	checkValueFormat(std::string value, std::map<std::string, float> dataBase)
+/*bool	checkValueFormat(std::string value, std::map<std::string, float> dataBase)
 {
 	(void)dataBase;
 	
-	if (!isPositiveInt(value))
+	if (!isValidNum(value))
 		return (false);
 	return (true);
+}*/
+
+std::string	closestDate(const std::string date, std::map<std::string, float> &dataBase)
+{
+	std::map<std::string, float>::iterator	it;
+	
+	it = dataBase.find(date); 
+	if (it != dataBase.end())
+	{
+	//	std::cout << "exact date found" << std::endl;
+		return (date);
+	}
+	else
+	{
+	//	std::cout << "not exact date found" << std::endl;
+		it = dataBase.begin();
+	//	for (it != dataBase.end(); it++)
+	//	{
+
+	//	}
+	}
+	return (date);
+}
+
+float	multiplyValue(const std::string date, const std::string value, std::map<std::string, float>& dataBase)
+{
+	std::cout << "database value = " << dataBase[date] << std::endl;
+	return (dataBase[date] * std::atof(value.c_str()));
 }
 
 void	calculatePrice(std::string inFileName, std::map<std::string, float>& dataBase)
@@ -161,11 +185,15 @@ void	calculatePrice(std::string inFileName, std::map<std::string, float>& dataBa
 			std::cout << "invalid format" << std::endl;
 			continue;
 		}
-		// checkDateFormat(date, dataBase)
-		if (!checkValueFormat(value, dataBase))
-			std::cout << "invalid value format" << std::endl;
-		
-		// std::cout << multiplyvalue(date, value, dataBase) << std::endl;
+		// checkFormat(date, dataBase)
+		if (!isValidDate(date))
+			std::cout << "invalid date" << std::endl;
+		if (!isValidNum(value))
+			std::cout << "invalid value" << std::endl;
+		std::cout << std::endl;
+	//	std::cout << multiplyValue(closestDate(date, dataBase), value, dataBase) << std::endl;
+//		std::cout << date << " -> " << value << " = " 
+//			<< multiplyValue(closestDate(date, dataBase), value, dataBase) << std::endl;
 		buffer.clear();
 	}
 }
