@@ -13,9 +13,11 @@
 #include "BitcoinExchange.hpp"
 #include <iostream>
 #include <fstream>
+#include <iterator>
 #include <map>
 #include <cstdlib>
 #include <climits>
+#include <algorithm>
 
 bool	readFile(char *	filename, std::fstream& inFile)
 {
@@ -72,7 +74,7 @@ std::map<std::string, float>*	storeDataBase(void)
 	return (dataMap);
 }
 
-bool	isValidNum(const std::string &value)
+int	isInvalidNum(const std::string &value)
 {
 	int		point;
 	long int	int_res;
@@ -81,7 +83,7 @@ bool	isValidNum(const std::string &value)
 	int_res = std::atol(value.c_str());
 	float_res = std::atof(value.c_str());
 	if (value.length() > 11 || int_res > 1000 || float_res > 1000)
-		return (false);
+		return (1);
 	point = 0;
 	for (size_t i = 0; i < value.length(); i++)
 	{
@@ -89,43 +91,76 @@ bool	isValidNum(const std::string &value)
 			point = 1;
 		if ((!std::isdigit(value[i]) && !point) || 
 			(!std::isdigit(value[i]) && value[i] != '.'))
-			return (false);
+			return (2);
 	}
-	return (true);
+	return (0);
 }
 
-bool	isValidDate(const std::string &date)
+int	isInvalidDate(const std::string &date)
 {
-	(void)date;
 	int	year;
 	int	month;
 	int	day;
 
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
-		return (false);
+		return (1);
+	for (size_t i = 0; i < date.size(); i++)
+	{
+		if (i != 4 && i != 7 && !std::isdigit(date[i]))
+			return (1);
+	}
 	year = std::atoi(date.substr(0, 4).c_str());
-//	std::cout << "year = " << year <<std::endl;
 	if (year > 2025)
-		return (false);
+		return (2);
 	month = std::atoi(date.substr(5, 2).c_str());
-//	std::cout << "month = " << month <<std::endl;
-	if (month > 12 || month < 01)
-		return (false);
+	if (month > 12 || month < 1)
+		return (3);
 	day = std::atoi(date.substr(8, 2).c_str());
-//	std::cout << "day = " << day <<std::endl;
 	if (day > 31 || day < 1)
-		return (false);
-	return (true);
+		return (4);
+	// FEBRERO
+	if (month == 2 && (day > 29 || (day > 28 && year % 4 != 0)))
+		return (4);
+	// MESES QUE NO TERMINAN EN 31
+	if (day == 31)
+	{
+		int	month_30[4] = {4, 6, 9, 11};
+		int	*p = std::find(month_30, month_30 + 4, month);
+		if (p != month_30 + 4)
+			return (4);
+	}
+	return (0);
 }
 
-/*bool	checkValueFormat(std::string value, std::map<std::string, float> dataBase)
+bool	checkValidity(std::string value, std::string date)
 {
-	(void)dataBase;
-	
-	if (!isValidNum(value))
+	int	res;
+	res = isInvalidDate(date);
+	if (res)
+	{
+		std::cout << "Error: invalid date" << std::endl;
+		if (res == 1)
+			std::cout << "(date too long or non-digit found)" << std::endl;
+		if (res == 2)
+			std::cout << "(invalid year)" << std::endl;
+		if (res == 3)
+			std::cout << "(invalid month)" << std::endl;
+		if (res == 4)
+			std::cout << "(invalid day)" << std::endl;
 		return (false);
+	}
+	res = isInvalidNum(value);
+	if (res)
+	{
+		std::cout << "Error: invalid value (from 0 to 1000)" << std::endl;
+		if (res == 1)
+			std::cout << "(value too big / too small)" << std::endl;
+		if (res == 2)
+			std::cout << "(num is negative or different to int/float)" << std::endl;
+		return (false);
+	}
 	return (true);
-}*/
+}
 
 std::string	closestDate(const std::string date, std::map<std::string, float> &dataBase)
 {
@@ -133,25 +168,18 @@ std::string	closestDate(const std::string date, std::map<std::string, float> &da
 	
 	it = dataBase.find(date); 
 	if (it != dataBase.end())
-	{
-	//	std::cout << "exact date found" << std::endl;
-		return (date);
-	}
+		return (date); // exact date found
 	else
 	{
-	//	std::cout << "not exact date found" << std::endl;
-		it = dataBase.begin();
-	//	for (it != dataBase.end(); it++)
-	//	{
-
-	//	}
+		it = dataBase.lower_bound(date); // first bigger than date
+		it--;
+		return (it->first);
 	}
-	return (date);
 }
 
 float	multiplyValue(const std::string date, const std::string value, std::map<std::string, float>& dataBase)
 {
-	std::cout << "database value = " << dataBase[date] << std::endl;
+//	std::cout << "database value = " << dataBase[date] << ", ";
 	return (dataBase[date] * std::atof(value.c_str()));
 }
 
@@ -178,22 +206,29 @@ void	calculatePrice(std::string inFileName, std::map<std::string, float>& dataBa
 		{
 			date = buffer.substr(0, pos);
 			value = buffer.substr(pos + 3, buffer.npos);
-			std::cout << "date = \'" << date << "\', value = \'" << value << "\'" << std::endl;
+		//	std::cout << "date = \'" << date << "\', value = \'" << value << "\'" << std::endl;
 		}
 		else
 		{
-			std::cout << "invalid format" << std::endl;
+			std::cout << "Error: invalid format" << std::endl;
 			continue;
 		}
-		// checkFormat(date, dataBase)
-		if (!isValidDate(date))
-			std::cout << "invalid date" << std::endl;
-		if (!isValidNum(value))
-			std::cout << "invalid value" << std::endl;
-		std::cout << std::endl;
-	//	std::cout << multiplyValue(closestDate(date, dataBase), value, dataBase) << std::endl;
-//		std::cout << date << " -> " << value << " = " 
-//			<< multiplyValue(closestDate(date, dataBase), value, dataBase) << std::endl;
+		if (!checkValidity(date, value))
+			continue;
+//		if (!isValidDate(date))
+//		{
+//			std::cout << "Error: invalid date (format: yyyy-mm-dd)" << std::endl;
+//			continue;
+//		}
+//		if (!isValidNum(value))
+//		{
+//			std::cout << "Error: invalid value (valid only from 0 to 1000)" << std::endl;
+//			continue;
+//		}
+	//	std::cout << std::endl << "database value in " << closestDate(date, dataBase) << " = " << dataBase[closestDate(date, dataBase)] << std::endl;
+		std::cout << date << " -> " << value << " = " 
+			<< multiplyValue(closestDate(date, dataBase), value, dataBase) << std::endl;
+	//	std::cout << "-----------------------------------------" << std::endl;
 		buffer.clear();
 	}
 }
