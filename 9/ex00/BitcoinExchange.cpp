@@ -28,7 +28,7 @@ BitcoinExchange::BitcoinExchange(const std::string dataPath)
 	// Open file
 	dataFile.open(dataPath.c_str(), std::ios_base::in); 
 	if (dataFile.fail())
-		throw std::runtime_error(dataPath);
+		throw std::runtime_error("Error: could not open database file");
 //	std::cout.setf(std::ios::fixed); 
 //	std::cout.precision(2);
 	// Read file
@@ -203,6 +203,8 @@ void	BitcoinExchange::calculatePrice(const std::string inputFileName)
 	std::string	value;
 
 	inFile.open(inputFileName.c_str(), std::ios_base::in);
+	if (inFile.fail())
+		throw std::runtime_error("Error: could not open input file");
 	std::getline(inFile, buffer);
 	buffer.clear();
 	while (true)
