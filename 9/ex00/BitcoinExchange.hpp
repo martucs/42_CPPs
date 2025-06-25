@@ -14,16 +14,25 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <iostream>
+# include <map>
+# include <fstream>
 
 class	BitcoinExchange
 {
 	public:
-		BitcoinExchange();
+		BitcoinExchange(const std::string dataPath);
 		BitcoinExchange(const BitcoinExchange&);
 		~BitcoinExchange();
 
 		BitcoinExchange		&operator=(const BitcoinExchange&);
+		void			printDataBase();
+		void			calculatePrice(const std::string inputFileName);
+		bool			checkValidity(const std::string date, const std::string value);
+		float			multiplyValue(const std::string date, const std::string value);
+		std::string		closestDate(const std::string fileDate);
+	private:
+		BitcoinExchange();		
+		std::map<std::string, float>	_dataBase;
 };
-std::ostream&	operator<<(std::ostream&, const BitcoinExchange&);
 
 #endif

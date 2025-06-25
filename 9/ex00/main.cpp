@@ -12,23 +12,17 @@
 
 #include "BitcoinExchange.hpp"
 #include <iostream>
-#include <fstream>
-#include <iterator>
-#include <map>
-#include <cstdlib>
-#include <climits>
-#include <algorithm>
 
-bool	readFile(char *	filename, std::fstream& inFile)
+/*bool	readFile(char *	filename, std::fstream& inFile)
 {
 	inFile.open(filename, std::ios_base::in); 
 	if (inFile.fail())
 		return (0);
 	inFile.close();
 	return (1);
-}
+}*/
 
-void	printDataMap(std::map<std::string, float> dataMap)
+/*void	printDataMap(std::map<std::string, float> dataMap)
 {
 	std::map<std::string, float>::iterator	it;
 	it = dataMap.begin();
@@ -37,9 +31,9 @@ void	printDataMap(std::map<std::string, float> dataMap)
 		std::cout << it->first << " -> " << it->second << std::endl;
 		it++;
 	}
-}
+}*/
 
-std::map<std::string, float>*	storeDataBase(void)
+/*std::map<std::string, float>*	storeDataBase(void)
 {
 	std::fstream			dataFile;
 	std::map<std::string, float>	*dataMap;
@@ -65,16 +59,14 @@ std::map<std::string, float>*	storeDataBase(void)
 		pos = buffer.find(',', 0);
 		key = buffer.substr(0, pos);
 		value = buffer.substr(pos + 1, buffer.npos);
-	//	std::cout << "buffer = " << value << std::endl;
-	//	std::cout << "atof = " << std::atof(value.c_str()) << std::endl;
 		dataMap->insert(std::pair<std::string, float>(key, std::atof(value.c_str())));	
 		buffer.clear();
 	}
 //	printDataMap(*dataMap);
 	return (dataMap);
-}
+}*/
 
-int	isInvalidNum(const std::string &value)
+/*int	isInvalidNum(const std::string &value)
 {
 	int		point;
 	long int	int_res;
@@ -132,31 +124,32 @@ int	isInvalidDate(const std::string &date)
 	return (0);
 }
 
-bool	checkValidity(std::string value, std::string date)
+bool	checkValidity(std::string date, std::string value)
 {
-	int	res;
+	int	res = 0;
+
 	res = isInvalidDate(date);
-	if (res)
+	if (res != 0)
 	{
-		std::cout << "Error: invalid date" << std::endl;
+		std::cout << "Error: invalid date";
 		if (res == 1)
-			std::cout << "(date too long or non-digit found)" << std::endl;
+			std::cout << " -> date too long or non-digit found" << std::endl;
 		if (res == 2)
-			std::cout << "(invalid year)" << std::endl;
+			std::cout << " -> invalid year" << std::endl;
 		if (res == 3)
-			std::cout << "(invalid month)" << std::endl;
+			std::cout << " -> invalid month" << std::endl;
 		if (res == 4)
-			std::cout << "(invalid day)" << std::endl;
+			std::cout << " -> invalid day" << std::endl;
 		return (false);
 	}
 	res = isInvalidNum(value);
-	if (res)
+	if (res != 0)
 	{
-		std::cout << "Error: invalid value (from 0 to 1000)" << std::endl;
+		std::cout << "Error: invalid value";
 		if (res == 1)
-			std::cout << "(value too big / too small)" << std::endl;
+			std::cout << " -> value too big/too small (from 0 to 100 allowed)" << std::endl;
 		if (res == 2)
-			std::cout << "(num is negative or different to int/float)" << std::endl;
+			std::cout << " -> num is not postive int/float" << std::endl;
 		return (false);
 	}
 	return (true);
@@ -179,13 +172,11 @@ std::string	closestDate(const std::string date, std::map<std::string, float> &da
 
 float	multiplyValue(const std::string date, const std::string value, std::map<std::string, float>& dataBase)
 {
-//	std::cout << "database value = " << dataBase[date] << ", ";
 	return (dataBase[date] * std::atof(value.c_str()));
 }
 
 void	calculatePrice(std::string inFileName, std::map<std::string, float>& dataBase)
 {
-	(void)dataBase;
 	std::fstream	inFile;
 	std::string	buffer;
 	std::string	date;
@@ -206,7 +197,6 @@ void	calculatePrice(std::string inFileName, std::map<std::string, float>& dataBa
 		{
 			date = buffer.substr(0, pos);
 			value = buffer.substr(pos + 3, buffer.npos);
-		//	std::cout << "date = \'" << date << "\', value = \'" << value << "\'" << std::endl;
 		}
 		else
 		{
@@ -215,42 +205,36 @@ void	calculatePrice(std::string inFileName, std::map<std::string, float>& dataBa
 		}
 		if (!checkValidity(date, value))
 			continue;
-//		if (!isValidDate(date))
-//		{
-//			std::cout << "Error: invalid date (format: yyyy-mm-dd)" << std::endl;
-//			continue;
-//		}
-//		if (!isValidNum(value))
-//		{
-//			std::cout << "Error: invalid value (valid only from 0 to 1000)" << std::endl;
-//			continue;
-//		}
-	//	std::cout << std::endl << "database value in " << closestDate(date, dataBase) << " = " << dataBase[closestDate(date, dataBase)] << std::endl;
 		std::cout << date << " -> " << value << " = " 
 			<< multiplyValue(closestDate(date, dataBase), value, dataBase) << std::endl;
-	//	std::cout << "-----------------------------------------" << std::endl;
 		buffer.clear();
 	}
-}
+}*/
 
 int	main(int argc, char **argv)
 {
-	std::fstream			inFile;
-	std::map<std::string, float>	*dataBase;
-
 	if (argc != 2)
 	{
 		std::cout << "Usage: ./btc infile.txt" << std::endl;
 		return (1);
 	}
-	dataBase = storeDataBase();
-	if (!readFile(argv[1], inFile))	
-	{
-		std::cout << "Error: failed to open file" << std::endl;
-		return (1);
-	}
-	calculatePrice(argv[1], *dataBase);
-	delete dataBase;
+//	try
+//	{
+		BitcoinExchange	exchange("./data.csv");
+		
+	//	exchange.printDataBase();
+		exchange.calculatePrice(argv[1]);
+//	}
+//	catch (std::exception &e)
+//	{
+//		std::cout << std::endl << e.what() << std::endl;
+//	}
+//	if (!readFile(argv[1], inFile))	
+//	{
+//		std::cout << "Error: failed to open file" << std::endl;
+//		return (1);
+//	}
+//	calculatePrice(argv[1], *dataBase);
 	return (0);
 }
 
