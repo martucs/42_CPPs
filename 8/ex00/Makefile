@@ -2,8 +2,11 @@ NAME = easyfind
 
 CC = c++
 
-CFLAGS = -std=c++98 -pedantic -g -Wall -Werror -Wextra 
+CFLAGS = -std=c++98 -pedantic -Wall -Werror -Wextra 
 
+#debug: CFLAGS += -g
+#debug: re
+	
 SRC = main.cpp 
 
 HEADERS = easyfind.hpp 
