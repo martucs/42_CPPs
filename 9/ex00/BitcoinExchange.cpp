@@ -29,8 +29,6 @@ BitcoinExchange::BitcoinExchange(const std::string dataPath)
 	dataFile.open(dataPath.c_str(), std::ios_base::in); 
 	if (dataFile.fail())
 		throw std::runtime_error("Error: could not open database file");
-//	std::cout.setf(std::ios::fixed); 
-//	std::cout.precision(2);
 	// Read file
 	std::getline(dataFile, buffer);
 	buffer.clear();
@@ -187,7 +185,7 @@ bool	BitcoinExchange::checkValidity(std::string date, std::string value)
 	{
 		std::cout << "Error: invalid value";
 		if (res == 1)
-			std::cout << " -> num is too big (from 0 to 100 allowed)" << std::endl;
+			std::cout << " -> num is too big (from 0 to 1000 allowed)" << std::endl;
 		if (res == 2)
 			std::cout << " -> num is not postive int/float" << std::endl;
 		return (false);

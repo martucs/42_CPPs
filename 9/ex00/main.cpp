@@ -38,11 +38,10 @@ int	main(int argc, char **argv)
 	// 1. store database in "./data.csv" in a std::map
 	// 2. open file 'argv[1]'
 		// if not possible -> "error: could not open file" 
-	// 3. store info ?
-	// 4. check that file is in correct format
+	// 3. check that file is in correct format
 		// error if invalid date 
 		// error if negative value
 		// error if num is bigger than int
 		// error if there is no num or date
-	// 5. multiply value * exchange rate 
-	// 6. show result (date -> value = result)
+	// 4. multiply value * exchange rate 
+	// 5. show result (date -> value = result)
