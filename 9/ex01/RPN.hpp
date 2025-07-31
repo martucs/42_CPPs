@@ -4,6 +4,7 @@
 # include <iostream>
 # include <stack>
 # include <cstdlib>
+# include <cstring>
 
 class	RPN
 {
@@ -19,8 +20,7 @@ class	RPN
 		int	calculateLine(std::string line);	
 
 	private:
-		char		_operations[4];
-		int		_numberOfValues;
+		std::string		_operations;
 		std::stack<float>	_stack;
 };
 
