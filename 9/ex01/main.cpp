@@ -2,16 +2,14 @@
 
 int	main(int argc, char** args)
 {
-	RPN		calculator;
-	std::string	expression;
+	RPN	calculator;
 
 	if (argc != 2)
 	{
 		std::cout << "Usage: ./RPN \"inverted Polish mathematical expression\"" << std::endl;
 		return (1);
 	}
-	expression = args[1];
-	if (!expression.size())
+	if (args[1] && !args[1][0])
 	{
 		std::cerr << "Error: empty expression\n";
 		return (1);
