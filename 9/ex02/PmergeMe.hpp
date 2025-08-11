@@ -12,6 +12,7 @@ class PmergeMe
 		PmergeMe(const PmergeMe &);
 		~PmergeMe();
 	
+		void		calculate(std::vector<int> &input);
 		PmergeMe	&operator=(const PmergeMe &);
 	private:
 

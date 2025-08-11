@@ -1,5 +1,70 @@
 #include "PmergeMe.hpp"
 
+#include <cmath>
+
+int testingFormula(int n)
+{
+    int sum = 0;
+    for (int k = 1; k <= n; ++k) {
+        double value = (3.0 / 4.0) * k;
+        sum += static_cast<int>(ceil(log2(value)));
+    }
+    return sum;
+}
+
+std::vector<int>	getJacobsthalNums(int amount)
+{
+	std::vector<int>	JacobNums;
+	int			i = 0;
+	int			prevJacob = 1;
+	int			prevprevJacob = 1;
+
+
+	for (; i < amount; i++)
+	{
+		int res = prevJacob + (2 * prevprevJacob);
+		prevprevJacob = prevJacob;
+		prevJacob = res;
+		JacobNums.push_back(res);
+	}
+	return (JacobNums);
+}
+
+int	binarySearch(int target, std::vector<int> vector)
+{
+	int size = vector.size();
+	int left = 0;
+	int right = size - 1;
+
+	while (left <= right)
+	{
+		int mid = left + (right - left) / 2;
+		if (vector[mid] == target)
+			return mid;
+		else if (vector[mid] < target)
+			left = mid + 1;  // search right half
+		else
+			right = mid - 1; // search left half
+	}
+	return (left);
+}
+
+int	getJacobsthalAt(int index)
+{
+	if (index == 0) 
+		return (0);
+	if (index == 1)
+		return (1);
+	int j0 = 0, j1 = 1, jn;
+	for (int i = 2; i <= index; ++i) 
+	{
+		jn = j1 + 2 * j0;
+		j0 = j1;
+		j1 = jn;
+	}
+	return (jn);
+}
+
 void	printVector(const std::vector<int> &vector, std::string when)
 {
 	std::vector<int>::const_iterator	it = vector.begin();
@@ -23,7 +88,7 @@ bool	isValidInput (std::vector<int> &vector)
 
 int	main(int argc, char **argv)
 {
-	PmergeMe	mergeSort;
+	PmergeMe	mergeInsertSort;
 
 	if (argc < 2)
 	{
@@ -41,8 +106,15 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	printVector(vector, "Before");
-	// merge-sort
+	// merge-insert sort
 	
+	mergeInsertSort.calculate(vector);
+
 	printVector(vector, "After");
+	
+	std::vector<int> JNums = getJacobsthalNums(19);
+	int Jacobstal = getJacobsthalAt(3);
+	std::cout << "Jacobsthal at 3 = " << Jacobstal << std::endl;
+	printVector(JNums, "Jacobsthal numbers");
 	return (0);
 }
