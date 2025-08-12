@@ -65,15 +65,6 @@ int	getJacobsthalAt(int index)
 	return (jn);
 }
 
-void	printVector(const std::vector<int> &vector, std::string when)
-{
-	std::vector<int>::const_iterator	it = vector.begin();
-
-	std::cout << when << ": ";
-	for (; it != vector.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
-}
 
 bool	isValidInput (std::vector<int> &vector)
 {
@@ -105,16 +96,17 @@ int	main(int argc, char **argv)
 		std::cerr << "Error: only positive integers accepted\n";
 		return (1);
 	}
-	printVector(vector, "Before");
+	printVector(vector, "Before", 1);
 	// merge-insert sort
-	
-	mergeInsertSort.calculate(vector);
 
-	printVector(vector, "After");
+	mergeInsertSort.vectorMergeInsertion(vector);
+
+	std::cout << std::endl;
+	printVector(vector, "After", 1);
 	
 	std::vector<int> JNums = getJacobsthalNums(19);
 	int Jacobstal = getJacobsthalAt(3);
 	std::cout << "Jacobsthal at 3 = " << Jacobstal << std::endl;
-	printVector(JNums, "Jacobsthal numbers");
+	printVector(JNums, "Jacobsthal numbers", 1);
 	return (0);
 }
