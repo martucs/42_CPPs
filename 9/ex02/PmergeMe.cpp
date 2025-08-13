@@ -4,7 +4,10 @@
 PmergeMe::PmergeMe()
 {
 }
-
+PmergeMe::PmergeMe(std::vector<unsigned int> &vector)
+{
+	_vector = vector;
+}
 PmergeMe::PmergeMe(const PmergeMe &var)
 {
 	(void)var;
@@ -14,10 +17,10 @@ PmergeMe::~PmergeMe()
 {
 }
 
-std::vector<std::pair<int, int> >	makePairs(std::vector<int> input)
+std::vector<std::pair<int, int> >	makePairs(std::vector<unsigned int> input)
 {
 	std::vector<std::pair<int, int> >	pairVector;
-	std::vector<int>::iterator		it = input.begin();
+	std::vector<unsigned int>::iterator		it = input.begin();
 
 	size_t i = 0;
 	while (i < input.size() / 2 )
@@ -29,7 +32,7 @@ std::vector<std::pair<int, int> >	makePairs(std::vector<int> input)
 	return (pairVector);
 }
 
-void	sortElements(std::vector<int> &vector, int elementsAmount)
+void	sortElements(std::vector<unsigned int> &vector, int elementsAmount)
 {
 //	std::vector<int>::iterator	it = vector.begin();
 //	std::vector<int>	sortedVec;
@@ -73,7 +76,7 @@ void	sortElements(std::vector<int> &vector, int elementsAmount)
 	}
 }
 
-void	PmergeMe::vectorMergeInsertion(std::vector<int> &input)
+void	PmergeMe::vectorMergeInsertion()
 {
 	std::size_t	elementsAmount = 1;
 	int		recursionLevel = 0;
@@ -83,26 +86,25 @@ void	PmergeMe::vectorMergeInsertion(std::vector<int> &input)
 		elementsAmount *= 2;
 	}
 	std::cout << "elements amount = " << elementsAmount << std::endl;
-	if (input.size() < elementsAmount)
+	if (_vector.size() < elementsAmount)
 	{
 		std::cout << "\nstopping recursion!\n";
 		return ;
 	}
-	sortElements(input, elementsAmount);
-	printVector(input, "After sorting", 1);
+	sortElements(_vector, elementsAmount);
+	printVector(_vector, "After sorting", 1);
 	elementsAmount *=2;
 	std::cout << std::endl;
 
 	std::cout << "elements amount = " << elementsAmount << std::endl;
-	sortElements(input, elementsAmount);
-	printVector(input, "After sorting 2nd time", 1);	
+	sortElements(_vector, elementsAmount);
+	printVector(_vector, "After sorting 2nd time", 1);	
 	elementsAmount *=2;
 	std::cout << std::endl;
 	
 	std::cout << "elements amount = " << elementsAmount << std::endl;
-	sortElements(input, elementsAmount);
-	printVector(input, "After sorting 3rd time", 1);
-
+	sortElements(_vector, elementsAmount);
+	printVector(_vector, "After sorting 3rd time", 1);
 
 //	calculate(pairVector);
 }

@@ -19,7 +19,6 @@ std::vector<int>	getJacobsthalNums(int amount)
 	int			prevJacob = 1;
 	int			prevprevJacob = 1;
 
-
 	for (; i < amount; i++)
 	{
 		int res = prevJacob + (2 * prevprevJacob);
@@ -30,7 +29,7 @@ std::vector<int>	getJacobsthalNums(int amount)
 	return (JacobNums);
 }
 
-int	binarySearch(int target, std::vector<int> vector)
+int	binarySearch(unsigned int target, std::vector<unsigned int> vector)
 {
 	int size = vector.size();
 	int left = 0;
@@ -66,47 +65,51 @@ int	getJacobsthalAt(int index)
 }
 
 
-bool	isValidInput (std::vector<int> &vector)
+bool	isValidInput (char **argv)
 {
-	std::vector<int>::iterator	it = vector.begin();
-	for (;it != vector.end(); it++)
+	for (int i = 1; argv[i]; i++)
 	{
-		if (*it < 0 )
-			return (false);
+		for (int x = 0; argv[i][x]; x++)
+		{
+			if (!std::isdigit(argv[i][x]))
+				return (false);
+		}
 	}
 	return (true);
 }
 
 int	main(int argc, char **argv)
 {
-	PmergeMe	mergeInsertSort;
 
 	if (argc < 2)
 	{
 		std::cout << "Usage: ./PmergeMe num1 num2 num3 (etc)" << std::endl;
 		return (1);
 	}
-	// store args
-	std::vector<int>	vector;
-	for (int i = 1; argv[i] ; i++)
-		vector.push_back(atoi(argv[i]));
 	// check args
-	if (!isValidInput(vector))
+	if (!isValidInput(argv))
 	{
 		std::cerr << "Error: only positive integers accepted\n";
 		return (1);
 	}
+	// store args
+	std::vector<unsigned int>	vector;
+	for (int i = 1; argv[i] ; i++)
+		vector.push_back(atoi(argv[i]));
+	
 	printVector(vector, "Before", 1);
+	std::cout << std::endl;
 	// merge-insert sort
 
-	mergeInsertSort.vectorMergeInsertion(vector);
+	PmergeMe	mergeInsertSort(vector);
+	mergeInsertSort.vectorMergeInsertion();
 
 	std::cout << std::endl;
 	printVector(vector, "After", 1);
 	
-	std::vector<int> JNums = getJacobsthalNums(19);
+/*	std::vector<int> JNums = getJacobsthalNums(19);
 	int Jacobstal = getJacobsthalAt(3);
 	std::cout << "Jacobsthal at 3 = " << Jacobstal << std::endl;
-	printVector(JNums, "Jacobsthal numbers", 1);
+	printVector(JNums, "Jacobsthal numbers", 1);*/
 	return (0);
 }

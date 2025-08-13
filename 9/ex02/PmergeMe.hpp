@@ -10,18 +10,20 @@ class PmergeMe
 {
 	public:
 		PmergeMe();
+		PmergeMe(std::vector<unsigned int> &vector);
 		PmergeMe(const PmergeMe &);
 		~PmergeMe();
 	
-		void		vectorMergeInsertion(std::vector<int> &input);
+		void		vectorMergeInsertion();
 		PmergeMe	&operator=(const PmergeMe &);
 	private:
+		std::vector<unsigned int>	_vector;
 
 };
 
-static void	printVector(const std::vector<int> &vector, std::string when, int level)
+static void	printVector(const std::vector<unsigned int> &vector, std::string when, int level)
 {
-	std::vector<int>::const_iterator	it = vector.begin();
+	std::vector<unsigned int>::const_iterator	it = vector.begin();
 	(void)level;
 
 	std::cout << when << ": ";
