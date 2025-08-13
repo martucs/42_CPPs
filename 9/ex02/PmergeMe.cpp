@@ -37,15 +37,16 @@ std::vector<std::pair<int, int> >	makePairs(std::vector<unsigned int> input)
 	return (pairVector);
 }
 
-void	sortElements(std::vector<unsigned int> &vector, int groupSize)
+void	PmergeMe::sortElements(std::vector<unsigned int> &vector, int &groupSize)
 {
-	// como vamos a mirar en grupos de elementos, iteramos hasta que podamos ver 2 grupos
-	// si hay numeros sueltos o se acaba el vector, salimos del bucle
 	if (vector.size() < (size_t)groupSize)
 	{
-		std::cout << "stopping recursion at groupsize " << groupSize << std::endl;
+		std::cout << "stopping recursion after groupsize " << groupSize / 2 << std::endl;
+		groupSize = groupSize / 2;
 		return ;
 	}
+	// como vamos a mirar en grupos de elementos, iteramos hasta que podamos ver 2 grupos
+	// si hay numeros sueltos o se acaba el vector, salimos del bucle
 	for (int i = 0; i + 2 * groupSize - 1 < (int)vector.size(); i += 2 * groupSize)
 	{
 		int firstGroupStart = i;
@@ -61,7 +62,25 @@ void	sortElements(std::vector<unsigned int> &vector, int groupSize)
 				std::swap(vector[firstGroupStart + j], vector[secondGroupStart + j]);
 		}
 	}
-	sortElements(vector, groupSize * 2);
+	groupSize *= 2;
+	sortElements(vector, groupSize);
+}
+
+void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int recursionLevel)
+{
+	(void)vector;
+	(void)recursionLevel;
+	// name each element and their bound element (b1 - a1)
+	// create main chain
+	// create pend chain (victor no los quita del pend despues de insertarlos en la main)
+	// create non-participating chain
+	// find insertion order with Jacobsthal nums
+	// insertion loop 
+		// binary insert each element (with its bound element) in the main
+		// update numero de elementos insertados (b1 lo he instertado yo ya al principio, siempre cuenta)
+		// eso es = num de elementos insertados * groupSize
+		// luego hay que moverse ese numero de posiciones para ir al siguiente numero a insertar, a veces hacia el inicio del main, a veces hacia el final 
+	// 
 }
 
 void	PmergeMe::vectorMergeInsertion()
@@ -73,10 +92,14 @@ void	PmergeMe::vectorMergeInsertion()
 	{
 		elementSize *= 2;
 	}*/
-	sortElements(_vector, 1);
+	int elementSize = 1;
+	sortElements(_vector, elementSize);
 	printVector(_vector, "after sortingg", 1);
 
-//	calculate(pairVector);
+	int recursionLevel = log2(elementSize) + 1;
+	std::cout << "\ngroup size = " << elementSize << std::endl;
+	std::cout << "recursion level = " << recursionLevel << std::endl;
+	sequenceInsertions(_vector, recursionLevel);
 }
 
 PmergeMe&	PmergeMe::operator=(const PmergeMe &var)

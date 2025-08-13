@@ -15,6 +15,8 @@ class PmergeMe
 		~PmergeMe();
 	
 		void				vectorMergeInsertion();
+		void				sortElements(std::vector<unsigned int> &vector, int &groupSize);
+		void				sequenceInsertions(std::vector<unsigned int> &vector, int recursionLevel);
 		std::vector<unsigned int>	getVector() const;
 		PmergeMe			&operator=(const PmergeMe &);
 	private:
