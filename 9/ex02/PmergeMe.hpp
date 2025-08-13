@@ -14,8 +14,9 @@ class PmergeMe
 		PmergeMe(const PmergeMe &);
 		~PmergeMe();
 	
-		void		vectorMergeInsertion();
-		PmergeMe	&operator=(const PmergeMe &);
+		void				vectorMergeInsertion();
+		std::vector<unsigned int>	getVector() const;
+		PmergeMe			&operator=(const PmergeMe &);
 	private:
 		std::vector<unsigned int>	_vector;
 

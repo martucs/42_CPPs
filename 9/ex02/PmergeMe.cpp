@@ -17,6 +17,11 @@ PmergeMe::~PmergeMe()
 {
 }
 
+std::vector<unsigned int>	PmergeMe::getVector() const
+{
+	return (_vector);
+}
+
 std::vector<std::pair<int, int> >	makePairs(std::vector<unsigned int> input)
 {
 	std::vector<std::pair<int, int> >	pairVector;
@@ -32,31 +37,16 @@ std::vector<std::pair<int, int> >	makePairs(std::vector<unsigned int> input)
 	return (pairVector);
 }
 
-void	sortElements(std::vector<unsigned int> &vector, int elementsAmount)
+void	sortElements(std::vector<unsigned int> &vector, int groupSize)
 {
-//	std::vector<int>::iterator	it = vector.begin();
-//	std::vector<int>	sortedVec;
-/*	int i = 0;
-	while (it != vector.end())
+	// como vamos a mirar en grupos de elementos, iteramos hasta que podamos ver 2 grupos
+	// si hay numeros sueltos o se acaba el vector, salimos del bucle
+	if (vector.size() < (size_t)groupSize)
 	{
-		if ((it + elementsAmount) != vector.end() && *it > *(it + elementsAmount))
-		{
-			std::cout << "swapping " << *it << " & " << *(it + elementsAmount) << " at pos " << i << std::endl;
-//			std::swap(*it, *(it + elementsAmount));
-			sortedVec.push_back(*(it + elementsAmount));
-			sortedVec.push_back(*it);
-//			std::cout << "[" << i << "] = " << *it << std::endl;
-//			std::cout << "[" << i + elementsAmount << "] = " << *(it + elementsAmount) << std::endl;
-		}
-		else
-			sortedVec.push_back(*it);
-		i++;
-		it += elementsAmount;
-	}*/
-	int n = vector.size();
-	int groupSize = elementsAmount;
-
-	for (int i = 0; i + 2 * groupSize - 1 < n; i += 2 * groupSize)
+		std::cout << "stopping recursion at groupsize " << groupSize << std::endl;
+		return ;
+	}
+	for (int i = 0; i + 2 * groupSize - 1 < (int)vector.size(); i += 2 * groupSize)
 	{
 		int firstGroupStart = i;
 		int secondGroupStart = i + groupSize;
@@ -64,47 +54,27 @@ void	sortElements(std::vector<unsigned int> &vector, int elementsAmount)
 		int firstGroupLast = firstGroupStart + groupSize - 1;
 		int secondGroupLast = secondGroupStart + groupSize - 1;
 
-		// Compare the last elements of each group
 		if (vector[firstGroupLast] > vector[secondGroupLast])
 		{
-			// Swap the entire groups
+			// Swap de todos los numeros que forman cada elemento
 			for (int j = 0; j < groupSize; ++j)
-			{
 				std::swap(vector[firstGroupStart + j], vector[secondGroupStart + j]);
-			}
 		}
 	}
+	sortElements(vector, groupSize * 2);
 }
 
 void	PmergeMe::vectorMergeInsertion()
 {
-	std::size_t	elementsAmount = 1;
+	/*std::size_t	elementSize = 1;
 	int		recursionLevel = 0;
 
 	for (int i = 0; i < recursionLevel; ++i) 
 	{
-		elementsAmount *= 2;
-	}
-	std::cout << "elements amount = " << elementsAmount << std::endl;
-	if (_vector.size() < elementsAmount)
-	{
-		std::cout << "\nstopping recursion!\n";
-		return ;
-	}
-	sortElements(_vector, elementsAmount);
-	printVector(_vector, "After sorting", 1);
-	elementsAmount *=2;
-	std::cout << std::endl;
-
-	std::cout << "elements amount = " << elementsAmount << std::endl;
-	sortElements(_vector, elementsAmount);
-	printVector(_vector, "After sorting 2nd time", 1);	
-	elementsAmount *=2;
-	std::cout << std::endl;
-	
-	std::cout << "elements amount = " << elementsAmount << std::endl;
-	sortElements(_vector, elementsAmount);
-	printVector(_vector, "After sorting 3rd time", 1);
+		elementSize *= 2;
+	}*/
+	sortElements(_vector, 1);
+	printVector(_vector, "after sortingg", 1);
 
 //	calculate(pairVector);
 }

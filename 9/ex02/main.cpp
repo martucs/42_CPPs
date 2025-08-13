@@ -105,7 +105,7 @@ int	main(int argc, char **argv)
 	mergeInsertSort.vectorMergeInsertion();
 
 	std::cout << std::endl;
-	printVector(vector, "After", 1);
+	printVector(mergeInsertSort.getVector(), "After", 1);
 	
 /*	std::vector<int> JNums = getJacobsthalNums(19);
 	int Jacobstal = getJacobsthalAt(3);
