@@ -66,10 +66,11 @@ void	PmergeMe::sortElements(std::vector<unsigned int> &vector, int &groupSize)
 	sortElements(vector, groupSize);
 }
 
-void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int recursionLevel)
+void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupSize, int recursionLevel)
 {
 	(void)vector;
 	(void)recursionLevel;
+	(void)groupSize;
 	// name each element and their bound element (b1 - a1)
 	// create main chain
 	// create pend chain (victor no los quita del pend despues de insertarlos en la main)
@@ -81,6 +82,70 @@ void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int recursi
 		// eso es = num de elementos insertados * groupSize
 		// luego hay que moverse ese numero de posiciones para ir al siguiente numero a insertar, a veces hacia el inicio del main, a veces hacia el final 
 	// 
+	std::cout << "groupSize = " << groupSize << std::endl;
+	if (vector.size() < (size_t)groupSize * 2)
+	{
+		groupSize = groupSize / 2;
+		recursionLevel -= 1;
+		std::cout << "nothing to be done in this level, entering recursion\n";
+		sequenceInsertions(vector, groupSize, recursionLevel);
+		return ;
+	}
+	std::vector<unsigned int> main; 
+	std::vector<unsigned int> pend; 
+	std::vector<unsigned int> aMainIndexes; 
+	std::vector<unsigned int> nonParticipating; 
+
+	int n = static_cast<int>(vector.size());
+
+	for (int i = 0; i + groupSize - 1 < n; i += groupSize * 2)
+	{
+		int bStart = i;
+		int aStart = i + groupSize;
+
+		if (i == 0) // automatically copy b1 to main
+		{
+			for (int j = 0; j < groupSize; ++j)
+			{
+				std::cout << "adding " << vector[bStart + j] << " to main\n";
+				main.push_back(vector[bStart + j]);
+			}
+		}
+		// Copy all b's (first group)
+		for (int j = 0; i != 0 && j < groupSize; ++j)
+		{
+			std::cout << "adding " << vector[bStart + j] << " to pend\n";
+			pend.push_back(vector[bStart + j]);
+		}
+
+		if (i != 0)
+			aMainIndexes.push_back(main.size()); // aun no hemos añadido las a's al main, solo hay b1, asi que el final del main es el inicio de la proxima a que se va a insertar, que es lo que nos queremos guardar
+		// Copy all a's (second group)
+		for (int j = 0; j < groupSize; ++j)
+		{
+			std::cout << "adding " << vector[aStart + j] << " to main\n";
+			main.push_back(vector[aStart + j]);
+		}
+		std::cout << " --- next " << groupSize * 2 << " numbers ---\n";
+	}
+
+	// Handle leftover elements that don't form a full pair of groups
+	int leftover = n % (2 * groupSize);
+	if (leftover > 0)
+	{
+		int start = n - leftover;
+		// These leftover elements don't have pairs, so add them to main
+		for (int i = start; i < n; ++i)
+		{
+			std::cout << "adding " << vector[i] << " to main\n";
+			main.push_back(vector[i]);
+		}
+	}
+	printVector(main, "main", 1);
+	printVector(pend, "pend", 1);
+	printVector(aMainIndexes, "a's main indexes for b's in pend", 1);
+	printVector(nonParticipating, "non part", 1);
+
 }
 
 void	PmergeMe::vectorMergeInsertion()
@@ -99,7 +164,10 @@ void	PmergeMe::vectorMergeInsertion()
 	int recursionLevel = log2(elementSize) + 1;
 	std::cout << "\ngroup size = " << elementSize << std::endl;
 	std::cout << "recursion level = " << recursionLevel << std::endl;
-	sequenceInsertions(_vector, recursionLevel);
+
+//	elementSize = 2;
+//	recursionLevel = 3;
+	sequenceInsertions(_vector, elementSize, recursionLevel);
 }
 
 PmergeMe&	PmergeMe::operator=(const PmergeMe &var)
