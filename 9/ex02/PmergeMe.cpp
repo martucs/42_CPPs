@@ -68,9 +68,7 @@ void	PmergeMe::sortElements(std::vector<unsigned int> &vector, int &groupSize)
 
 void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupSize, int recursionLevel)
 {
-	(void)vector;
 	(void)recursionLevel;
-	(void)groupSize;
 	// name each element and their bound element (b1 - a1)
 	// create main chain
 	// create pend chain (victor no los quita del pend despues de insertarlos en la main)
@@ -82,7 +80,9 @@ void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupS
 		// eso es = num de elementos insertados * groupSize
 		// luego hay que moverse ese numero de posiciones para ir al siguiente numero a insertar, a veces hacia el inicio del main, a veces hacia el final 
 	// 
-	std::cout << "groupSize = " << groupSize << std::endl;
+	std::cout << "\ngroupSize = " << groupSize << std::endl;
+	if (groupSize < 1 )
+		return ;
 	if (vector.size() < (size_t)groupSize * 2)
 	{
 		groupSize = groupSize / 2;
@@ -91,18 +91,22 @@ void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupS
 		sequenceInsertions(vector, groupSize, recursionLevel);
 		return ;
 	}
+	printVector(vector, "sequence", groupSize);
+	std::cout << std::endl;
 	std::vector<unsigned int> main; 
 	std::vector<unsigned int> pend; 
 	std::vector<unsigned int> aMainIndexes; 
 	std::vector<unsigned int> nonParticipating; 
 
 	int n = static_cast<int>(vector.size());
+	int lastPosition = -1;
+
 
 	for (int i = 0; i + groupSize - 1 < n; i += groupSize * 2)
 	{
 		int bStart = i;
 		int aStart = i + groupSize;
-
+		
 		if (i == 0) // automatically copy b1 to main
 		{
 			for (int j = 0; j < groupSize; ++j)
@@ -118,34 +122,66 @@ void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupS
 			pend.push_back(vector[bStart + j]);
 		}
 
-		if (i != 0)
-			aMainIndexes.push_back(main.size()); // aun no hemos añadido las a's al main, solo hay b1, asi que el final del main es el inicio de la proxima a que se va a insertar, que es lo que nos queremos guardar
+		//if (i != 0)
+		//	aMainIndexes.push_back(main.size()); // aun no hemos añadido las a's al main, solo hay b1, asi que el final del main es el inicio de la proxima a que se va a insertar, que es lo que nos queremos guardar
+
+		bool hasAGroup = (aStart + groupSize - 1 < n);
 		// Copy all a's (second group)
-		for (int j = 0; j < groupSize; ++j)
+		int j;
+		for (j = 0; j < groupSize; ++j)
 		{
+			if (aStart + groupSize > n)
+			{
+				std::cout << "I enter break\n";
+				if (i != 0)
+					aMainIndexes.push_back(main.size() - 1);
+				break;
+			}
 			std::cout << "adding " << vector[aStart + j] << " to main\n";
 			main.push_back(vector[aStart + j]);
 		}
+		if (j < groupSize)
+		{
+			lastPosition = i + (groupSize - j * 2) - 1;
+			break;
+		}
+		if (i != 0)
+		{
+			if (hasAGroup)
+				aMainIndexes.push_back(main.size() - 1); // last element of the just-inserted a group
+			else
+				aMainIndexes.push_back(main.size() - 1); // last element in main (no a group)
+		}
+		lastPosition = i + (groupSize * 2) - 1;
 		std::cout << " --- next " << groupSize * 2 << " numbers ---\n";
 	}
+	
+	std::cout << "exited loop\n";
 
-	// Handle leftover elements that don't form a full pair of groups
-	int leftover = n % (2 * groupSize);
-	if (leftover > 0)
+	// DO INSERTION
+	// 1. find insertion order with jacobsthal sequence
+	// 2. binary insert each element until hemos acabdo de recorrer el pend
+
+	// ADD leftover elements to main
+	if (lastPosition + 1 < n)
 	{
-		int start = n - leftover;
-		// These leftover elements don't have pairs, so add them to main
-		for (int i = start; i < n; ++i)
+		for (int i = lastPosition + 1; i < n; ++i)
 		{
-			std::cout << "adding " << vector[i] << " to main\n";
+			std::cout << "adding leftover " << vector[i] << " to main\n";
 			main.push_back(vector[i]);
+			nonParticipating.push_back(vector[i]);
 		}
 	}
-	printVector(main, "main", 1);
-	printVector(pend, "pend", 1);
-	printVector(aMainIndexes, "a's main indexes for b's in pend", 1);
-	printVector(nonParticipating, "non part", 1);
 
+	std::cout << std::endl;
+	printVector(main, "main", groupSize);
+	printVector(pend, "pend", groupSize);
+	printVector(nonParticipating, "non part", groupSize);
+	printVector(aMainIndexes, "a's main indexes for b's in pend", 1);
+	
+	groupSize /= 2;
+	recursionLevel -= 1;
+	sequenceInsertions(main, groupSize, recursionLevel);
 }
 
 void	PmergeMe::vectorMergeInsertion()
@@ -162,8 +198,6 @@ void	PmergeMe::vectorMergeInsertion()
 	printVector(_vector, "after sortingg", 1);
 
 	int recursionLevel = log2(elementSize) + 1;
-	std::cout << "\ngroup size = " << elementSize << std::endl;
-	std::cout << "recursion level = " << recursionLevel << std::endl;
 
 //	elementSize = 2;
 //	recursionLevel = 3;

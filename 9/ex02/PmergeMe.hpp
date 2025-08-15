@@ -24,7 +24,62 @@ class PmergeMe
 
 };
 
-static void	printVector(const std::vector<unsigned int> &vector, std::string when, int level)
+static void printVector(const std::vector<unsigned int> &vector, const std::string &when, int groupSize)
+{
+    std::cout << when << ": ";
+
+    int n = static_cast<int>(vector.size());
+    int i = 0;
+
+	const std::string color = "\033[31m";
+	const std::string colorReset = "\033[0m";
+
+    while (i < n)
+    {
+        int remaining = n - i;
+
+	if (groupSize == 1)
+	{
+		for (; i < n; ++i)
+		{
+			std::cout << vector[i];
+			if (i < n - 1)
+			std::cout << ", ";
+		}
+		break;
+	}
+        // If remaining elements are fewer than groupSize, print them without brackets
+        if (remaining < groupSize)
+        {
+            for (int j = 0; j < remaining; ++j, ++i)
+            {
+                std::cout << vector[i];
+                if (j < remaining - 1)
+                    std::cout << ", ";
+            }
+        }
+        else
+        {
+            // Print a full group with brackets
+            std::cout << "\x1B[1m[" << "\x1B[0m";
+            for (int j = 0; j < groupSize; ++j, ++i)
+            {
+                if (j == groupSize - 1)
+                    std::cout << color << vector[i] << colorReset; // Last element in group: print in red
+                else
+                    std::cout << vector[i];
+                if (j < groupSize - 1)
+                    std::cout << ", ";
+            }
+            std::cout << "\x1B[1m]" << "\x1B[0m";
+        }
+        if (i < n)
+            std::cout << ", ";
+    }
+    std::cout << std::endl;
+}
+
+/*static void	printVector(const std::vector<unsigned int> &vector, std::string when, int level)
 {
 	std::vector<unsigned int>::const_iterator	it = vector.begin();
 	(void)level;
@@ -32,12 +87,6 @@ static void	printVector(const std::vector<unsigned int> &vector, std::string whe
 	std::cout << when << ": ";
 	for (int i = 0; it != vector.end(); it++)
 	{
-//		if (i == groupNumber - 1)
-//		{
-//			groupNumber += groupNumber;
-//			std::cout << "\033[34m" << *it << "\033[0m, ";
-//		}
-//		else
 		if (it + 1 == vector.end())
 			std::cout<< *it;
 		else
@@ -45,6 +94,6 @@ static void	printVector(const std::vector<unsigned int> &vector, std::string whe
 		i++;
 	}
 	std::cout << std::endl;
-}
+}*/
 
 #endif
