@@ -29,7 +29,7 @@ std::vector<int>	getJacobsthalNums(int amount)
 	return (JacobNums);
 }
 
-int	binarySearch(unsigned int target, std::vector<unsigned int> vector)
+int	binarySearch(std::vector<unsigned int> vector, unsigned int target)
 {
 	int size = vector.size();
 	int left = 0;
@@ -48,21 +48,6 @@ int	binarySearch(unsigned int target, std::vector<unsigned int> vector)
 	return (left);
 }
 
-int	getJacobsthalAt(int index)
-{
-	if (index == 0) 
-		return (0);
-	if (index == 1)
-		return (1);
-	int j0 = 0, j1 = 1, jn;
-	for (int i = 2; i <= index; ++i) 
-	{
-		jn = j1 + 2 * j0;
-		j0 = j1;
-		j1 = jn;
-	}
-	return (jn);
-}
 
 
 bool	isValidInput (char **argv)
@@ -107,9 +92,9 @@ int	main(int argc, char **argv)
 	std::cout << std::endl;
 	printVector(mergeInsertSort.getVector(), "After", 1);
 	
-/*	std::vector<int> JNums = getJacobsthalNums(19);
+//	std::vector<int> JNums = getJacobsthalNums(19);
 	int Jacobstal = getJacobsthalAt(3);
 	std::cout << "Jacobsthal at 3 = " << Jacobstal << std::endl;
-	printVector(JNums, "Jacobsthal numbers", 1);*/
+//	printVector(JNums, "Jacobsthal numbers", 1);
 	return (0);
 }
