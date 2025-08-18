@@ -99,64 +99,7 @@ std::vector<int>	getJacobsthalInsertionOrder(int numGroups)
 	return order;
 }
 
-
-// Generate Jacobsthal numbers up to n (exclusive)
-std::vector<int> jacobsthal_up_to(int n) {
-    std::vector<int> jacob;
-    jacob.push_back(0);
-    jacob.push_back(1);
-    while (true) {
-        int next = jacob.back() + 2 * jacob[jacob.size() - 2];
-        if (next >= n)
-            break;
-        jacob.push_back(next);
-    }
-    return jacob;
-}
-
-// Map b numbers to group indexes in pend
-std::vector<int> ford_johnson_b_group_order(int num_groups) {
-    std::vector<int> jacob = jacobsthal_up_to(num_groups + 2); // +2 to cover all bs
-    std::vector<int> order;
-    int prev = 2;
-    for (size_t i = 3; i < jacob.size(); ++i) {
-        for (int k = jacob[i] - 1; k >= prev; --k) {
-            if (k < num_groups)
-                order.push_back(k);
-        }
-        prev = jacob[i];
-    }
-    // Add remaining groups in reverse order
-    for (int k = num_groups - 1; k >= 0; --k) {
-        bool already = false;
-        for (size_t m = 0; m < order.size(); ++m)
-            if (order[m] == k)
-                already = true;
-        if (!already)
-            order.push_back(k);
-    }
-    return order;
-}
-
-// Map b numbers to individual pend indexes
-std::vector<int> b_to_pend_indexes(int pend_size, int group_size) {
-    int num_groups = pend_size / group_size;
-    std::vector<int> group_order = ford_johnson_b_group_order(num_groups);
-    std::vector<int> index_order;
-    for (size_t i = 0; i < group_order.size(); ++i) {
-        int group_start = group_order[i] * group_size;
-        for (int j = 0; j < group_size; ++j) {
-            index_order.push_back(group_start + j);
-        }
-    }
-    // If pend_size is not a multiple of group_size, add remaining elements
-    for (int i = num_groups * group_size; i < pend_size; ++i) {
-        index_order.push_back(i);
-    }
-    return index_order;
-}
-
-
+/*
 // Lookup table for Ford-Johnson group order for up to 8 groups
 const int fj_group_order[][8] = {
     {}, // 0 groups
@@ -185,6 +128,68 @@ std::vector<int> fj_b_to_pend_indexes(int pend_size, int group_size) {
         index_order.push_back(i);
     }
     return index_order;
+}*/
+
+
+// Generate Jacobsthal numbers up to n (inclusive)
+std::vector<int> jacobsthal_up_to(int n) {
+    std::vector<int> jacob;
+    jacob.push_back(0); // J(0)
+    jacob.push_back(1); // J(1)
+    while (true) {
+        int next = jacob.back() + 2 * jacob[jacob.size() - 2];
+        if (next > n)
+            break;
+        jacob.push_back(next);
+    }
+    return jacob;
+}
+
+// Generate Ford-Johnson insertion order for group representatives
+std::vector<int> ford_johnson_representative_indexes(int pend_size, int group_size)
+{
+    int num_groups = pend_size / group_size;
+    std::vector<int> jacob = jacobsthal_up_to(num_groups);
+
+    std::vector<int> order;
+    std::vector<bool> used(num_groups, false);
+
+    // Always start with Jacobsthal 3 (b3, which is group 1)
+    if (num_groups >= 2) {
+        order.push_back(1); // group 1 (b3)
+        used[1] = true;
+    }
+    if (num_groups >= 1) {
+        order.push_back(0); // group 0 (b2)
+        used[0] = true;
+    }
+
+    // Now process further Jacobsthal intervals
+    for (int j = 3; j < (int)jacob.size(); ++j) {
+        int high = jacob[j];
+        int low = jacob[j-1];
+        for (int i = high - 1; i >= low; --i) {
+            if (i < num_groups && !used[i]) {
+                order.push_back(i);
+                used[i] = true;
+            }
+        }
+    }
+    // Insert remaining groups in reverse order
+    for (int i = num_groups - 1; i >= 0; --i) {
+        if (!used[i]) {
+            order.push_back(i);
+            used[i] = true;
+        }
+    }
+
+    // Convert group indexes to representative indexes in pend
+    std::vector<int> rep_indexes;
+    for (size_t k = 0; k < order.size(); ++k) {
+        int last_idx = (order[k] + 1) * group_size - 1;
+        rep_indexes.push_back(last_idx);
+    }
+    return rep_indexes;
 }
 
 void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupSize, int recursionLevel)
@@ -313,31 +318,10 @@ void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupS
 		insertedElements++;
 	}*/
 
-/*	int numberOfElements = (pend.size() + groupSize - 1) / groupSize;
-	std::vector<int> insertionOrder = getJacobsthalInsertionOrder(numberOfElements);
-
-	for (size_t i = 0; i < insertionOrder.size(); ++i)
-	{
-		int groupIdx = insertionOrder[i];
-		std::cout << "Inserting pend group at index " << groupIdx << ": [";
-		for (int j = 0; j < groupSize; ++j)
-		{
-			int idx = groupIdx * groupSize + j;
-			if (idx < (int)pend.size()) { // C++98: explicit cast for comparison
-				int element = pend[idx];
-				std::cout << element;
-				if (j < groupSize - 1 && idx + 1 < (int)pend.size())
-					std::cout << ", ";
-				// TODO: Insert element into main using your binary insertion logic here
-			}
-		}
-		std::cout << "]" << std::endl;
-	}*/
-
 	std::cout  << std::endl;
 	if (pend.size())
 	{
-		std::vector<int> order = fj_b_to_pend_indexes(pend.size(), groupSize);
+		std::vector<int> order = ford_johnson_representative_indexes(pend.size(), groupSize);
 		for (size_t i = 0; i < order.size(); ++i)
 		{
 			std::cout << order[i];
@@ -386,8 +370,6 @@ void	PmergeMe::vectorMergeInsertion()
 
 	int recursionLevel = log2(elementSize) + 1;
 
-//	elementSize = 2;
-//	recursionLevel = 3;
 	sequenceInsertions(_vector, elementSize, recursionLevel);
 }
 
