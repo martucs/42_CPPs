@@ -24,7 +24,7 @@ class PmergeMe
 
 };
 
-static int	getJacobsthalAt(int index)
+/*static int	getJacobsthalAt(int index)
 {
 	if (index == 0) 
 		return (0);
@@ -38,7 +38,7 @@ static int	getJacobsthalAt(int index)
 		j1 = jn;
 	}
 	return (jn);
-}
+}*/
 
 static void printVector(const std::vector<unsigned int> &vector, const std::string &when, int groupSize)
 {

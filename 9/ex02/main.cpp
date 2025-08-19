@@ -29,7 +29,7 @@ std::vector<int>	getJacobsthalNums(int amount)
 	return (JacobNums);
 }
 
-int	binarySearch(std::vector<unsigned int> vector, unsigned int target)
+int	binarySearch(const std::vector<unsigned int> vector, unsigned int target)
 {
 	int size = vector.size();
 	int left = 0;
@@ -39,13 +39,13 @@ int	binarySearch(std::vector<unsigned int> vector, unsigned int target)
 	{
 		int mid = left + (right - left) / 2;
 		if (vector[mid] == target)
-			return mid;
+			return (mid);
 		else if (vector[mid] < target)
 			left = mid + 1;  // search right half
 		else
 			right = mid - 1; // search left half
 	}
-	return (left);
+	return (-1);
 }
 
 
@@ -93,8 +93,33 @@ int	main(int argc, char **argv)
 	printVector(mergeInsertSort.getVector(), "After", 1);
 	
 //	std::vector<int> JNums = getJacobsthalNums(19);
-	int Jacobstal = getJacobsthalAt(3);
-	std::cout << "Jacobsthal at 3 = " << Jacobstal << std::endl;
+//	int Jacobstal = getJacobsthalAt(3);
+//	std::cout << "Jacobsthal at 3 = " << Jacobstal << std::endl;
 //	printVector(JNums, "Jacobsthal numbers", 1);
 	return (0);
 }
+
+// binary search test
+/*int	main(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+	std::vector<unsigned int>	vector;
+
+	vector.push_back(1);
+	vector.push_back(3);
+	vector.push_back(4);
+	vector.push_back(10);
+	vector.push_back(16);
+	vector.push_back(40);
+	vector.push_back(100);
+
+	int Jacobstal = getJacobsthalAt(3);
+	(void)Jacobstal;
+
+	printVector(vector, "vector", 1);
+	int searchNumber = 3;
+	std::cout << "searching for number " << searchNumber << std::endl;
+	std::cout << "binary search res = " << binarySearch(vector, searchNumber) << std::endl;
+	return (0);
+}*/
