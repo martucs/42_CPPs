@@ -24,22 +24,6 @@ class PmergeMe
 
 };
 
-/*static int	getJacobsthalAt(int index)
-{
-	if (index == 0) 
-		return (0);
-	if (index == 1)
-		return (1);
-	int j0 = 0, j1 = 1, jn;
-	for (int i = 2; i <= index; ++i) 
-	{
-		jn = j1 + 2 * j0;
-		j0 = j1;
-		j1 = jn;
-	}
-	return (jn);
-}*/
-
 static void printVector(const std::vector<unsigned int> &vector, const std::string &when, int groupSize)
 {
     std::cout << when << ": ";
@@ -94,22 +78,5 @@ static void printVector(const std::vector<unsigned int> &vector, const std::stri
     }
     std::cout << std::endl;
 }
-
-/*static void	printVector(const std::vector<unsigned int> &vector, std::string when, int level)
-{
-	std::vector<unsigned int>::const_iterator	it = vector.begin();
-	(void)level;
-
-	std::cout << when << ": ";
-	for (int i = 0; it != vector.end(); it++)
-	{
-		if (it + 1 == vector.end())
-			std::cout<< *it;
-		else
-			std::cout<< *it << ", ";
-		i++;
-	}
-	std::cout << std::endl;
-}*/
 
 #endif
