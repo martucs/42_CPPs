@@ -63,6 +63,15 @@ bool	isValidInput (char **argv)
 	return (true);
 }
 
+bool isSortedAscending(const std::vector<unsigned int>& vec) {
+    for (size_t i = 1; i < vec.size(); ++i) {
+        if (vec[i] < vec[i - 1]) {
+            return false; // Not in ascending order
+        }
+    }
+    return true; // All elements are in order
+}
+
 int	main(int argc, char **argv)
 {
 
@@ -88,9 +97,17 @@ int	main(int argc, char **argv)
 
 	PmergeMe	mergeInsertSort(vector);
 	mergeInsertSort.vectorMergeInsertion();
+	
+	if (!isSortedAscending(mergeInsertSort.getVector()))
+	{
+		std::cout << "something went wrong, vector is not sorted!\n";
+		return (1);
+	}
 
 	std::cout << std::endl;
 	printVector(mergeInsertSort.getVector(), "After", 1);
+	std::cout << std::endl;
+	std::cout << "Vector is sorted! :) \n";
 	
 //	std::vector<int> JNums = getJacobsthalNums(19);
 //	int Jacobstal = getJacobsthalAt(3);

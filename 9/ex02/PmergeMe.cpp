@@ -142,10 +142,10 @@ int compareGroups(const std::vector<unsigned int>& main, int mainGroupIdx,
     unsigned int mainLast = main[mainStart + groupSize - 1];
     unsigned int pendLast = pend[pendStart + groupSize - 1];
 
-    std::cout << "  Comparing main group " << mainGroupIdx
+   /* std::cout << "  Comparing main group " << mainGroupIdx
               << " (last = " << mainLast << ")"
               << " with pend group starting at " << pendStart
-              << " (last = " << pendLast << ")\n";
+              << " (last = " << pendLast << ")\n";*/
 
     if (mainLast < pendLast) return -1;
     if (mainLast > pendLast) return 1;
@@ -163,7 +163,7 @@ void printGroup(const std::vector<unsigned int>& vec, int start, int groupSize, 
 }
 
 
-void binaryInsertion(std::vector<unsigned int>& main, const std::vector<unsigned int>& pend, int orderIndex, int groupSize, int upperBound)
+int binaryInsertion(std::vector<unsigned int>& main, const std::vector<unsigned int>& pend, int orderIndex, int groupSize, int upperBound)
 {
     // Find the group in pend to insert
     int pendGroupStart = orderIndex - groupSize + 1;
@@ -191,8 +191,10 @@ void binaryInsertion(std::vector<unsigned int>& main, const std::vector<unsigned
     }
   std::cout << "Inserting at main group index: " << left << "\n";
     // Insert the group at position 'left'
+    int insertPos = left * groupSize;
     main.insert(main.begin() + left * groupSize, pend.begin() + pendGroupStart, pend.begin() + pendGroupStart + groupSize);
 	printVector(main, "main after insertion", groupSize);
+    return (insertPos);
 }
 
 
@@ -320,52 +322,38 @@ void	PmergeMe::sequenceInsertions(std::vector<unsigned int> &vector, int &groupS
 	}
 	std::cout  << std::endl;
 
-/*std::vector<unsigned int> groupOrder = ford_johnson_group_order(pend.size() / groupSize);
-		std::cout << "group \norder = ";
-		for (size_t i = 0; i < groupOrder.size(); ++i)
-		{
-			std::cout << groupOrder[i];
-			if (i != groupOrder.size() - 1)
-				std::cout << ", ";
-		}
-		std::cout  << std::endl << std::endl;*/
-/*std::vector<unsigned int> aMainIndexesOrdered;
-for (size_t i = 0; i < groupOrder.size(); ++i) {
-    aMainIndexesOrdered.push_back(aMainIndexes[groupOrder[i]]);
-}
-	printVector(aMainIndexesOrdered, "a's main indexes ORDERED for b's in pend", 1);*/
-//	printVector(groupOrder, "grouporder", 1);
-//	std::vector<unsigned int> aMainIndexesOrdered;
-//	for (size_t i = 0; i < order.size(); ++i) {
-//		int groupIdx = (order[i] - (groupSize - 1)) / groupSize;
-//		aMainIndexesOrdered.push_back(aMainIndexes[groupIdx]);
-//	}
-
 	// 2. binary insert each element until hemos acabdo de recorrer el pend
 	size_t	insertedElements = 0; // b1 already in main
 	int	i = 0;
 
 	while ( insertedElements < pend.size() / groupSize)
 	{
-		int upperBound = aMainIndexes[i];
-
-		// Perform the insertion
-		binaryInsertion(main, pend, order[i], groupSize, upperBound);
-
-		// Calculate where the insertion happened
-		int insertPos = upperBound; // You passed this to binaryInsertion, so use it directly
-
-		// Update all aMainIndexes that come after or at the insertion point
+		int bGroupIdx = order[i] / groupSize; // 0 for b2, 1 for b3, etc.
+		int pairedAIdx = bGroupIdx;           // a2 for b2, a3 for b3, etc.
+		int upperBound = aMainIndexes[pairedAIdx];
+//		int upperBound = aMainIndexes[i]; 
+		int insertPos = binaryInsertion(main, pend, order[i], groupSize, upperBound);
+		std::cout << "aMainIndexes before update: ";
+		for(size_t idx = 0; idx < aMainIndexes.size() ; idx++)
+		{
+			    std::cout << aMainIndexes[idx] << " ";
+		}
+		std::cout << std::endl;	
 		for (size_t j = 0; j < aMainIndexes.size(); ++j)
 		{
-			if ((int)aMainIndexes[j] >= insertPos)
-			{
-				aMainIndexes[j] += groupSize;
-			}
+		    if ((int)aMainIndexes[j] >= insertPos)
+		    {
+			aMainIndexes[j] += groupSize;
+		    }
 		}
-
 		insertedElements++;
 		i++;
+		std::cout << "aMainIndexes after update: ";
+		for(size_t idx = 0; idx < aMainIndexes.size() ; idx++)
+		{
+			    std::cout << aMainIndexes[idx] << " ";
+		}
+		std::cout << std::endl;
 	}
 
 
@@ -395,13 +383,6 @@ for (size_t i = 0; i < groupOrder.size(); ++i) {
 
 void	PmergeMe::vectorMergeInsertion()
 {
-	/*std::size_t	elementSize = 1;
-	int		recursionLevel = 0;
-
-	for (int i = 0; i < recursionLevel; ++i) 
-	{
-		elementSize *= 2;
-	}*/
 	int elementSize = 1;
 	sortElements(_vector, elementSize);
 	printVector(_vector, "after sortingg", 1);
