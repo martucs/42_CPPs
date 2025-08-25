@@ -36,7 +36,6 @@ bool isSortedAscending(const std::vector<unsigned int>& vec)
 
 int	main(int argc, char **argv)
 {
-
 	if (argc < 2)
 	{
 		std::cout << "Usage: ./PmergeMe num1 num2 num3 (etc)" << std::endl;
@@ -54,7 +53,6 @@ int	main(int argc, char **argv)
 		vector.push_back(atoi(argv[i]));
 	
 	printVector(vector, "Before", 1);
-	std::cout << std::endl;
 
 	// merge-insert sort
 	PmergeMe	mergeInsertSort(vector);
@@ -66,7 +64,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 
-	std::cout << std::endl;
 	printVector(mergeInsertSort.getVector(), "After", 1);
 	std::cout << std::endl;
 	std::cout << "Vector is sorted! :) \n";
