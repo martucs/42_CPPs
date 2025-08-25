@@ -8,6 +8,7 @@ PmergeMe::PmergeMe()
 PmergeMe::PmergeMe(std::vector<unsigned int> &vector)
 {
 	_vector = vector;
+	_comparisons = 0;
 }
 PmergeMe::PmergeMe(const PmergeMe &var)
 {
@@ -21,6 +22,11 @@ PmergeMe::~PmergeMe()
 std::vector<unsigned int>	PmergeMe::getVector() const
 {
 	return (_vector);
+}
+
+int	PmergeMe::getComparisons() const
+{
+	return (_comparisons);
 }
 
 void printVector(const std::vector<unsigned int> &vector, const std::string &when, int groupSize)
@@ -104,6 +110,7 @@ void	PmergeMe::sortElements(std::vector<unsigned int> &vector, int &groupSize)
 			for (int j = 0; j < groupSize; ++j)
 				std::swap(vector[firstGroupStart + j], vector[secondGroupStart + j]);
 		}
+		_comparisons++;
 	}
 	groupSize *= 2;
 	sortElements(vector, groupSize);
@@ -190,9 +197,7 @@ std::vector<unsigned int> ford_johnson_representative_indexes(int pend_size, int
 }
 
 // Compare two groups in main and pend, return -1 if group1 < group2, 0 if equal, 1 if group1 > group2
-int compareGroups(const std::vector<unsigned int>& main, int mainGroupIdx,
-                  const std::vector<unsigned int>& pend, int pendGroupStart,
-                  int groupSize)
+int PmergeMe::compareGroups(const std::vector<unsigned int>& main, int mainGroupIdx, const std::vector<unsigned int>& pend, int pendGroupStart, int groupSize)
 {
     int mainStart = mainGroupIdx * groupSize;
     int pendStart = pendGroupStart;
@@ -205,8 +210,16 @@ int compareGroups(const std::vector<unsigned int>& main, int mainGroupIdx,
               << " with pend group starting at " << pendStart
               << " (last = " << pendLast << ")\n";*/
 
-    if (mainLast < pendLast) return -1;
-    if (mainLast > pendLast) return 1;
+    if (mainLast < pendLast)
+    {
+	_comparisons++;
+	return -1;
+    }
+    if (mainLast > pendLast)
+    {
+	_comparisons++;
+	return 1;
+    }
     return 0;
 }
 
@@ -223,7 +236,7 @@ void printGroupInVector(const std::vector<unsigned int>& vec, int start, int gro
     std::cout << "]\n";
 }
 
-int binaryInsertion(std::vector<unsigned int>& main, const std::vector<unsigned int>& pend, int orderIndex, int groupSize, int upperBound)
+int PmergeMe::binaryInsertion(std::vector<unsigned int>& main, const std::vector<unsigned int>& pend, int orderIndex, int groupSize, int upperBound)
 {
     // Find the group in pend to insert
     int pendGroupStart = orderIndex - groupSize + 1;
@@ -434,6 +447,7 @@ PmergeMe&	PmergeMe::operator=(const PmergeMe &var)
 	if (this != &var)
 	{
 		_vector = var._vector;
+		_comparisons = var._comparisons;
 	}
 	return (*this);
 }	

@@ -36,10 +36,15 @@ class PmergeMe
 		void				sortElements(std::vector<unsigned int> &vector, int &groupSize);
 		void				sequenceInsertions(std::vector<unsigned int> &vector, int groupSize);
 		std::vector<unsigned int>	getVector() const;
+		int				getComparisons() const;
+
+		int				binaryInsertion(std::vector<unsigned int>& main, const std::vector<unsigned int>& pend, int orderIndex, int groupSize, int upperBound);
+		int				compareGroups(const std::vector<unsigned int>& main, int mainGroupIdx, const std::vector<unsigned int>& pend, int pendGroupStart, int groupSize);
+
 		PmergeMe			&operator=(const PmergeMe &);
 	private:
 		std::vector<unsigned int>	_vector;
-
+		int				_comparisons;
 };
 
 void printVector(const std::vector<unsigned int>& vector, const std::string& when, int groupSize);

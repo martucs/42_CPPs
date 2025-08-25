@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 	}
 
 	printVector(mergeInsertSort.getVector(), "After", 1);
-	std::cout << std::endl;
 	std::cout << "Vector is sorted! :) \n";
+	std::cout << "\nComparisons = " << mergeInsertSort.getComparisons() << std::endl;
 	return (0);
 }
