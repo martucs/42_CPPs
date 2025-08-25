@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <ctime>
 
 int testingFormula(int n)
 {
@@ -56,7 +57,9 @@ int	main(int argc, char **argv)
 
 	// merge-insert sort
 	PmergeMe	mergeInsertSort(vector);
+	clock_t	start = clock();
 	mergeInsertSort.vectorMergeInsertion();
+	clock_t	end = clock();
 	
 	if (!isSortedAscending(mergeInsertSort.getVector()))
 	{
@@ -66,6 +69,8 @@ int	main(int argc, char **argv)
 
 	printVector(mergeInsertSort.getVector(), "After", 1);
 	std::cout << "Vector is sorted! :) \n";
-	std::cout << "\nComparisons = " << mergeInsertSort.getComparisons() << std::endl;
+	std::cout << "\nComparisons: " << mergeInsertSort.getComparisons() << std::endl;
+	double	time = ((end - start) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
+	std::cout << "Time passed: " << time << " ms\n";
 	return (0);
 }
