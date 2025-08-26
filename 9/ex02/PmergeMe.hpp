@@ -57,6 +57,8 @@ class PmergeMe
 		int				compareVecGroups(const std::vector<unsigned int>& main, int mainGroupIdx, const std::vector<unsigned int>& pend, int pendGroupStart, int groupSize);
 		int				compareDeqGroups(const std::deque<unsigned int>& main, int mainGroupIdx, const std::deque<unsigned int>& pend, int pendGroupStart, int groupSize);
 
+		void				performVecInsertions(std::vector<unsigned int> &main, std::vector<unsigned int> &pend, std::vector<unsigned int> &aMainIndexes, int groupSize);
+		void				performDeqInsertions(std::deque<unsigned int> &main, std::deque<unsigned int> &pend, std::deque<unsigned int> &aMainIndexes, int groupSize);
 		PmergeMe			&operator=(const PmergeMe &);
 	private:
 		std::vector<unsigned int>	_vector;
