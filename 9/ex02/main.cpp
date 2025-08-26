@@ -1,17 +1,6 @@
 #include "PmergeMe.hpp"
 #include <ctime>
 
-int testingFormula(int n)
-{
-	int sum = 0;
-	for (int k = 1; k <= n; ++k)
-	{
-		double value = (3.0 / 4.0) * k;
-		sum += static_cast<int>(ceil(log2(value)));
-	}
-	return (sum);
-}
-
 bool	isValidInput (char **argv)
 {
 	for (int i = 1; argv[i]; i++)
@@ -25,11 +14,12 @@ bool	isValidInput (char **argv)
 	return (true);
 }
 
-bool isSortedAscending(const std::vector<unsigned int>& vec)
+template <typename T>
+bool isSortedAscending(T& container)
 {
-	for (size_t i = 1; i < vec.size(); ++i)
+	for (size_t i = 1; i < container.size(); ++i)
 	{
-		if (vec[i] < vec[i - 1])
+		if (container[i] < container[i - 1])
 			return (false);
 	}
 	return (true);
@@ -52,25 +42,47 @@ int	main(int argc, char **argv)
 	std::vector<unsigned int>	vector;
 	for (int i = 1; argv[i] ; i++)
 		vector.push_back(atoi(argv[i]));
-	
-	printVector(vector, "Before", 1);
+	printVector(vector, "VECTOR\nBefore", 1);
 
-	// merge-insert sort
-	PmergeMe	mergeInsertSort(vector);
-	clock_t	start = clock();
-	mergeInsertSort.vectorMergeInsertion();
-	clock_t	end = clock();
+	PmergeMe	vecMergeInsertSort(vector);
 	
-	if (!isSortedAscending(mergeInsertSort.getVector()))
+	// merge-insert sort with vector
+	clock_t	vec_start = clock();
+	vecMergeInsertSort.vectorMergeInsertion();
+	clock_t	vec_end = clock();
+	if (!isSortedAscending(vecMergeInsertSort.getVector()))
 	{
 		std::cout << "something went wrong, vector is not sorted!\n";
 		return (1);
 	}
-
-	printVector(mergeInsertSort.getVector(), "After", 1);
+	printVector(vecMergeInsertSort.getVector(), "After", 1);
 	std::cout << "Vector is sorted! :) \n";
-	std::cout << "\nComparisons: " << mergeInsertSort.getComparisons() << std::endl;
-	double	time = ((end - start) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
-	std::cout << "Time passed: " << time << " ms\n";
+	std::cout << "\nComparisons: " << vecMergeInsertSort.getVectorComparisons() << std::endl;
+	double	vec_time = ((vec_end - vec_start) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
+	std::cout << "Time passed: " << vec_time << " ms\n";
+	
+	std::cout << "--------------------------------------------------\n";
+
+	std::deque<unsigned int>	deque;
+	for (int i = 1; argv[i] ; i++)
+		deque.push_back(atoi(argv[i]));
+	printDeque(deque, "DEQUE\nBefore", 1);
+
+	PmergeMe	deqMergeInsertSort(deque);
+
+	// merge-insert sort with deque
+	clock_t	deq_start = clock();
+	deqMergeInsertSort.dequeMergeInsertion();
+	clock_t	deq_end = clock();
+	if (!isSortedAscending(deqMergeInsertSort.getDeque()))
+	{
+		std::cout << "something went wrong, deque is not sorted!\n";
+		return (1);
+	}
+	printDeque(deqMergeInsertSort.getDeque(), "After", 1);
+	std::cout << "Deque is sorted! :) \n";
+	std::cout << "\nComparisons: " << deqMergeInsertSort.getDequeComparisons() << std::endl;
+	double	deq_time = ((deq_end - deq_start) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
+	std::cout << "Time passed: " << deq_time << " ms\n";
 	return (0);
 }
