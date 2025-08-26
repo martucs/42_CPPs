@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	std::cout << "Vector is sorted! :) \n";
 	std::cout << "\nComparisons: " << vecMergeInsertSort.getVectorComparisons() << std::endl;
 	double	vec_time = ((vec_end - vec_start) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
-	std::cout << "Time passed: " << vec_time << " ms\n";
+	std::cout << "Time to process " << vector.size() << " elements with std::vector -> " << vec_time << " ms\n";
 	
 	std::cout << "--------------------------------------------------\n";
 
@@ -83,6 +83,6 @@ int	main(int argc, char **argv)
 	std::cout << "Deque is sorted! :) \n";
 	std::cout << "\nComparisons: " << deqMergeInsertSort.getDequeComparisons() << std::endl;
 	double	deq_time = ((deq_end - deq_start) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
-	std::cout << "Time passed: " << deq_time << " ms\n";
+	std::cout << "Time to process " << deque.size() << " elements with std::deque -> " << deq_time << " ms\n";
 	return (0);
 }
