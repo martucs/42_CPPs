@@ -9,25 +9,12 @@
 
 #ifdef DEBUG_MODE
     #define DEBUG_PRINT(x) do { std::cout << x; } while (0)
+    #define DEBUG_PRINT_CONTAINER(c, when, groupSize) printContainer(c, when, groupSize)
+    #define DEBUG_PRINT_GROUP(c, start, groupSize, name) printGroupInContainer(c, start, groupSize, name)
 #else
     #define DEBUG_PRINT(x) do {} while (0)
-#endif
-
-#ifdef DEBUG_MODE
-    #define DEBUG_PRINT_VECTOR(vec, when, groupSize) printVector(_vector, when, groupSize)
-    #define DEBUG_PRINT_DEQUE(deq, when, groupSize) printDeque(_deque, when, groupSize)
-#else
-    #define DEBUG_PRINT_VECTOR(vec, when, groupSize) do {} while (0)
-    #define DEBUG_PRINT_DEQUE(deq, when, groupSize) do {} while (0)
-
-#endif
-
-#ifdef DEBUG_MODE
-    #define DEBUG_PRINT_VECGROUP(vec, start, groupSize, name) printGroupInVector(vec, start, groupSize, name)
-    #define DEBUG_PRINT_DEQGROUP(vec, start, groupSize, name) printGroupInDeque(_deque, start, groupSize, name)
-#else
-    #define DEBUG_PRINT_VECGROUP(vec, start, groupSize, name) do {} while (0)
-    #define DEBUG_PRINT_DEQGROUP(dec, start, groupSize, name) do {} while (0)
+    #define DEBUG_PRINT_CONTAINER(c, when, groupSize) do {} while (0)
+    #define DEBUG_PRINT_GROUP(c, start, groupSize, name) do {} while (0)
 #endif
 
 class PmergeMe
@@ -67,7 +54,85 @@ class PmergeMe
 		int				_deqComparisons;
 };
 
-void printVector(const std::vector<unsigned int>& vector, const std::string& when, int groupSize);
-void printDeque(const std::deque<unsigned int>& deque, const std::string &when, int groupSize);
+template <typename Container>
+void printContainer(const Container& container, const std::string& when, int groupSize)
+{
+    std::cout << when << ": ";
+    int n = static_cast<int>(container.size());
+    int i = 0;
+    const std::string color = "\033[31m";
+    const std::string colorReset = "\033[0m";
+
+    while (i < n)
+    {
+        int remaining = n - i;
+
+        if (groupSize == 1)
+        {
+            for (; i < n; ++i)
+            {
+                std::cout << container[i];
+                if (i < n - 1)
+                    std::cout << ", ";
+            }
+            break;
+        }
+        if (remaining < groupSize)
+        {
+            for (int j = 0; j < remaining; ++j, ++i)
+            {
+                std::cout << container[i];
+                if (j < remaining - 1)
+                    std::cout << ", ";
+            }
+        }
+        else
+        {
+            std::cout << "\x1B[1m[" << "\x1B[0m";
+            for (int j = 0; j < groupSize; ++j, ++i)
+            {
+                if (j == groupSize - 1)
+                    std::cout << color << container[i] << colorReset;
+                else
+                    std::cout << container[i];
+                if (j < groupSize - 1)
+                    std::cout << ", ";
+            }
+            std::cout << "\x1B[1m]" << "\x1B[0m";
+        }
+        if (i < n)
+            std::cout << ", ";
+    }
+    std::cout << std::endl;
+}
+
+template <typename Container>
+void printGroupInContainer(const Container& container, int start, int groupSize, const std::string& name)
+{
+	std::cout << name << " group: ";
+
+	int n = static_cast<int>(container.size());
+	if (start < 0 || start >= n)
+	{
+		std::cout << "(invalid start index)" << std::endl;
+		return;
+	}
+	int end = std::min(start + groupSize, n);
+	const std::string color = "\033[31m";
+	const std::string colorReset = "\033[0m";
+
+	std::cout << "\x1B[1m[" << "\x1B[0m";
+	for (int i = start; i < end; ++i)
+	{
+		if (i == end - 1) 
+			std::cout << color << container[i] << colorReset;
+		else
+			std::cout << container[i];
+
+		if (i < end - 1)
+			std::cout << ", ";
+	}
+	std::cout << "\x1B[1m]" << "\x1B[0m" << std::endl;
+}
 
 #endif

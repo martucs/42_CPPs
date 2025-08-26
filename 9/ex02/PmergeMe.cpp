@@ -55,7 +55,7 @@ void	PmergeMe::vectorMergeInsertion()
 {
 	int elementSize = 1;
 	sortVecElements(_vector, elementSize);
-	DEBUG_PRINT_VECTOR(_vector, "after sortingg", 1);
+	DEBUG_PRINT_CONTAINER(_vector, "after sortingg", 1);
 	DEBUG_PRINT(std::endl);
 	vecSequenceInsertions(_vector, elementSize);
 }
@@ -64,7 +64,7 @@ void	PmergeMe::dequeMergeInsertion()
 {
 	int elementSize = 1;
 	sortDeqElements(_deque, elementSize);
-	DEBUG_PRINT_DEQUE(_deque, "after sortingg", 1);
+        DEBUG_PRINT_CONTAINER(_deque, "after sortingg", 1);
 	DEBUG_PRINT(std::endl);
 	deqSequenceInsertions(_deque, elementSize);
 }
@@ -315,30 +315,6 @@ int PmergeMe::compareDeqGroups(const std::deque<unsigned int>& main, int mainGro
     return 0;
 }
 
-void printGroupInVector(const std::vector<unsigned int>& vec, int start, int groupSize, const std::string& name)
-{
-    std::cout << name << " group: [";
-    for (int i = 0; i < groupSize; ++i)
-    {
-        std::cout << vec[start + i];
-        if (i != groupSize - 1)
-	    std::cout << ", ";
-    }
-    std::cout << "]\n";
-}
-
-void printGroupInDeque(const std::deque<unsigned int>& deq, int start, int groupSize, const std::string& name)
-{
-    std::cout << name << " group: [";
-    for (int i = 0; i < groupSize; ++i)
-    {
-        std::cout << deq[start + i];
-        if (i != groupSize - 1)
-	    std::cout << ", ";
-    }
-    std::cout << "]\n";
-}
-
 int PmergeMe::binaryInsertion(std::vector<unsigned int>& main, const std::vector<unsigned int>& pend, int orderIndex, int groupSize, int upperBound)
 {
     int pendGroupStart = orderIndex - groupSize + 1;
@@ -350,7 +326,7 @@ int PmergeMe::binaryInsertion(std::vector<unsigned int>& main, const std::vector
     DEBUG_PRINT("\ninserting with orderIndex = " << orderIndex << std::endl);
     DEBUG_PRINT("upperbound = " << upperBound << std::endl);	
     DEBUG_PRINT("Inserting group from pend indices [" << pendGroupStart << " to " << pendGroupStart + groupSize - 1 << "]\n");
-    DEBUG_PRINT_VECGROUP(pend, pendGroupStart, groupSize, "Pend");
+    DEBUG_PRINT_GROUP(pend, pendGroupStart, groupSize, "Pend");
     while (left < right)
     {
 	int mid = left + (right - left) / 2;
@@ -366,7 +342,7 @@ int PmergeMe::binaryInsertion(std::vector<unsigned int>& main, const std::vector
     int insertPos = left * groupSize;
     main.insert(main.begin() + insertPos, pend.begin() + pendGroupStart, pend.begin() + pendGroupStart + groupSize);
     
-    DEBUG_PRINT_VECTOR(main, "main after insertion", groupSize);
+    DEBUG_PRINT_CONTAINER(main, "main after insertion", groupSize);
     return (insertPos);
 }
 
@@ -380,7 +356,7 @@ int PmergeMe::deqBinaryInsertion(std::deque<unsigned int>& main, const std::dequ
     DEBUG_PRINT("\ninserting with orderIndex = " << orderIndex << std::endl);
     DEBUG_PRINT("upperbound = " << upperBound << std::endl);	
     DEBUG_PRINT("Inserting group from pend indices [" << pendGroupStart << " to " << pendGroupStart + groupSize - 1 << "]\n");
-    DEBUG_PRINT_DEQGROUP(pend, pendGroupStart, groupSize, "Pend");
+    DEBUG_PRINT_GROUP(pend, pendGroupStart, groupSize, "Pend");
     while (left < right)
     {
 	int mid = left + (right - left) / 2;
@@ -395,7 +371,7 @@ int PmergeMe::deqBinaryInsertion(std::deque<unsigned int>& main, const std::dequ
     int insertPos = left * groupSize;
     main.insert(main.begin() + insertPos, pend.begin() + pendGroupStart, pend.begin() + pendGroupStart + groupSize);
     
-    DEBUG_PRINT_VECTOR(main, "main after insertion", groupSize);
+    DEBUG_PRINT_CONTAINER(main, "main after insertion", groupSize);
     return (insertPos);
 }
 
@@ -558,7 +534,7 @@ void	PmergeMe::vecSequenceInsertions(std::vector<unsigned int> &vector, int grou
         return;
     }
 
-    DEBUG_PRINT_VECTOR(vector, "sequence", groupSize);
+    DEBUG_PRINT_CONTAINER(vector, "sequence", groupSize);
     DEBUG_PRINT(std::endl);
 
     std::vector<unsigned int> main; 
@@ -569,18 +545,18 @@ void	PmergeMe::vecSequenceInsertions(std::vector<unsigned int> &vector, int grou
     int lastProcessedIndex = fillVecChains(vector, groupSize, main, pend, aMainIndexes, nonParticipating);
 
     DEBUG_PRINT("\nBEFORE INSERTION" << std::endl);
-    DEBUG_PRINT_VECTOR(main, "main", groupSize);
-    DEBUG_PRINT_VECTOR(pend, "pend", groupSize);
-    DEBUG_PRINT_VECTOR(nonParticipating, "non part", groupSize);
-    DEBUG_PRINT_VECTOR(aMainIndexes, "a's main indexes for b's in pend", 1);
+    DEBUG_PRINT_CONTAINER(main, "main", groupSize);
+    DEBUG_PRINT_CONTAINER(pend, "pend", groupSize);
+    DEBUG_PRINT_CONTAINER(nonParticipating, "non part", groupSize);
+    DEBUG_PRINT_CONTAINER(aMainIndexes, "a's main indexes for b's in pend", 1);
 
     performVecInsertions(main, pend, aMainIndexes, groupSize);
 
     DEBUG_PRINT("\nAFTER INSERTION" << std::endl);
-    DEBUG_PRINT_VECTOR(main, "main", groupSize);
-    DEBUG_PRINT_VECTOR(pend, "pend/inserted", groupSize);
-    DEBUG_PRINT_VECTOR(nonParticipating, "non part", groupSize);
-    DEBUG_PRINT_VECTOR(aMainIndexes, "a's main indexes for b's in pend", 1);
+    DEBUG_PRINT_CONTAINER(main, "main", groupSize);
+    DEBUG_PRINT_CONTAINER(pend, "pend/inserted", groupSize);
+    DEBUG_PRINT_CONTAINER(nonParticipating, "non part", groupSize);
+    DEBUG_PRINT_CONTAINER(aMainIndexes, "a's main indexes for b's in pend", 1);
     DEBUG_PRINT(std::endl);
 
     handleLeftovers(vector, main, nonParticipating, lastProcessedIndex);
@@ -742,7 +718,7 @@ void	PmergeMe::deqSequenceInsertions(std::deque<unsigned int> &deque, int groupS
         deqSequenceInsertions(deque, groupSize / 2);
         return;
     }
-    DEBUG_PRINT_DEQUE(deque, "sequence", groupSize);
+    DEBUG_PRINT_CONTAINER(deque, "sequence", groupSize);
     DEBUG_PRINT(std::endl);
 
     std::deque<unsigned int> main;
@@ -753,18 +729,18 @@ void	PmergeMe::deqSequenceInsertions(std::deque<unsigned int> &deque, int groupS
     int lastProcessedIndex = fillDeqChains(deque, groupSize, main, pend, aMainIndexes, nonParticipating);
 
     DEBUG_PRINT("\nBEFORE INSERTION" << std::endl);
-    DEBUG_PRINT_DEQUE(main, "main", groupSize);
-    DEBUG_PRINT_DEQUE(pend, "pend", groupSize);
-    DEBUG_PRINT_DEQUE(nonParticipating, "non part", groupSize);
-    DEBUG_PRINT_DEQUE(aMainIndexes, "a's main indexes for b's in pend", 1);
+    DEBUG_PRINT_CONTAINER(main, "main", groupSize);
+    DEBUG_PRINT_CONTAINER(pend, "pend", groupSize);
+    DEBUG_PRINT_CONTAINER(nonParticipating, "non part", groupSize);
+    DEBUG_PRINT_CONTAINER(aMainIndexes, "a's main indexes for b's in pend", 1);
 
     performDeqInsertions(main, pend, aMainIndexes, groupSize);
 
     DEBUG_PRINT("\nAFTER INSERTION" << std::endl);
-    DEBUG_PRINT_DEQUE(main, "main", groupSize);
-    DEBUG_PRINT_DEQUE(pend, "pend/inserted", groupSize);
-    DEBUG_PRINT_DEQUE(nonParticipating, "non part", groupSize);
-    DEBUG_PRINT_DEQUE(aMainIndexes, "a's main indexes for b's in pend", 1);
+    DEBUG_PRINT_CONTAINER(main, "main", groupSize);
+    DEBUG_PRINT_CONTAINER(pend, "pend/inserted", groupSize);
+    DEBUG_PRINT_CONTAINER(nonParticipating, "non part", groupSize);
+    DEBUG_PRINT_CONTAINER(aMainIndexes, "a's main indexes for b's in pend", 1);
     DEBUG_PRINT(std::endl);
 
     handleDeqLeftovers(deque, main, nonParticipating, lastProcessedIndex);
@@ -782,106 +758,3 @@ PmergeMe&	PmergeMe::operator=(const PmergeMe &var)
 	}
 	return (*this);
 }	
-
-void printVector(const std::vector<unsigned int> &vector, const std::string &when, int groupSize)
-{
-    std::cout << when << ": ";
-    int n = static_cast<int>(vector.size());
-    int i = 0;
-    const std::string color = "\033[31m";
-    const std::string colorReset = "\033[0m";
-
-    while (i < n)
-    {
-        int remaining = n - i;
-
-        if (groupSize == 1)
-        {
-            for (; i < n; ++i)
-            {
-                std::cout << vector[i];
-                if (i < n - 1)
-                    std::cout << ", ";
-            }
-            break;
-        }
-        // If remaining elements are fewer than groupSize, print them without brackets
-        if (remaining < groupSize)
-        {
-            for (int j = 0; j < remaining; ++j, ++i)
-            {
-                std::cout << vector[i];
-                if (j < remaining - 1)
-                    std::cout << ", ";
-            }
-        }
-        else
-        {
-            // Print a full group with brackets
-            std::cout << "\x1B[1m[" << "\x1B[0m";
-            for (int j = 0; j < groupSize; ++j, ++i)
-            {
-                if (j == groupSize - 1)
-                    std::cout << color << vector[i] << colorReset; // Last element in group
-                else
-                    std::cout << vector[i];
-                if (j < groupSize - 1)
-                    std::cout << ", ";
-            }
-            std::cout << "\x1B[1m]" << "\x1B[0m";
-        }
-        if (i < n)
-            std::cout << ", ";
-    }
-    std::cout << std::endl;
-}
-
-void printDeque(const std::deque<unsigned int> &deque, const std::string &when, int groupSize)
-{
-    std::cout << when << ": ";
-    int n = static_cast<int>(deque.size());
-    int i = 0;
-    const std::string color = "\033[31m";
-    const std::string colorReset = "\033[0m";
-
-    while (i < n)
-    {
-        int remaining = n - i;
-        if (groupSize == 1)
-        {
-            for (; i < n; ++i)
-            {
-                std::cout << deque[i];
-                if (i < n - 1)
-                    std::cout << ", ";
-            }
-            break;
-        }
-        if (remaining < groupSize)
-        {
-            for (int j = 0; j < remaining; ++j, ++i)
-            {
-                std::cout << deque[i];
-                if (j < remaining - 1)
-                    std::cout << ", ";
-            }
-        }
-        else
-        {
-            std::cout << "\x1B[1m[" << "\x1B[0m";
-            for (int j = 0; j < groupSize; ++j, ++i)
-            {
-                if (j == groupSize - 1)
-                    std::cout << color << deque[i] << colorReset;
-                else
-                    std::cout << deque[i];
-                if (j < groupSize - 1)
-                    std::cout << ", ";
-            }
-            std::cout << "\x1B[1m]" << "\x1B[0m";
-        }
-        if (i < n)
-            std::cout << ", ";
-    }
-    std::cout << std::endl;
-}
