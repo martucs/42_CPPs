@@ -35,6 +35,8 @@ This is not the best example because there are only 8 numbers (even number), we 
 
 This means it will be a very simple example, but, if you're starting out, I think it will be less overwhelming and more clear, and you can always check out more complex examples like the ones in the article.
 
+<br/>
+
 ### 1. Grouping and Sorting
 This part is simple. It consists on making groups of powers of 2 and sorting those pairs in a recursive manner until you can no longer create a group because you don't have enough numbers to create a group.
 
@@ -110,6 +112,30 @@ The smaller numbers aren't in order, but that is precisely what we will deal wit
 This is how our sequence looks after grouping and sorting:
 
     1 5 4 6 3 7 2 9
+
+
+***ODD NUMBERS***
+
+If we had had an odd amount of numbers, we would have probably encountered at some point something like this:
+    
+    element size = 2
+    vector size = 5
+
+    [4 1] [2 6] 3
+
+The vector[4], which is = 3, is left out of the sorting process. We will simply sort what we can, add the leftover number, and continue the grouping process:
+     
+     [4 1] [2 6] 3  - >   [ [1 4] [2 6] ] 3   - >  1 4 2 6 3    (and that would be it)
+<br/>
+
+In terms of code, this first process is simple, but I'll point out some things to keep in mind:
+
+- I am not dividing in any moment the vector (it's just a clearer representation of the idea) 
+- I use an std::vector<unsigned int> as argument to the recursive function.
+  This means I always have to keep track of the size of elements.
+  I never use std::pairs, it seemed hard to implement to me.
+- You have to respect the grouping of elements of the previous call.
+<br/>
 
 ### 2. Inserting in the different group levels
 
