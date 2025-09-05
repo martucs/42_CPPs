@@ -40,36 +40,81 @@ This part is simple. It consists on making groups of powers of 2 and sorting tho
 
 In emuniov's article, he refers to each group as an element, which makes sense and helps keep things clear, so I will use the term like so as well.
 
-Every time speak about an element, we should know how many numbers form that element. When we start, we have a std::vector<unsigned int> and an elements will simply be each number. The first grouping will be of pairs/groups of 2.
+Every time speak about an element, we should know how many numbers form that element. When we start, we have a std::vector<unsigned int> and our elements will simply be each number. The first grouping will be of pairs/groups of 2.
 
-We will not change anything in the vector, but our elements will have a size of 2 and look like this:
+So we start with:
 
+    7 3 9 2 5 1 4 6
+    
+    grouped like so:
+    
     [7 3] [9 2] [5 1] [4 6]
 
 Then we will simply put the biggest number in each element to the right:
 
     [3 7] [2 9] [1 5] [4 6]
+
 We switched the positions of 7 and 3 because 7 > 3, and the same thing with 9 and 2 and 5 and 1. We left 4 and 6 as they were because they are already in the correct order.
 
-Now we repeat the process with the modified sequence: we make groups of (the previous group size(2) x 2) -> 4.
+> [!NOTE]
+>
+>Later, in the insertion part, we'll see that we identify elements by being ***b***'s or ***a***'s.
+>
+>        [3 7]  [2 9]  [1 5]  [4 6]
+>        b1 a1  b2 a2  b3 a3  b4 a4
+>
+> After the sorting  ->   b's = ***smaller*** numbers  |  a's = ***bigger*** ones.
+> 
+> This is something that is ALWAYS true, in every level.
+> (the tags will change each level, but we'll see that later on)
+>
+> Our goal this first stage is to have the bigger numbers in ascending order.
 
-    [[3 7] [2 9]] [[1 5] [4 6]]
+If that note didn't help you, don't panic! Everything is much clearer through example. Let's continue.
+    
+Now that we have our pairs with the bigger numbers to the right, we repeat the grouping process: we make groups of (the previous group size(2) x 2) -> 4.
 
-Notice that we mantain the previous grouping. This is very important. The logic of the algorithm works with the idea that in each level of grouping and sorting we are sorting the bigger numbers and putting them in the right-most position, and this means that we will only check the number in that position (last number of each element) and moving the whole group when needed.
+    [ [3 7] [2 9] ] [ [1 5] [4 6] ]
+         Group           Group
 
-In this case, we have 2 elements per group, so we ask ourselves: is 7 > 9? and, is 5 > 6?: 
-Because both of them are smaller, we don't need to do any switch in positions.
+Notice that we mantain the previous grouping of pairs. This is very important. The logic of the algorithm works with the idea that in each level of grouping and sorting we are sorting the bigger numbers and putting them in the right-most position, and this means that we will only check the number in that position (last number of each element) and moving the whole group when needed.
 
-So, now, you guessed it! We make groups again: 
+Now we have 2 elements per group, each element formed by 2 numbers:
 
-    [[[3 7] [2 9]] [[1 5] [4 6]]]
-Now we have one group with 2 elements of size 4.
+      [ [3 7]    [2 9] ]   [ [1 5]    [4 6] ]
+         (b1)     (a1)        (b2)     (a2)
+      
+we only check the right-most number of each element, so we ask ourselves: is 7 > 9? and, is 5 > 6?: 
+Because both 7 is smaller than 9, and 5 is samller than 6, we don't need to do any switch in positions.
 
-We ask ourselves, is 9 > 6 ? It isn't, so we switch the whole group like so:
+We are making sure that the bigger elements( formed by pairs in this case) go to the right.
 
-    [[[1 5] [4 6]] [[3 7] [2 9]]]
+So, now, you guessed it! We make groups again, of (4 x 2) = 8: 
 
-As you can see, now the bigger numbers in each pair are already in order (5, 6, 7, 9). And the smaller aren't, but that is something we will deal with in the next part.
+    [  [ [3 7] [2 9] ]   [ [1 5] [4 6] ]  ]
+           Element           Element
+                     Group
+    
+We have 1 group, with 2 elements of size 4. We ask ourselves, is 9(last number of element) > 6(last number of element) ? 
+It is, and we want the bigger element to the right, so we switch the elements:
+ 
+    [  [ [1 5] [4 6] ]   [ [3 7] [2 9] ]  ]
+            (b1)              (a1)
+
+Notice that we have switched all 4 numbers that compose the element. As you can see, in this case, the bigger numbers in each pair are already in ascendinig order (5, 6, 7, 9). 
+
+We stop recursion/grouping here because it is not possible to make bigger groups. Our vector size = 8 and the next group would have to have at least 16 (8 x 2) numbers.
+
+The smaller numbers aren't in order, but that is precisely what we will deal with in the next part.
+
+This is how our sequence looks after grouping and sorting:
+
+    1 5 4 6 3 7 2 9
+
+### 2. Inserting in the different group levels
+
+
+
 
 
 
