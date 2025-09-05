@@ -139,6 +139,55 @@ In terms of code, this first process is simple, but I'll point out some things t
 
 ### 2. Inserting in the different group levels
 
+This part consists on creating chains and inserting elements from one chain to the other. 
+
+The 'main' chain will consist of the bigger elements (already sorted) and the 'pend' chain will have the smaller elements (not sorted).\
+We will insert elements from the 'pend' (b's) to the 'main'(b1 + a's).\
+We start this process with the element size that we left off with during the grouping process.
+
+Follwing our example, we had: 
+
+    1 5 4 6 3 7 2 9
+    
+    and we left off at element size = 4
+   
+    [ [1 5] [4 6] ]   [ [3 7] [2 9] ]
+         (b1)              (a1)
+
+The order of elements is ALWAYS going to be b1, a1, b2, a2, b3, a3, b4, a4, and so on, no matter the element's size. We will reset these 'tags' after each recursion level; because yes, we will also use recursion for this process :') 
+
+Now, as I am following emuminov's article, I chose to do the same he does, which is initialize the 'main' chain always with b1 + all the a's. The alternative would be to simply initialize the 'main' with all a's (bigger elements) and the 'pend' with all b's (smaller elements).
+
+Keeping b1 in the main saves us an insertion and is supposed to be a very obvious optimization, because we already have established and seen that b elements are always smaller than their corresponding a alements (for ex: b1 will always be smaller than a1). If we have done the first part of the process correctly, this should be true. In our current example, we can see that if we take the last number of b1 (6), it is indeed smaller than the last number of a1 (9). 
+
+Why is this more efficient? Because our goal is to insert the smaller numbers into the 'main'. And if we know that the first two are always in order, we can skip the usual process.
+
+In our case, there are no other b elements besides b1, so we don't have anything to insert, we can go to the next grouping level - > where element size = 2.
+
+We are now doing the inverse process. In part 1 we created groups, of bigger numbers each time, and here we start with big groups, put them in 'main' and 'pend' chains, put the elements in the 'pend' in the correct order inside the 'main', and then we go back a level of grouping, until we have elements of 1 number. Let's see how this looks.
+
+With element size = 2:
+
+     [1 5] [4 6] [3 7] [2 9] 
+       b1    a1    b2    a2
+
+Our main and pend should look like:
+
+    main = [1 5] [4 6] [2 9]   |    pend = [3 7]
+             b1    a1    a2    |             b2
+
+Now comes the part I struggled the most to understand: 
+
+### the insertion order ✨
+
+This is simply gonna be the order of the elements to be inserted. If we had 5 elements in the pend, we will always insert those same 5 elements, the only thing we decide here is when to insert each of them.
+
+The implications of this order is something that I still find difficult to understand. How could inserting one element before another matter, if we are inserting them anyway? Well, I don't have the answer 100% clear, but I believe the gist of it relies in the fact that we will be inserting the pend elements in the main with the help of binary search and the [Jacobsthal numbers](https://en.wikipedia.org/wiki/Jacobsthal_number). 
+
+> [!TIP]
+> If you don't know anything about binary search, it is a way to find a number inside an ***already sorted*** array.\
+> [This](https://www.youtube.com/watch?v=eVuPCG5eIr4&t=52s) video is extremely simple but suuper clear, and you'll understand it in a second!
+
 
 
 
