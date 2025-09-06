@@ -206,35 +206,60 @@ Let's briefly imagine we have 7 ***b*** elements. 6 of those elements will be in
     
     pend = [1 5]  [4 6]  [2 9]  [3 8]  [0 7]  [11 12]
              b2     b3     b4     b5     b6     b7
+Jacobsthal numbers used: 3, 5\
 The order of insertion will be: b3, b2, b5, b4, b7, b6
 
 If we had 11 ***b*** elements, 10 of those elements in the pend (b1 in the main):
     
     pend = [1 5]  [4 6]  [2 9]  [3 8]  [0 7]  [11 12]  [15 25]  [13 14]  [16 19]  [20 22]
              b2     b3     b4     b5     b6      b7       b8       b9      b10      b11 
+Jacobsthal numbers used: 3, 5, 11\
 The order of insertion will be: b3, b2, b5, b4, b11, b10, b9, b8, b7, b6
 
 The pattern is: 
 1. We start with the b element the closest to Jacobsthal 3
    >  We ***always*** start with Jacobsthal 3 because we have already inserted b1 in the main (it's as if we had already used Jacobsthal 1)
    
-2. We descend in our vector to the left untill we reach the start of the vector
-   > because we always start with b2, that's gonna be our next element to insert
+2. We descend in our vector to the left until we reach the last element inserted or the beggining of the vector
+   > because we always start with b2 and b3 is inserted but it is a position to the right, b2 is gonna be our next element to insert
    
 3. We look for the element corresponding to the next Jacobsthal number (Jacobsthal 5) -> b5
-   - if it exists: we choose it 
+   - if it exists: we choose it
    - if it doesn't exist: we insert the remainig elements in reverse order, like we saw in the first example with Jacobsthal 11:
       
          pend = [1 5]  [4 6]  [2 9]  [3 8]  [0 7]  [11 12]
                   b2     b3     b4     b5     b6     b7
          there is no b11, we have from b6 to b7 to insert, so the order of insertion is : b3, b2, b5, b4, b7, b6
    
-4. If we found the Jacobsthal element in step 3, we descend from that element to the last element to the left of the vector that hasn't been inserted yet
+4. If we found the Jacobsthal element in step 3, apply step 2 again: descend from that element to the last element to the left of the vector that hasn't been inserted yet
    > If we came from jacobsthal 5, the next element to insert will be b4 (b3 and b2 will have already been inserted at this point)
    
 5. We look for the element corresponding to the next Jacobsthal number (Jacobsthal 11)
     > we'll repeat step 3 and 4 basically, until we can no longer use a Jacobsthal number
+<br/>
 
+This may seem a bit overwhelming at first but I promise you'll realize it's actually very consistent and simple. Let's what happens with the example we have been following:
 
+    main = [1 5] [4 6] [2 9]   |    pend = [3 7]
+             b1    a1    a2    |             b2
+
+We only have 1 element to insert, so it may not matter much, but know that we choose b2 because it is the closest lower element to b3 (element corresponding to Jacobsthal 3).
+
+Now, how do we actually insert? How do we know in which position in the main b2 has to be?\
+Visually, you and I can clearly tell that, because 7 is > 6 but < 9, b2 should be between a1 and a2. But we still haven't established how to determine that. This is where binary search/insertion comes in.
+
+The article mentions it but doesn't explain exactly how to do it, or I didn't understand it. I made my own binaryInsertion function, but I see a lot of people use std::lower_bound and supposedly this function already has binary insertion integrated. \
+It is also probably easier in terms of code, but I wanted to try to do it with a specific function for it. I definately made my life more complicated, adding a maximum position to insert to the righgt pointer of the main\
+The article talks about this, and it should be a great way to make the insertion even more efficient, but I am not sure if the way I coded it (with a LOOT of help from chatgpt) takes advantadge of it.
+
+I'm gonna attempt to explain this optimization:
+
+> If you aren't familiar with binary search and haven't watched the video I linked, do it now because I'm gonna assume you already know the basics.
+
+So, everything comes down to the 'tags' of the elements and the logic behind this algorithm, which is pretty difficult for me to grasp. I simply trust it 🙇‍♀️
+
+Basically, what we do is: instead of having a left pointer pointing to the start of the main and a right pointer to the end of the main, we send the binaryInsertion function a variable I believe I called upperBound, which is gonna be the position in the main where the upper limit for the insertion of that element will be. Which is this element? And how do we know where it is?\
+Well, because each b element has a corresponding a element that is always bigger, whenever we insert a b element into the main, we will look for its a element, and that position is gonna be our upperBound, that's what's gonna act as the right pointer would during normal binary search. This should make us discard some elements.\
+Let's see an example:
 
 
