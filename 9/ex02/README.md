@@ -5,9 +5,9 @@ I mainly followed [this](https://dev.to/emuminov/human-explanation-and-step-by-s
 
 To my understanding, these are the basic characteristics that the Ford-Johnson algorithm has:
 - Divides and sorts recursively, sorting the bigger numbers to later insert the smaller numbers in their correct position
-- Uses the Jacobsthal sequence to decide the insertioin order of the elements to insert
+- Uses the Jacobsthal sequence to decide the insertion order of the elements to insert
 
-I also understood from this article that the binary serarch/insertion is also an important characteristic of this algorithm and that it plays a part in the efficiency of the insertion, so I incorporated it, but it is still unclear to me whether it is necessary or not.
+I also understood from this article that the binary serarch/insertion is an important characteristic of this algorithm and that it plays a part in the efficiency of the insertion, so I incorporated it, but it is still unclear to me whether it is necessary or not.
 
 I used std::vector and std::deque, and I also print the comparisions made, which, because the code is exactly the same for deque and vector, are always the same in both cases.
 
@@ -156,15 +156,15 @@ Follwing our example, we had:
 
 The order of elements is ALWAYS going to be b1, a1, b2, a2, b3, a3, b4, a4, and so on, no matter the element's size. We will reset these 'tags' after each recursion level; because yes, we will also use recursion for this process :') 
 
-Now, as I am following emuminov's article, I chose to do the same he does, which is initialize the 'main' chain always with b1 + all the a's. The alternative would be to simply initialize the 'main' with all a's (bigger elements) and the 'pend' with all b's (smaller elements).
+Now, as I am following emuminov's article, I chose to do the same he does, which is to initialize the 'main' chain always with b1 + all the a's. The alternative would be to simply initialize the 'main' with all a's (bigger elements) and the 'pend' with all b's (smaller elements).
 
-Keeping b1 in the main saves us an insertion and is supposed to be a very obvious optimization, because we already have established and seen that b elements are always smaller than their corresponding a alements (for ex: b1 will always be smaller than a1). If we have done the first part of the process correctly, this should be true. In our current example, we can see that if we take the last number of b1 (6), it is indeed smaller than the last number of a1 (9). 
+Keeping b1 in the 'main' saves us an insertion and is supposed to be a very obvious optimization, because we have already established and seen that b elements are always smaller than their corresponding a alements (for ex: b1 will always be smaller than a1). If we have done the first part of the process correctly, this should be true. In our current example, we can see that if we take the last number of b1 (6), it is indeed smaller than the last number of a1 (9). 
 
 Why is this more efficient? Because our goal is to insert the smaller numbers into the 'main'. And if we know that the first two are always in order, we can skip the usual process.
 
-In our case, there are no other b elements besides b1, so we don't have anything to insert, we can go to the next grouping level - > where element size = 2.
+In our example, there are no other b elements besides b1, so we don't have anything to insert, we can go to the next grouping level - > where element size = 2.
 
-We are now doing the inverse process. In part 1 we created groups, of bigger numbers each time, and here we start with big groups, put them in 'main' and 'pend' chains, put the elements in the 'pend' in the correct order inside the 'main', and then we go back a level of grouping, until we have elements of 1 number. Let's see how this looks.
+We are now doing the inverse process. In part 1 we created groups of bigger numbers each time, and here we start with big groups, put them in 'main' and 'pend' chains, put the elements in the 'pend' in the correct order inside the 'main', and then we go back a level of grouping, until we have elements composed by only 1 number. Let's see how this looks.
 
 With element size = 2:
 
@@ -182,18 +182,58 @@ Now comes the part I struggled the most to understand:
 
 This is simply gonna be the order of the elements to be inserted. If we had 5 elements in the pend, we will always insert those same 5 elements, the only thing we decide here is when to insert each of them.
 
-The implications of this order is something that I still find difficult to understand. How could inserting one element before another matter, if we are inserting them anyway? Well, I don't have the answer 100% clear, but I believe the gist of it relies in the fact that we will be inserting the pend elements in the main with the help of binary search and the [Jacobsthal numbers](https://en.wikipedia.org/wiki/Jacobsthal_number). 
+The implications of this order is something that I still find difficult to understand. How could inserting one element before another matter, if we are inserting them anyway? Well, I don't have the answer 100% clear. The gist of it relies in the fact that we will be inserting the pend elements in the main with the help of binary search and the [Jacobsthal numbers](https://en.wikipedia.org/wiki/Jacobsthal_number). 
 
 > [!TIP]
 > If you don't know anything about binary search, it is a way to find a number inside an ***already sorted*** array.\
 > [This](https://www.youtube.com/watch?v=eVuPCG5eIr4&t=52s) video is extremely simple but suuper clear, and you'll understand it in a second!
 
+We use the Jacobsthal numbers to determine the order, and it is very consistent. It is always the same order and it is related to the elements that we are working with. 
+I see it this way:
 
+    Jacobsthal numbers (not repeated) = 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, ...
 
+    Jacobsthal 1 = b1
+    Jacobsthal 3 = b3
+    Jacobsthal 5 = b5
+    Jacobsthal 11 = b11
+    ...
 
+This is just the base of how we are gonna use the Jacobsthal numbers. We are linking them to the 'tags' of the elements of the pend (small elements). 
+Seen in a different way, these 'tags' also represent the positions of the b elements. And we are gonna apply an order of insertion based on the positions of these b elements.
 
+Let's briefly imagine we have 7 ***b*** elements. 6 of those elements will be in the pend (b1 will be in the main):
+    
+    pend = [1 5]  [4 6]  [2 9]  [3 8]  [0 7]  [11 12]
+             b2     b3     b4     b5     b6     b7
+The order of insertion will be: b3, b2, b5, b4, b7, b6
 
+If we had 11 ***b*** elements, 10 of those elements in the pend (b1 in the main):
+    
+    pend = [1 5]  [4 6]  [2 9]  [3 8]  [0 7]  [11 12]  [15 25]  [13 14]  [16 19]  [20 22]
+             b2     b3     b4     b5     b6      b7       b8       b9      b10      b11 
+The order of insertion will be: b3, b2, b5, b4, b11, b10, b9, b8, b7, b6
 
+The pattern is: 
+1. We start with the b element the closest to Jacobsthal 3
+   >  We ***always*** start with Jacobsthal 3 because we have already inserted b1 in the main (it's as if we had already used Jacobsthal 1)
+   
+2. We descend in our vector to the left untill we reach the start of the vector
+   > because we always start with b2, that's gonna be our next element to insert
+   
+3. We look for the element corresponding to the next Jacobsthal number (Jacobsthal 5) -> b5
+   - if it exists: we choose it 
+   - if it doesn't exist: we insert the remainig elements in reverse order, like we saw in the first example with Jacobsthal 11:
+      
+         pend = [1 5]  [4 6]  [2 9]  [3 8]  [0 7]  [11 12]
+                  b2     b3     b4     b5     b6     b7
+         there is no b11, we have from b6 to b7 to insert, so the order of insertion is : b3, b2, b5, b4, b7, b6
+   
+4. If we found the Jacobsthal element in step 3, we descend from that element to the last element to the left of the vector that hasn't been inserted yet
+   > If we came from jacobsthal 5, the next element to insert will be b4 (b3 and b2 will have already been inserted at this point)
+   
+5. We look for the element corresponding to the next Jacobsthal number (Jacobsthal 11)
+    > we'll repeat step 3 and 4 basically, until we can no longer use a Jacobsthal number
 
 
 
