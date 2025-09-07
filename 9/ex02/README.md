@@ -238,7 +238,16 @@ The pattern is:
     > we'll repeat step 3 and 4 basically, until we can no longer use a Jacobsthal number
 <br/>
 
-This may seem a bit overwhelming at first but I promise you'll realize it's actually very consistent and simple. Let's what happens with the example we have been following:
+> [!IMPORTANT]
+> We will set the insertion order each time we 'degroup', because each time the element size changes, the 'tags' change as well❗
+> 
+> When I say 'degroup' I think of removing a recursion level, I mean going to smaller groups of elements until we reach the beggining, where our elements were formed by 1 number.\
+> In this example, our elements are of size 2, so after inserting b2, they'll become elements of 1 and we will organize them like so:
+> 
+>      1   5   4   6   3   7   2   9
+>      b1  a1  b2  a2  b3  a3  b4  a4
+
+It may seem a bit overwhelming at first, but I promise you'll realize it's actually very consistent and simple. Let's continue where we were in our example:
 
     main = [1 5] [4 6] [2 9]   |    pend = [3 7]
              b1    a1    a2    |             b2
@@ -246,10 +255,12 @@ This may seem a bit overwhelming at first but I promise you'll realize it's actu
 We only have 1 element to insert, so it may not matter much, but know that we choose b2 because it is the closest lower element to b3 (element corresponding to Jacobsthal 3).
 
 Now, how do we actually insert? How do we know in which position in the main b2 has to be?\
-Visually, you and I can clearly tell that, because 7 is > 6 but < 9, b2 should be between a1 and a2. But we still haven't established how to determine that. This is where binary search/insertion comes in.
+Visually, you and I can clearly tell that, because 7 is > 6 but < 9, b2 should be between a1 and a2. But we still haven't established how to determine that. This is where binary search comes in.
 
-The article mentions it but doesn't explain exactly how to do it, or I didn't understand it. I made my own binaryInsertion function, but I see a lot of people use std::lower_bound and supposedly this function already has binary insertion integrated. \
-It is also probably easier in terms of code, but I wanted to try to do it with a specific function for it. I definately made my life more complicated, adding a maximum position to insert to the righgt pointer of the main\
+### Binary search for insertion
+
+The article mentions it but doesn't explain exactly how to do it, or I get it. I made my own binaryInsertion function, but I see a lot of people use std::lower_bound and supposedly this function already has binary insertion integrated. \
+It is also probably easier in terms of code, but I wanted to try to do it with a specific function for it. I definately made my life more complicated, adding a maximum position to insert to the right pointer of the main\
 The article talks about this, and it should be a great way to make the insertion even more efficient, but I am not sure if the way I coded it (with a LOOT of help from chatgpt) takes advantadge of it.
 
 I'm gonna attempt to explain this optimization:
@@ -259,7 +270,38 @@ I'm gonna attempt to explain this optimization:
 So, everything comes down to the 'tags' of the elements and the logic behind this algorithm, which is pretty difficult for me to grasp. I simply trust it 🙇‍♀️
 
 Basically, what we do is: instead of having a left pointer pointing to the start of the main and a right pointer to the end of the main, we send the binaryInsertion function a variable I believe I called upperBound, which is gonna be the position in the main where the upper limit for the insertion of that element will be. Which is this element? And how do we know where it is?\
-Well, because each b element has a corresponding a element that is always bigger, whenever we insert a b element into the main, we will look for its a element, and that position is gonna be our upperBound, that's what's gonna act as the right pointer would during normal binary search. This should make us discard some elements.\
-Let's see an example:
+Well, because each b element has a corresponding a element that is always bigger, whenever we insert a ***b*** element into the main, we will look for its ***a*** element, and that position is gonna be our upperBound, that's what's gonna act as the right pointer would during normal binary search. This should make us discard some elements.
 
+In the example we are following, the corresponding a to the b element to insert (b2) is a2, which also happens to be the last element of the vector, so we don't "gain" much, but in the next level of insertion we are gonna see it more clearly:
 
+    main after b2 insertion: [1 5] [4 6] [3 7] [2 9]
+                               b1    a1    b2    a2
+
+    sequence regrouped:  1   5   4   6   3   7   2   9
+                         b1  a1  b2  a2  b3  a3  b4  a4
+                         
+    main:  1   5   6   7   9       |    pend:  4   3   2
+           b1  a1  a2  a3  a4      |           b2  b3  b4
+
+Insertion order: b3, b2, b4
+Jacbosthal numbers used: 3
+
+B3 is the first element we need to insert and we know we cannot put it past a number bigger than itself, we cannot put it after its corresponding a element (a3). So we know that the position of a3 in the main (index position 3) is gonna be our upperBound. We won't do binary insertion with the whole 'main' vector, we'll limit it at main[3]. Hopefully now you can start to get an idea of how it works.\
+After inserting b3: 
+
+     main:  1  3   5   6   7   9       |    pend:  4   2
+           b1  b3  a1  a2  a3  a4      |           b2  b4
+After inserting b2 with upper bound a2 (main[3]):
+
+     main:  1  3   4   5   6   7   9       |    pend:  2
+           b1  b3  b2  a1  a2  a3  a4      |           b4
+> [!WARNING]
+> If you decide to do this optimization, you will have to keep track of the position of the a's in the main, as they inevitable move/change whenever we insert more elemnts in the main. This gave me a lot of issues and is something I initially didn't even think about.\
+> You can clearly see here that upperBound is position 3 two times, because adding b3 made a2 move from position 2 to position 3 in the main.\
+> So yeah, just a reminder to keep this in mind if you add the upperBound limit.
+
+After inserting b4 with upper bound a4 (main[6]):
+
+     main:  1  2   3   4   5   6   7   9  
+           b1  b4  b3  b2  a1  a2  a3  a4  
+And there we have it, the sequence is sorted! 🥳
