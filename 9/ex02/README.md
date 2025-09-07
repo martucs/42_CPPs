@@ -283,8 +283,8 @@ In the example we are following, the corresponding a to the b element to insert 
     main:  1   5   6   7   9       |    pend:  4   3   2
            b1  a1  a2  a3  a4      |           b2  b3  b4
 
-Insertion order: b3, b2, b4
-Jacbosthal numbers used: 3
+Insertion order: b3, b2, b4\
+Jacbosthal numbers: 3
 
 B3 is the first element we need to insert and we know we cannot put it past a number bigger than itself, we cannot put it after its corresponding a element (a3). So we know that the position of a3 in the main (index position 3) is gonna be our upperBound. We won't do binary insertion with the whole 'main' vector, we'll limit it at main[3]. Hopefully now you can start to get an idea of how it works.\
 After inserting b3: 
