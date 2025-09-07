@@ -311,7 +311,7 @@ This was a very quick example, but if you can understand it, you already have ha
 
 My biggest tip would be to try to sort numbers using this logic in a piece of paper first. I may have spent 2 weeks just trying to understand and implement the algorithm in paper. Once I was there, I also had a lot of issues with the code, but if you have time, and people you can ask, it is doable. The hardest part for me was getting the right insertion order tracking the a's in the main for the upperBound.
 
-I want to give a huge shoutout to @christianfidalgo and @victorperez for helping me understand this algorthim and not getting tired of my questions. You can check out their gitHub and their code is clean, they use std::lower_bound and they also print the comparisons they made.\
+I want to give a huge shoutout to [@cfareste](https://github.com/cfareste) and [@VPFI](https://github.com/VPFI) for helping me understand this algorthim and not getting tired of my questions. You can check out their gitHub and their code is clean, they use std::lower_bound and they also print the comparisons they made.\
 You can see the comparisons in my project as well, and usually they stay below the maximum the Ford-Johnson should do. You can calculate them with this formula (in emuminov's article):
 
     int F(int n)   
