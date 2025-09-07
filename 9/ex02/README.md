@@ -304,4 +304,33 @@ After inserting b4 with upper bound a4 (main[6]):
 
      main:  1  2   3   4   5   6   7   9  
            b1  b4  b3  b2  a1  a2  a3  a4  
-And there we have it, the sequence is sorted! 🥳
+We stop here because we cannot make smaller groups. And there we have it, the sequence is sorted! 🥳
+<br/>
+
+This was a very quick example, but if you can understand it, you already have half the project done!
+
+My biggest tip would be to try to sort numbers using this logic in a piece of paper first. I may have spent 2 weeks just trying to understand and implement the algorithm in paper. Once I was there, I also had a lot of issues with the code, but if you have time, and people you can ask, it is doable. The hardest part for me was getting the right insertion order tracking the a's in the main for the upperBound.
+
+I want to give a huge shoutout to @christianfidalgo and @victorperez for helping me understand this algorthim and not getting tired of my questions. You can check out their gitHub and their code is clean, they use std::lower_bound and they also print the comparisons they made.\
+You can see the comparisons in my project as well, and usually they stay below the maximum the Ford-Johnson should do. You can calculate them with this formula (in emuminov's article):
+
+    int F(int n)   
+    {
+        int sum = 0;
+        for (int k = 1; k <= n; ++k)
+        {
+            double value = (3.0 / 4.0) * k;
+            sum += static_cast<int>(ceil(log2(value)));
+        }
+        return sum;
+    }
+
+From what I understood, this algorithm is not very commonly used. It is supposed to be very efficient with small amounts of numbers though. I honestly don't know why they make us do it. You can check out more information about it in the article or online. There's some links that talk about it, which you can find in the references below.
+
+## References
+
+- https://dev.to/emuminov/human-explanation-and-step-by-step-visualisation-of-the-ford-johnson-algorithm-5g91 (emuminov's article)
+- https://github.com/decidedlyso/merge-insertion-sort?tab=readme-ov-file (info about use)
+- https://www.youtube.com/watch?v=eVuPCG5eIr4&t=52s (binary search video)
+
+
