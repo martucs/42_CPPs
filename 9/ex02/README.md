@@ -259,7 +259,7 @@ Visually, you and I can clearly tell that, because 7 is > 6 but < 9, b2 should b
 
 ### Binary search for insertion
 
-The article mentions it but doesn't explain exactly how to do it, or I get it. I made my own binaryInsertion function, but I see a lot of people use std::lower_bound and supposedly this function already has binary insertion integrated. \
+The article mentions it but doesn't explain exactly how to do it, or I get it. I made my own binaryInsertion function, but I see a lot of people use std::upper_bound and supposedly this function already has binary insertion integrated. \
 It is also probably easier in terms of code, but I wanted to try to do it with a specific function for it. I definately made my life more complicated, adding a maximum position to insert to the right pointer of the main\
 The article talks about this, and it should be a great way to make the insertion even more efficient, but I am not sure if the way I coded it (with a LOOT of help from chatgpt) takes advantadge of it.
 
@@ -311,7 +311,7 @@ This was a very quick example, but if you can understand it, you already have ha
 
 My biggest tip would be to try to sort numbers using this logic in a piece of paper first. I may have spent 2 weeks just trying to understand and implement the algorithm in paper. Once I was there, I also had a lot of issues with the code, but if you have time, and people you can ask, it is doable. The hardest part for me was getting the right insertion order tracking the a's in the main for the upperBound.
 
-I want to give a huge shoutout to [@cfareste](https://github.com/cfareste) and [@VPFI](https://github.com/VPFI) for helping me understand this algorthim and not getting tired of my questions. You can check out their gitHub and their code is clean, they use std::lower_bound and they also print the comparisons they made.\
+I want to give a huge shoutout to [@cfareste](https://github.com/cfareste) and [@VPFI](https://github.com/VPFI) for helping me understand this algorthim and not getting tired of my questions. You can check out their gitHub and their code is clean, they use std::upper_bound, they print the comparisons they made and they have a tester!\
 You can see the comparisons in my project as well, and usually they stay below the maximum the Ford-Johnson should do. You can calculate them with this formula (in emuminov's article):
 
     int F(int n)   
